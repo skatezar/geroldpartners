@@ -93,30 +93,5 @@ document.addEventListener('turbo:load', function() {
     }
   });
 
-  // Card hover effects with slight tilt
-  const cards = document.querySelectorAll('.service-card, .story-card, .job-card');
-
-  cards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.style.transition = 'transform 0.3s ease';
-    });
-
-    card.addEventListener('mousemove', function(e) {
-      const rect = this.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      const rotateX = (y - centerY) / 20;
-      const rotateY = (centerX - x) / 20;
-
-      this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-    });
-
-    card.addEventListener('mouseleave', function() {
-      this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-    });
-  });
+  // Remove 3D tilt effect - relying on CSS transitions only for cleaner animations
 });
