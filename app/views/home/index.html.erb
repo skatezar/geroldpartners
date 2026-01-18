@@ -1,0 +1,202 @@
+<!-- Fixed Left Navigation -->
+<nav class="side-nav">
+  <div class="nav-logo">GP</div>
+  <ul class="nav-links">
+    <li><a href="#hero" class="nav-link active" data-section="hero">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Home</span>
+    </a></li>
+    <li><a href="#services" class="nav-link" data-section="services">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Services</span>
+    </a></li>
+    <li><a href="#success" class="nav-link" data-section="success">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Success Stories</span>
+    </a></li>
+    <li><a href="#opportunities" class="nav-link" data-section="opportunities">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Mandates</span>
+    </a></li>
+    <li><a href="#cv-upload" class="nav-link" data-section="cv-upload">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Talent Bank</span>
+    </a></li>
+    <li><a href="#contact" class="nav-link" data-section="contact">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Contact</span>
+    </a></li>
+  </ul>
+</nav>
+
+<!-- Hero Section -->
+<section id="hero" class="hero section-animate">
+  <div class="container">
+    <h1 class="fade-in-up">Gerold Partners</h1>
+    <p class="tagline fade-in-up delay-1">Executive Search & Capital Introduction</p>
+    <p class="founder fade-in-up delay-2">Founded by Laurenz Gerold, Former Goldman Sachs Banker</p>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="services section-animate">
+  <div class="container">
+    <h2>Our Services</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Executive Search</h3>
+        <p>We identify and recruit top-tier executives for leadership positions across industries. Our deep network and rigorous selection process ensure the perfect match for your organization.</p>
+      </div>
+      <div class="service-card">
+        <h3>Capital Introduction</h3>
+        <p>Connecting institutional investors with alternative investment managers. We facilitate meaningful relationships that drive growth and create value for all parties.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Success Stories 2025 -->
+<section id="success" class="success-stories section-animate">
+  <div class="container">
+    <h2>2025 Success Stories</h2>
+    <p class="subtitle">7 Successful Placements This Year</p>
+    <div class="stories-grid">
+      <div class="story-card">
+        <h4>Chief Investment Officer</h4>
+        <p>Leading European Asset Manager | $15B AUM</p>
+      </div>
+      <div class="story-card">
+        <h4>Managing Director, Private Equity</h4>
+        <p>Global Investment Firm | Buyout Strategy</p>
+      </div>
+      <div class="story-card">
+        <h4>Head of Capital Markets</h4>
+        <p>FinTech Unicorn | Series C+</p>
+      </div>
+      <div class="story-card">
+        <h4>Partner, M&A Advisory</h4>
+        <p>Boutique Investment Bank | Technology Sector</p>
+      </div>
+      <div class="story-card">
+        <h4>CFO</h4>
+        <p>Healthcare Services Group | Pre-IPO</p>
+      </div>
+      <div class="story-card">
+        <h4>Head of Investor Relations</h4>
+        <p>Multi-Strategy Hedge Fund | $8B AUM</p>
+      </div>
+      <div class="story-card">
+        <h4>CEO</h4>
+        <p>Sustainable Energy Investment Platform | Growth Stage</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Job Opportunities -->
+<section id="opportunities" class="opportunities section-animate">
+  <div class="container">
+    <h2>Current Opportunities</h2>
+    <div class="jobs-list">
+      <div class="job-card">
+        <h4>Chief Operating Officer</h4>
+        <p class="company">Private Equity Firm | London</p>
+        <p class="description">Seeking experienced COO for growing PE firm specializing in infrastructure investments.</p>
+        <a href="#contact" class="btn-link">Express Interest</a>
+      </div>
+      <div class="job-card">
+        <h4>Head of ESG</h4>
+        <p class="company">Asset Manager | Frankfurt</p>
+        <p class="description">Lead ESG strategy and implementation for €20B+ multi-asset manager.</p>
+        <a href="#contact" class="btn-link">Express Interest</a>
+      </div>
+      <div class="job-card">
+        <h4>Managing Director, Debt Capital Markets</h4>
+        <p class="company">Investment Bank | Paris</p>
+        <p class="description">Senior role covering European corporate debt origination and structuring.</p>
+        <a href="#contact" class="btn-link">Express Interest</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CV Upload Section -->
+<section id="cv-upload" class="cv-upload section-animate">
+  <div class="container">
+    <h2>Join Our Network</h2>
+    <p>Upload your CV to be considered for current and future opportunities</p>
+    <%= form_with url: "#", multipart: true, class: "cv-form" do |f| %>
+      <div class="form-group">
+        <%= f.label :name, "Full Name" %>
+        <%= f.text_field :name, required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email, "Email" %>
+        <%= f.email_field :email, required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label :phone, "Phone" %>
+        <%= f.telephone_field :phone %>
+      </div>
+      <div class="form-group">
+        <%= f.label :cv, "Upload CV (PDF)" %>
+        <%= f.file_field :cv, accept: ".pdf", required: true %>
+      </div>
+      <%= f.submit "Submit CV", class: "btn-primary" %>
+    <% end %>
+  </div>
+</section>
+
+<!-- Contact Form -->
+<section id="contact" class="contact section-animate">
+  <div class="container">
+    <h2>Get In Touch</h2>
+    <p>Whether you're seeking exceptional talent or exploring new opportunities, we'd love to hear from you.</p>
+    <%= form_with url: "#", class: "contact-form" do |f| %>
+      <div class="form-row">
+        <div class="form-group">
+          <%= f.label :name, "Name" %>
+          <%= f.text_field :name, required: true %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email, "Email" %>
+          <%= f.email_field :email, required: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :subject, "Subject" %>
+        <%= f.text_field :subject, required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label :message, "Message" %>
+        <%= f.text_area :message, rows: 6, required: true %>
+      </div>
+      <%= f.submit "Send Message", class: "btn-primary" %>
+    <% end %>
+  </div>
+</section>
+
+<!-- Impressum -->
+<section id="impressum" class="impressum">
+  <div class="container">
+    <h2>Impressum</h2>
+    <div class="impressum-content">
+      <p><strong>Gerold Partners</strong></p>
+      <p>Executive Search & Capital Introduction</p>
+      <p>Represented by: Laurenz Gerold</p>
+      <p>Email: contact@geroldpartners.com</p>
+      <p>VAT ID: [To be added]</p>
+      <p>Commercial Register: [To be added]</p>
+      <p class="disclaimer">All information provided on this website is for informational purposes only.
+      Services are provided in compliance with applicable regulations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2025 Gerold Partners. All rights reserved.</p>
+    <p>Executive Search & Capital Introduction | Founded by Laurenz Gerold</p>
+  </div>
+</footer>
