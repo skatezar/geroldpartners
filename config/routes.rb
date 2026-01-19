@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  get "mandates/apply"
+  devise_for :admins
+
+  namespace :admin do
+    resources :mandates
+  end
+
+  resources :mandates, only: [:index] do
+    member do
+      post :apply
+    end
+  end
+
   get "home/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

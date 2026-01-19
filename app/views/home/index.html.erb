@@ -32,7 +32,7 @@
 <!-- Hero Section -->
 <section id="hero" class="hero section-animate">
   <div class="container">
-    <h1 class="fade-in-up">Gerold Partners</h1>
+    <h1 class="fade-in-up">Gerold & Partners</h1>
     <p class="tagline fade-in-up delay-1">Executive Search & Capital Introduction</p>
     <p class="founder fade-in-up delay-2">Founded by Laurenz Gerold, Former Goldman Sachs Banker</p>
   </div>
@@ -48,12 +48,44 @@
     <h2>Our Services</h2>
     <div class="services-grid">
       <div class="service-card">
-        <h3>Executive Search</h3>
-        <p>We identify and recruit top-tier executives for leadership positions across industries. Our deep network and rigorous selection process ensure the perfect match for your organization.</p>
+        <h3>Structured Finance & Private Credit Executive Search</h3>
+        <p>We specialize in identifying and recruiting top-tier talent for structured finance and private credit roles. From analysts to managing directors, our deep network and rigorous selection process ensure the perfect match for your organization.</p>
       </div>
       <div class="service-card">
         <h3>Capital Introduction</h3>
-        <p>Connecting institutional investors with alternative investment managers. We facilitate meaningful relationships that drive growth and create value for all parties.</p>
+        <p>Focused on connecting UAE family offices with alternative investment managers across structured finance and private credit strategies. We facilitate meaningful relationships that drive growth and create value for all parties.</p>
+      </div>
+    </div>
+
+    <!-- Areas of Expertise -->
+    <div class="expertise-section">
+      <h3>Areas of Expertise</h3>
+      <div class="expertise-grid">
+        <div class="expertise-column">
+          <h4>Markets</h4>
+          <ul>
+            <li>CLOs</li>
+            <li>ABS</li>
+            <li>RMBS</li>
+            <li>Infrastructure</li>
+            <li>Real Estate</li>
+            <li>Fund Finance</li>
+            <li>SRT</li>
+          </ul>
+        </div>
+        <div class="expertise-column">
+          <h4>Role Types</h4>
+          <ul>
+            <li>Sales</li>
+            <li>Trading</li>
+            <li>Structuring</li>
+            <li>Investing</li>
+          </ul>
+        </div>
+        <div class="expertise-column">
+          <h4>Firm Size</h4>
+          <p class="firm-size-text">We work with firms of all sizes, from $500M AUM to $50B+ AUM</p>
+        </div>
       </div>
     </div>
   </div>
@@ -63,35 +95,31 @@
 <section id="success" class="success-stories section-animate">
   <div class="container">
     <h2>2025 Success Stories</h2>
-    <p class="subtitle">7 Successful Placements This Year</p>
+    <p class="subtitle">7 Successful Searches This Year</p>
     <div class="stories-grid">
       <div class="story-card">
-        <h4>Chief Investment Officer</h4>
-        <p>Leading European Asset Manager | $15B AUM</p>
+        <h4>Analyst</h4>
+        <p>$3B Private Credit Fund | Madrid</p>
       </div>
       <div class="story-card">
-        <h4>Managing Director, Private Equity</h4>
-        <p>Global Investment Firm | Buyout Strategy</p>
+        <h4>Associate</h4>
+        <p>$3B Private Credit Fund | Madrid</p>
       </div>
       <div class="story-card">
-        <h4>Head of Capital Markets</h4>
-        <p>FinTech Unicorn | Series C+</p>
+        <h4>Associate VP, Real Estate</h4>
+        <p>$1B Real Estate Manager | London</p>
       </div>
       <div class="story-card">
-        <h4>Partner, M&A Advisory</h4>
-        <p>Boutique Investment Bank | Technology Sector</p>
+        <h4>Portfolio Manager</h4>
+        <p>Hedge Fund | London</p>
       </div>
       <div class="story-card">
-        <h4>CFO</h4>
-        <p>Healthcare Services Group | Pre-IPO</p>
+        <h4>CLO Structurer</h4>
+        <p>$40B US PE Fund | New York City</p>
       </div>
       <div class="story-card">
-        <h4>Head of Investor Relations</h4>
-        <p>Multi-Strategy Hedge Fund | $8B AUM</p>
-      </div>
-      <div class="story-card">
-        <h4>CEO</h4>
-        <p>Sustainable Energy Investment Platform | Growth Stage</p>
+        <h4>Trading Associate</h4>
+        <p>$500M Hedge Fund | London</p>
       </div>
     </div>
   </div>
@@ -102,24 +130,17 @@
   <div class="container">
     <h2>Current Opportunities</h2>
     <div class="jobs-list">
-      <div class="job-card">
-        <h4>Chief Operating Officer</h4>
-        <p class="company">Private Equity Firm | London</p>
-        <p class="description">Seeking experienced COO for growing PE firm specializing in infrastructure investments.</p>
-        <a href="#contact" class="btn-link">Express Interest</a>
-      </div>
-      <div class="job-card">
-        <h4>Head of ESG</h4>
-        <p class="company">Asset Manager | Frankfurt</p>
-        <p class="description">Lead ESG strategy and implementation for €20B+ multi-asset manager.</p>
-        <a href="#contact" class="btn-link">Express Interest</a>
-      </div>
-      <div class="job-card">
-        <h4>Managing Director, Debt Capital Markets</h4>
-        <p class="company">Investment Bank | Paris</p>
-        <p class="description">Senior role covering European corporate debt origination and structuring.</p>
-        <a href="#contact" class="btn-link">Express Interest</a>
-      </div>
+      <% @mandates.each do |mandate| %>
+        <div class="job-card">
+          <h4><%= mandate.title %></h4>
+          <p class="company"><%= mandate.firm_name.present? ? mandate.firm_name : "Confidential" %> | <%= mandate.location %></p>
+          <p class="description"><%= mandate.description %></p>
+          <button class="btn-link express-interest-btn" data-mandate-id="<%= mandate.id %>">Express Interest</button>
+        </div>
+      <% end %>
+      <% if @mandates.empty? %>
+        <p class="no-mandates">No current opportunities available. Join our talent bank to be notified of future openings.</p>
+      <% end %>
     </div>
   </div>
 </section>
@@ -143,8 +164,17 @@
         <%= f.telephone_field :phone %>
       </div>
       <div class="form-group">
-        <%= f.label :cv, "Upload CV (PDF)" %>
-        <%= f.file_field :cv, accept: ".pdf", required: true %>
+        <div class="cv-drop-zone" id="cvDropZone">
+          <div class="drop-zone-content">
+            <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <p class="drop-zone-text">Drop your CV here</p>
+            <p class="drop-zone-subtext">or click to browse (PDF only)</p>
+            <p class="file-name" id="fileName"></p>
+          </div>
+          <%= f.file_field :cv, accept: ".pdf", required: true, id: "cvFileInput", style: "display: none;" %>
+        </div>
       </div>
       <%= f.submit "Submit CV", class: "btn-primary" %>
     <% end %>
@@ -185,7 +215,7 @@
   <div class="container">
     <h2>Impressum</h2>
     <div class="impressum-content">
-      <p><strong>Gerold Partners</strong></p>
+      <p><strong>Gerold & Partners</strong></p>
       <p>Executive Search & Capital Introduction</p>
       <p>Represented by: Laurenz Gerold</p>
       <p>Email: contact@geroldpartners.com</p>
@@ -200,7 +230,52 @@
 <!-- Footer -->
 <footer class="footer">
   <div class="container">
-    <p>&copy; 2025 Gerold Partners. All rights reserved.</p>
+    <p>&copy; 2025 Gerold & Partners. All rights reserved.</p>
     <p>Executive Search & Capital Introduction | Founded by Laurenz Gerold</p>
   </div>
 </footer>
+
+<!-- Application Modal -->
+<div id="applicationModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2 id="modalTitle">Apply for Position</h2>
+    <%= form_with url: "#", id: "applicationForm", multipart: true, local: false do |f| %>
+      <input type="hidden" id="modalMandateId" name="mandate_id">
+
+      <div class="form-group">
+        <%= f.label :name, "Full Name" %>
+        <%= f.text_field :name, required: true, class: "modal-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :email, "Email" %>
+        <%= f.email_field :email, required: true, class: "modal-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :linkedin_url, "LinkedIn URL (Optional)" %>
+        <%= f.text_field :linkedin_url, placeholder: "https://linkedin.com/in/yourprofile", class: "modal-input" %>
+      </div>
+
+      <div class="form-group">
+        <label>CV (Optional if LinkedIn provided)</label>
+        <div class="cv-drop-zone modal-drop-zone" id="modalCvDropZone">
+          <div class="drop-zone-content">
+            <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <p class="drop-zone-text">Drop your CV here</p>
+            <p class="drop-zone-subtext">or click to browse (PDF only)</p>
+            <p class="file-name" id="modalFileName"></p>
+          </div>
+          <%= f.file_field :cv, accept: ".pdf", id: "modalCvFileInput", style: "display: none;" %>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <%= f.submit "Submit Application", class: "btn-primary modal-submit" %>
+      </div>
+    <% end %>
+  </div>
+</div>

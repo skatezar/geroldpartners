@@ -1,0 +1,2 @@
+module Admin::MandatesHelper
+end

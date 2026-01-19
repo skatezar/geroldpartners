@@ -1,0 +1,149 @@
+<%= form_with model: [:admin, mandate], class: "mandate-form" do |f| %>
+  <% if mandate.errors.any? %>
+    <div class="error-messages">
+      <h3><%= pluralize(mandate.errors.count, "error") %> prohibited this mandate from being saved:</h3>
+      <ul>
+        <% mandate.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :title, "Job Title" %>
+    <%= f.text_field :title, required: true, placeholder: "e.g. Chief Operating Officer" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description, "Description" %>
+    <%= f.text_area :description, required: true, rows: 6, placeholder: "Detailed job description..." %>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <%= f.label :location, "Location" %>
+      <%= f.text_field :location, required: true, placeholder: "e.g. London" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :firm_name, "Firm Name (Optional)" %>
+      <%= f.text_field :firm_name, placeholder: "Leave blank for confidential" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :firm_size, "Firm Size (Optional)" %>
+    <%= f.text_field :firm_size, placeholder: "e.g. $3B AUM" %>
+  </div>
+
+  <div class="form-group checkbox-group">
+    <%= f.label :active do %>
+      <%= f.check_box :active %>
+      <span>Active (show on website)</span>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit mandate.new_record? ? "Create Mandate" : "Update Mandate", class: "btn-primary" %>
+    <%= link_to "Cancel", admin_mandates_path, class: "btn-secondary" %>
+  </div>
+<% end %>
+
+<style>
+  .mandate-form {
+    max-width: 800px;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .error-messages {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+  }
+
+  .error-messages h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+  }
+
+  .error-messages ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+  }
+
+  .form-group input[type="text"],
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Garamond', serif;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #000;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+  }
+
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+  }
+
+  @media (max-width: 768px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .mandate-form {
+      padding: 25px;
+    }
+  }
+</style>

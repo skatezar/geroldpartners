@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mandate: one
+  name: MyString
+  email: MyString
+  linkedin_url: MyString
+
+two:
+  mandate: two
+  name: MyString
+  email: MyString
+  linkedin_url: MyString

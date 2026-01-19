@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <style>
+    body { font-family: Garamond, serif; color: #000; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    h2 { border-bottom: 2px solid #000; padding-bottom: 10px; }
+    .detail { margin: 10px 0; }
+    .label { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>New Application for <%= @mandate.title %></h2>
+
+    <div class="detail">
+      <span class="label">Candidate Name:</span> <%= @application.name %>
+    </div>
+
+    <div class="detail">
+      <span class="label">Email:</span> <%= @application.email %>
+    </div>
+
+    <% if @application.linkedin_url.present? %>
+      <div class="detail">
+        <span class="label">LinkedIn:</span> <a href="<%= @application.linkedin_url %>"><%= @application.linkedin_url %></a>
+      </div>
+    <% end %>
+
+    <% if @application.cv.attached? %>
+      <div class="detail">
+        <span class="label">CV:</span> Attached
+      </div>
+    <% end %>
+
+    <hr style="margin: 20px 0; border: none; border-top: 1px solid #ccc;">
+
+    <div class="detail">
+      <span class="label">Position:</span> <%= @mandate.title %>
+    </div>
+
+    <div class="detail">
+      <span class="label">Location:</span> <%= @mandate.location %>
+    </div>
+
+    <% if @mandate.firm_name.present? %>
+      <div class="detail">
+        <span class="label">Firm:</span> <%= @mandate.firm_name %>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>

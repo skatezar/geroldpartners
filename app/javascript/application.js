@@ -93,5 +93,155 @@ document.addEventListener('turbo:load', function() {
     }
   });
 
-  // Remove 3D tilt effect - relying on CSS transitions only for cleaner animations
+  // CV Drag and Drop functionality
+  function setupDropZone(dropZoneId, fileInputId, fileNameId) {
+    const dropZone = document.getElementById(dropZoneId);
+    const fileInput = document.getElementById(fileInputId);
+    const fileName = document.getElementById(fileNameId);
+
+    if (dropZone && fileInput) {
+      // Click to open file picker
+      dropZone.addEventListener('click', () => {
+        fileInput.click();
+      });
+
+      // Prevent default drag behaviors
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+      });
+
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      // Highlight drop zone when dragging over it
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+          dropZone.classList.add('drag-over');
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+          dropZone.classList.remove('drag-over');
+        }, false);
+      });
+
+      // Handle dropped files
+      dropZone.addEventListener('drop', (e) => {
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          handleFile(files[0]);
+        }
+      }, false);
+
+      // Handle file selection via input
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+          handleFile(e.target.files[0]);
+        }
+      });
+
+      function handleFile(file) {
+        if (file.type === 'application/pdf') {
+          if (fileName) {
+            fileName.textContent = `Selected: ${file.name}`;
+          }
+          // Set the file to the input
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          fileInput.files = dataTransfer.files;
+        } else {
+          alert('Please upload a PDF file only.');
+          if (fileName) {
+            fileName.textContent = '';
+          }
+        }
+      }
+    }
+  }
+
+  // Setup drop zones
+  setupDropZone('cvDropZone', 'cvFileInput', 'fileName');
+  setupDropZone('modalCvDropZone', 'modalCvFileInput', 'modalFileName');
+
+  // Modal functionality
+  const modal = document.getElementById('applicationModal');
+  const modalClose = document.querySelector('.modal-close');
+  const expressInterestBtns = document.querySelectorAll('.express-interest-btn');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalMandateId = document.getElementById('modalMandateId');
+  const applicationForm = document.getElementById('applicationForm');
+
+  // Open modal when Express Interest is clicked
+  expressInterestBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const mandateId = this.getAttribute('data-mandate-id');
+      const jobTitle = this.closest('.job-card').querySelector('h4').textContent;
+
+      modalTitle.textContent = `Apply for ${jobTitle}`;
+      modalMandateId.value = mandateId;
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Close modal when X is clicked
+  if (modalClose) {
+    modalClose.addEventListener('click', () => {
+      modal.classList.remove('show');
+      document.body.style.overflow = 'auto';
+      applicationForm.reset();
+      document.getElementById('modalFileName').textContent = '';
+    });
+  }
+
+  // Close modal when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('show');
+      document.body.style.overflow = 'auto';
+      applicationForm.reset();
+      document.getElementById('modalFileName').textContent = '';
+    }
+  });
+
+  // Handle form submission
+  if (applicationForm) {
+    applicationForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(applicationForm);
+      const mandateId = modalMandateId.value;
+
+      // Get CSRF token
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      try {
+        const response = await fetch(`/mandates/${mandateId}/apply`, {
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': csrfToken
+          },
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert('Application submitted successfully!');
+          modal.classList.remove('show');
+          document.body.style.overflow = 'auto';
+          applicationForm.reset();
+          document.getElementById('modalFileName').textContent = '';
+        } else {
+          alert('Error: ' + (result.errors ? result.errors.join(', ') : 'Something went wrong'));
+        }
+      } catch (error) {
+        alert('Error submitting application. Please try again.');
+        console.error('Error:', error);
+      }
+    });
+  }
 });

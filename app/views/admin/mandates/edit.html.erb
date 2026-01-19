@@ -1,0 +1,24 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h1>Edit Mandate</h1>
+    <%= link_to "Back to Mandates", admin_mandates_path, class: "btn-secondary" %>
+  </div>
+
+  <%= render 'form', mandate: @mandate %>
+</div>
+
+<style>
+  .btn-secondary {
+    padding: 10px 24px;
+    background: #666;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.2s;
+    font-weight: 600;
+  }
+
+  .btn-secondary:hover {
+    background: #555;
+  }
+</style>
