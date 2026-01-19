@@ -736,18 +736,21 @@ html {
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 40px;
-  color: #1a365d;
+  color: #000000;
+  font-weight: 600;
 }
 
 .impressum-content {
   max-width: 700px;
   margin: 0 auto;
-  color: #666;
+  color: #333;
   line-height: 1.8;
+  font-family: 'Garamond', 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
 }
 
 .impressum-content p {
   margin-bottom: 10px;
+  color: #333;
 }
 
 .impressum-content .disclaimer {
@@ -755,7 +758,7 @@ html {
   padding-top: 30px;
   border-top: 1px solid #ddd;
   font-size: 0.9rem;
-  color: #999;
+  color: #666;
 }
 
 /* Footer */
