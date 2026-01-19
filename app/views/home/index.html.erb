@@ -1,3 +1,12 @@
+<!-- Admin Controls -->
+<% if admin_signed_in? %>
+  <div class="admin-controls">
+    <%= link_to "Add Job", new_admin_mandate_path, class: "admin-btn" %>
+    <%= link_to "Manage Jobs", admin_mandates_path, class: "admin-btn" %>
+    <%= link_to "Logout", destroy_admin_session_path, method: :delete, class: "admin-btn-secondary" %>
+  </div>
+<% end %>
+
 <!-- Fixed Left Navigation -->
 <nav class="side-nav">
   <div class="nav-logo">GP</div>
@@ -219,8 +228,6 @@
       <p>Executive Search & Capital Introduction</p>
       <p>Represented by: Laurenz Gerold</p>
       <p>Email: contact@geroldpartners.com</p>
-      <p>VAT ID: [To be added]</p>
-      <p>Commercial Register: [To be added]</p>
       <p class="disclaimer">All information provided on this website is for informational purposes only.
       Services are provided in compliance with applicable regulations.</p>
     </div>

@@ -214,6 +214,12 @@ document.addEventListener('turbo:load', function() {
 
       const formData = new FormData(applicationForm);
       const mandateId = modalMandateId.value;
+      const submitBtn = applicationForm.querySelector('.modal-submit');
+      const originalBtnText = submitBtn.textContent;
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner"></span> Submitting...';
 
       // Get CSRF token
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -230,15 +236,28 @@ document.addEventListener('turbo:load', function() {
         const result = await response.json();
 
         if (result.success) {
-          alert('Application submitted successfully!');
-          modal.classList.remove('show');
-          document.body.style.overflow = 'auto';
-          applicationForm.reset();
-          document.getElementById('modalFileName').textContent = '';
+          // Show success message
+          submitBtn.innerHTML = '✓ Application Sent!';
+          submitBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+
+          // Close modal after 2 seconds
+          setTimeout(() => {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            applicationForm.reset();
+            document.getElementById('modalFileName').textContent = '';
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+            submitBtn.style.background = '';
+          }, 2000);
         } else {
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.disabled = false;
           alert('Error: ' + (result.errors ? result.errors.join(', ') : 'Something went wrong'));
         }
       } catch (error) {
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
         alert('Error submitting application. Please try again.');
         console.error('Error:', error);
       }
