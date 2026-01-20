@@ -38,6 +38,8 @@ Rails.application.configure do
 
   # Store uploaded files on Cloudflare R2 (see config/storage.yml for options).
   config.active_storage.service = :cloudflare_r2
+  # Disable additional checksums for R2 compatibility
+  config.active_storage.upload_checksums = false
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
