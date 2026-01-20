@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "mandates/apply"
   devise_for :admins
 
   namespace :admin do
@@ -11,6 +10,8 @@ Rails.application.routes.draw do
       post :apply
     end
   end
+
+  resources :contacts, only: [:create]
 
   get "home/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

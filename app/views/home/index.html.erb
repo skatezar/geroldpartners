@@ -193,31 +193,120 @@
 <!-- Contact Form -->
 <section id="contact" class="contact section-animate">
   <div class="container">
-    <h2>Get In Touch</h2>
-    <p>Whether you're seeking exceptional talent or exploring new opportunities, we'd love to hear from you.</p>
-    <%= form_with url: "#", class: "contact-form" do |f| %>
-      <div class="form-row">
-        <div class="form-group">
-          <%= f.label :name, "Name" %>
-          <%= f.text_field :name, required: true %>
+    <div id="contactFormContent">
+      <h2>Get In Touch</h2>
+      <p>Whether you're seeking exceptional talent or exploring new opportunities, we'd love to hear from you.</p>
+      <%= form_with model: Contact.new, url: contacts_path, id: "contactForm", class: "contact-form" do |f| %>
+        <!-- Honeypot field -->
+        <div style="position: absolute; left: -9999px; opacity: 0;">
+          <%= f.text_field :website, tabindex: "-1", autocomplete: "off" %>
+        </div>
+
+        <!-- Hidden timestamp -->
+        <input type="hidden" name="form_timestamp" id="contactFormTimestamp">
+
+        <div class="form-row">
+          <div class="form-group">
+            <%= f.label :name, "Name" %>
+            <%= f.text_field :name, required: true %>
+          </div>
+          <div class="form-group">
+            <%= f.label :email, "Email" %>
+            <%= f.email_field :email, required: true %>
+          </div>
         </div>
         <div class="form-group">
-          <%= f.label :email, "Email" %>
-          <%= f.email_field :email, required: true %>
+          <%= f.label :subject, "Subject" %>
+          <%= f.text_field :subject, required: true %>
         </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :subject, "Subject" %>
-        <%= f.text_field :subject, required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :message, "Message" %>
-        <%= f.text_area :message, rows: 6, required: true %>
-      </div>
-      <%= f.submit "Send Message", class: "btn-primary" %>
-    <% end %>
+        <div class="form-group">
+          <%= f.label :message, "Message" %>
+          <%= f.text_area :message, rows: 6, required: true %>
+        </div>
+
+        <!-- Cloudflare Turnstile -->
+        <div class="form-group" style="margin-top: 25px;">
+          <div class="cf-turnstile"
+               data-sitekey="<%= ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'] %>"
+               data-callback="onContactTurnstileSuccess"></div>
+        </div>
+
+        <%= f.submit "Send Message", class: "btn-primary", id: "contactSubmitBtn", disabled: true %>
+      <% end %>
+    </div>
+
+    <!-- Success Message -->
+    <div id="contactSuccessMessage" style="display: none; text-align: center; padding: 60px 40px;">
+      <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; font-size: 3rem; line-height: 80px; border-radius: 50%; margin: 0 auto 30px; animation: scaleIn 0.5s ease;">✓</div>
+      <h2 style="color: #000; font-size: 2rem; margin-bottom: 20px;">Message Sent!</h2>
+      <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px;">Thank you for reaching out. We'll get back to you soon.</p>
+    </div>
   </div>
 </section>
+
+<!-- Cloudflare Turnstile Script -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<script>
+  function onContactTurnstileSuccess(token) {
+    document.getElementById('contactSubmitBtn').disabled = false;
+    const tokenInput = document.createElement('input');
+    tokenInput.type = 'hidden';
+    tokenInput.name = 'cf-turnstile-response';
+    tokenInput.value = token;
+    document.getElementById('contactForm').appendChild(tokenInput);
+  }
+
+  document.addEventListener('turbo:load', function() {
+    // Set form timestamp
+    const timestampField = document.getElementById('contactFormTimestamp');
+    if (timestampField) {
+      timestampField.value = Math.floor(Date.now() / 1000);
+    }
+
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(contactForm);
+        const submitBtn = document.getElementById('contactSubmitBtn');
+        const originalText = submitBtn.value;
+
+        submitBtn.disabled = true;
+        submitBtn.value = 'Sending...';
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        try {
+          const response = await fetch(contactForm.action, {
+            method: 'POST',
+            headers: {
+              'X-CSRF-Token': csrfToken
+            },
+            body: formData
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            // Hide form and show success message
+            document.getElementById('contactFormContent').style.display = 'none';
+            document.getElementById('contactSuccessMessage').style.display = 'block';
+          } else {
+            alert('Error: ' + (result.errors ? result.errors.join(', ') : 'Something went wrong'));
+            submitBtn.value = originalText;
+            submitBtn.disabled = false;
+          }
+        } catch (error) {
+          alert('Error submitting form. Please try again.');
+          submitBtn.value = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+    }
+  });
+</script>
 
 <!-- Impressum -->
 <section id="impressum" class="impressum">
