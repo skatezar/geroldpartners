@@ -291,4 +291,48 @@ document.addEventListener('turbo:load', function() {
       }
     });
   }
+
+  // Handle CV Upload Form Submission
+  const cvForm = document.getElementById('cvForm');
+  if (cvForm) {
+    cvForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(cvForm);
+      const submitBtn = document.getElementById('cvSubmitBtn');
+      const originalText = submitBtn.value;
+
+      submitBtn.disabled = true;
+      submitBtn.value = 'Submitting...';
+
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      try {
+        const response = await fetch(cvForm.action, {
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': csrfToken
+          },
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Hide form and show success message
+          document.getElementById('cvFormContent').style.display = 'none';
+          document.getElementById('cvSuccessMessage').style.display = 'block';
+        } else {
+          alert('Error: ' + (result.errors ? result.errors.join(', ') : 'Something went wrong'));
+          submitBtn.value = originalText;
+          submitBtn.disabled = false;
+        }
+      } catch (error) {
+        alert('Error submitting form. Please try again.');
+        submitBtn.value = originalText;
+        submitBtn.disabled = false;
+        console.error('Error:', error);
+      }
+    });
+  }
 });

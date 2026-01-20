@@ -1,0 +1,7 @@
+<h2>New Talent Pool Application</h2>
+
+<p><strong>Name:</strong> <%= @application.name %></p>
+<p><strong>Email:</strong> <%= @application.email %></p>
+<p><strong>Phone:</strong> <%= @application.phone.present? ? @application.phone : 'Not provided' %></p>
+
+<p>This candidate has joined the talent pool and is open to any suitable opportunities.</p>

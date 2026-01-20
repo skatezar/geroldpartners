@@ -157,36 +157,45 @@
 <!-- CV Upload Section -->
 <section id="cv-upload" class="cv-upload section-animate">
   <div class="container">
-    <h2>Join Our Network</h2>
-    <p>Upload your CV to be considered for current and future opportunities</p>
-    <%= form_with url: "#", multipart: true, class: "cv-form" do |f| %>
-      <div class="form-group">
-        <%= f.label :name, "Full Name" %>
-        <%= f.text_field :name, required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :email, "Email" %>
-        <%= f.email_field :email, required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :phone, "Phone" %>
-        <%= f.telephone_field :phone %>
-      </div>
-      <div class="form-group">
-        <div class="cv-drop-zone" id="cvDropZone">
-          <div class="drop-zone-content">
-            <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-            </svg>
-            <p class="drop-zone-text">Drop your CV here</p>
-            <p class="drop-zone-subtext">or click to browse (PDF only)</p>
-            <p class="file-name" id="fileName"></p>
-          </div>
-          <%= f.file_field :cv, accept: ".pdf", required: true, id: "cvFileInput", style: "display: none;" %>
+    <div id="cvFormContent">
+      <h2>Join Our Network</h2>
+      <p>Upload your CV to be considered for current and future opportunities</p>
+      <%= form_with url: talent_pool_applications_path, multipart: true, id: "cvForm", class: "cv-form" do |f| %>
+        <div class="form-group">
+          <%= f.label :name, "Full Name" %>
+          <%= f.text_field :name, required: true %>
         </div>
-      </div>
-      <%= f.submit "Submit CV", class: "btn-primary" %>
-    <% end %>
+        <div class="form-group">
+          <%= f.label :email, "Email" %>
+          <%= f.email_field :email, required: true %>
+        </div>
+        <div class="form-group">
+          <%= f.label :phone, "Phone (Optional)" %>
+          <%= f.telephone_field :phone %>
+        </div>
+        <div class="form-group">
+          <div class="cv-drop-zone" id="cvDropZone">
+            <div class="drop-zone-content">
+              <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <p class="drop-zone-text">Drop your CV here</p>
+              <p class="drop-zone-subtext">or click to browse (PDF only)</p>
+              <p class="file-name" id="fileName"></p>
+            </div>
+            <%= f.file_field :cv, accept: ".pdf", required: true, id: "cvFileInput", style: "display: none;" %>
+          </div>
+        </div>
+        <%= f.submit "Submit CV", class: "btn-primary", id: "cvSubmitBtn" %>
+      <% end %>
+    </div>
+
+    <!-- Success Message -->
+    <div id="cvSuccessMessage" style="display: none; text-align: center; padding: 60px 40px;">
+      <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; font-size: 3rem; line-height: 80px; border-radius: 50%; margin: 0 auto 30px; animation: scaleIn 0.5s ease;">✓</div>
+      <h2 style="color: #000; font-size: 2rem; margin-bottom: 20px;">Application Received!</h2>
+      <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px;">Thank you for joining our talent pool. We'll reach out if there's a suitable opportunity.</p>
+    </div>
   </div>
 </section>
 

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
 
   resources :contacts, only: [:create]
+  resources :talent_pool_applications, only: [:create]
 
   get "home/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
