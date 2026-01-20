@@ -159,7 +159,7 @@
   <div class="container">
     <div id="cvFormContent">
       <h2>Join Our Network</h2>
-      <p>Upload your CV to be considered for current and future opportunities</p>
+      <p style="text-align: center;">Upload your CV to be considered for current and future opportunities</p>
       <%= form_with url: talent_pool_applications_path, multipart: true, id: "cvForm", class: "cv-form" do |f| %>
         <div class="form-group">
           <%= f.label :name, "Full Name" %>
@@ -204,7 +204,7 @@
   <div class="container">
     <div id="contactFormContent">
       <h2>Get In Touch</h2>
-      <p>Whether you're seeking exceptional talent or exploring new opportunities, we'd love to hear from you.</p>
+      
       <%= form_with model: Contact.new, url: contacts_path, id: "contactForm", class: "contact-form" do |f| %>
         <!-- Honeypot field -->
         <div style="position: absolute; left: -9999px; opacity: 0;">
@@ -258,7 +258,11 @@
 
 <script>
   function onContactTurnstileSuccess(token) {
-    document.getElementById('contactSubmitBtn').disabled = false;
+    const submitBtn = document.getElementById('contactSubmitBtn');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+    }
     const tokenInput = document.createElement('input');
     tokenInput.type = 'hidden';
     tokenInput.name = 'cf-turnstile-response';
