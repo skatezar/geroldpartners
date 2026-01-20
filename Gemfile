@@ -70,4 +70,4 @@ gem "dotenv-rails", "~> 3.2", groups: [:development, :test]
 gem "letter_opener", "~> 1.10", :group => :development
 
 # AWS SDK for S3-compatible storage (Cloudflare R2)
-gem "aws-sdk-s3", require: false
+gem "aws-sdk-s3", "~> 1.96.0", require: false
