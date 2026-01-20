@@ -158,7 +158,7 @@
 <section id="cv-upload" class="cv-upload section-animate">
   <div class="container">
     <div id="cvFormContent">
-      <h2>Join Our Network</h2>
+      <h2 style="color: black;">Join Our Network</h2>
       <p style="text-align: center;">Upload your CV to be considered for current and future opportunities</p>
       <%= form_with url: talent_pool_applications_path, multipart: true, id: "cvForm", class: "cv-form" do |f| %>
         <div class="form-group">
@@ -223,10 +223,6 @@
             <%= f.label :email, "Email" %>
             <%= f.email_field :email, required: true %>
           </div>
-        </div>
-        <div class="form-group">
-          <%= f.label :subject, "Subject" %>
-          <%= f.text_field :subject, required: true %>
         </div>
         <div class="form-group">
           <%= f.label :message, "Message" %>
@@ -388,3 +384,10 @@
     <% end %>
   </div>
 </div>
+
+
+<style type="text/css">
+  h2{
+    color: black;
+  }
+</style>
