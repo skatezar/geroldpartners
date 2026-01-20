@@ -8,12 +8,12 @@ class MandatesController < ApplicationController
       linkedin_url: params[:linkedin_url]
     )
 
-    if @application.save
-      # Handle CV file if present
-      if params[:cv].present?
-        @application.cv.attach(params[:cv])
-      end
+    # Attach CV before validation if present
+    if params[:cv].present?
+      @application.cv.attach(params[:cv])
+    end
 
+    if @application.save
       # Send email notification
       JobApplicationMailer.new_application(@application).deliver_now
 

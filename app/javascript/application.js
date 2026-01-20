@@ -214,15 +214,18 @@ document.addEventListener('turbo:load', function() {
 
       const formData = new FormData(applicationForm);
       const mandateId = modalMandateId.value;
-      const submitBtn = applicationForm.querySelector('.modal-submit');
-      const originalBtnText = submitBtn.textContent;
-
-      // Show loading state
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="spinner"></span> Submitting...';
+      const modalContent = document.querySelector('.modal-content');
 
       // Get CSRF token
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      // Replace modal content with loading spinner
+      modalContent.innerHTML = `
+        <div class="modal-loading">
+          <div class="spinner-large"></div>
+          <p>Submitting your application...</p>
+        </div>
+      `;
 
       try {
         const response = await fetch(`/mandates/${mandateId}/apply`, {
@@ -236,29 +239,54 @@ document.addEventListener('turbo:load', function() {
         const result = await response.json();
 
         if (result.success) {
-          // Show success message
-          submitBtn.innerHTML = '✓ Application Sent!';
-          submitBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+          // Replace spinner with success message
+          modalContent.innerHTML = `
+            <div class="modal-success">
+              <div class="success-icon">✓</div>
+              <h2>Application Submitted!</h2>
+              <p>Thank you for your interest. If there is a match, we will reach out to you.</p>
+              <button class="btn-primary modal-done">Done</button>
+            </div>
+          `;
 
-          // Close modal after 2 seconds
-          setTimeout(() => {
+          // Add event listener to close button
+          const doneBtn = modalContent.querySelector('.modal-done');
+          doneBtn.addEventListener('click', () => {
             modal.classList.remove('show');
             document.body.style.overflow = 'auto';
-            applicationForm.reset();
-            document.getElementById('modalFileName').textContent = '';
-            submitBtn.innerHTML = originalBtnText;
-            submitBtn.disabled = false;
-            submitBtn.style.background = '';
-          }, 2000);
+
+            // Restore original modal content
+            location.reload();
+          });
         } else {
-          submitBtn.innerHTML = originalBtnText;
-          submitBtn.disabled = false;
-          alert('Error: ' + (result.errors ? result.errors.join(', ') : 'Something went wrong'));
+          // Show error and restore form
+          modalContent.innerHTML = `
+            <div class="modal-error">
+              <h2>Error</h2>
+              <p>${result.errors ? result.errors.join(', ') : 'Something went wrong. Please try again.'}</p>
+              <button class="btn-primary modal-retry">Try Again</button>
+            </div>
+          `;
+
+          const retryBtn = modalContent.querySelector('.modal-retry');
+          retryBtn.addEventListener('click', () => {
+            location.reload();
+          });
         }
       } catch (error) {
-        submitBtn.innerHTML = originalBtnText;
-        submitBtn.disabled = false;
-        alert('Error submitting application. Please try again.');
+        // Show error and restore form
+        modalContent.innerHTML = `
+          <div class="modal-error">
+            <h2>Error</h2>
+            <p>Error submitting application. Please try again.</p>
+            <button class="btn-primary modal-retry">Try Again</button>
+          </div>
+        `;
+
+        const retryBtn = modalContent.querySelector('.modal-retry');
+        retryBtn.addEventListener('click', () => {
+          location.reload();
+        });
         console.error('Error:', error);
       }
     });

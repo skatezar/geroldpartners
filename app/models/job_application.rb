@@ -11,7 +11,7 @@ class JobApplication < ApplicationRecord
   private
 
   def cv_or_linkedin_present
-    if cv.blank? && linkedin_url.blank?
+    if !cv.attached? && linkedin_url.blank?
       errors.add(:base, 'Either CV or LinkedIn URL must be provided')
     end
   end

@@ -930,6 +930,102 @@ html {
   to { transform: rotate(360deg); }
 }
 
+/* Modal Loading State */
+.modal-loading {
+  text-align: center;
+  padding: 80px 40px;
+}
+
+.spinner-large {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #f0f0f0;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 30px;
+}
+
+.modal-loading p {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0;
+}
+
+/* Modal Success State */
+.modal-success {
+  text-align: center;
+  padding: 60px 40px;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  font-size: 3rem;
+  line-height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 30px;
+  animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-success h2 {
+  color: #000;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.modal-success p {
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.modal-done {
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+/* Modal Error State */
+.modal-error {
+  text-align: center;
+  padding: 60px 40px;
+}
+
+.modal-error h2 {
+  color: #dc3545;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.modal-error p {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.modal-retry {
+  max-width: 200px;
+  margin: 0 auto;
+}
+
 /* Admin Controls */
 .admin-controls {
   position: fixed;
