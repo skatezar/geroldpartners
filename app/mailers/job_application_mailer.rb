@@ -5,6 +5,11 @@ class JobApplicationMailer < ApplicationMailer
     @application = job_application
     @mandate = job_application.mandate
 
+    # Attach CV if present
+    if @application.cv.attached?
+      attachments[@application.cv.filename.to_s] = @application.cv.download
+    end
+
     mail(
       to: 'laurenz@geroldpartners.com',
       subject: "New Application for #{@mandate.title}"
