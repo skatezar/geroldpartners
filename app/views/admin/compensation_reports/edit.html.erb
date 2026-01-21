@@ -1,0 +1,27 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h1>Edit Compensation Report</h1>
+  </div>
+
+  <%= render 'form', compensation_report: @compensation_report %>
+</div>
+
+<style>
+  .admin-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Garamond', serif;
+  }
+
+  .admin-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000;
+  }
+
+  .admin-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+</style>

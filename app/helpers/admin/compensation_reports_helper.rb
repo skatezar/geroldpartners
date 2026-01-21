@@ -1,0 +1,2 @@
+module Admin::CompensationReportsHelper
+end

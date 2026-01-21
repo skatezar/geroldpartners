@@ -1,0 +1,124 @@
+<%= form_with model: [:admin, compensation_report], class: "compensation-report-form" do |f| %>
+  <% if compensation_report.errors.any? %>
+    <div class="error-messages">
+      <h3><%= pluralize(compensation_report.errors.count, "error") %> prohibited this compensation report from being saved:</h3>
+      <ul>
+        <% compensation_report.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, "Report Name" %>
+    <%= f.text_field :name, required: true, placeholder: "e.g. 2024 Investment Professional Compensation Survey" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :location, "Location" %>
+    <%= f.text_field :location, required: true, placeholder: "e.g. London, UK" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :pdf, "PDF File" %>
+    <%= f.file_field :pdf, accept: "application/pdf", required: compensation_report.new_record? %>
+    <% if compensation_report.pdf.attached? %>
+      <div class="current-file">
+        Current file: <%= link_to compensation_report.pdf.filename, rails_blob_path(compensation_report.pdf, disposition: "attachment"), target: "_blank" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit compensation_report.new_record? ? "Create Compensation Report" : "Update Compensation Report", class: "btn-primary" %>
+    <%= link_to "Cancel", admin_compensation_reports_path, class: "btn-secondary" %>
+  </div>
+<% end %>
+
+<style>
+  .compensation-report-form {
+    max-width: 800px;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .error-messages {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+  }
+
+  .error-messages h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+  }
+
+  .error-messages ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="file"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Garamond', serif;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: #000;
+  }
+
+  .current-file {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    font-size: 0.9rem;
+  }
+
+  .current-file a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .current-file a:hover {
+    text-decoration: underline;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+  }
+
+  @media (max-width: 768px) {
+    .compensation-report-form {
+      padding: 25px;
+    }
+  }
+</style>

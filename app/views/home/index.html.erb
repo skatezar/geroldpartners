@@ -3,6 +3,7 @@
   <div class="admin-controls">
     <%= link_to "Add Job", new_admin_mandate_path, class: "admin-btn" %>
     <%= link_to "Manage Jobs", admin_mandates_path, class: "admin-btn" %>
+    <%= link_to "Manage Compensation Reports", admin_compensation_reports_path, class: "admin-btn" %>
     <%= link_to "Logout", destroy_admin_session_path, method: :delete, class: "admin-btn-secondary" %>
   </div>
 <% end %>
@@ -26,6 +27,10 @@
     <li><a href="#opportunities" class="nav-link" data-section="opportunities">
       <span class="nav-dot"></span>
       <span class="nav-text">Mandates</span>
+    </a></li>
+    <li><a href="#compensation-reports" class="nav-link" data-section="compensation-reports">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Compensation Reports</span>
     </a></li>
     <li><a href="#cv-upload" class="nav-link" data-section="cv-upload">
       <span class="nav-dot"></span>
@@ -153,6 +158,112 @@
     </div>
   </div>
 </section>
+
+<!-- Compensation Reports Section -->
+<section id="compensation-reports" class="compensation-reports section-animate">
+  <div class="container">
+    <h2>Compensation Reports</h2>
+    <p class="subtitle">Industry insights and salary benchmarking reports</p>
+    <div class="reports-grid">
+      <% @compensation_reports.each do |report| %>
+        <div class="report-card">
+          <div class="report-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h4><%= report.name %></h4>
+          <p class="report-location"><%= report.location %></p>
+          <% if report.pdf.attached? %>
+            <%= link_to "Download PDF", rails_blob_path(report.pdf, disposition: "attachment"), class: "btn-link", target: "_blank" %>
+          <% end %>
+        </div>
+      <% end %>
+      <% if @compensation_reports.empty? %>
+        <p class="no-reports">No compensation reports available at this time. Check back soon for industry insights.</p>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<style>
+  .compensation-reports {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 100px 0;
+  }
+
+  .compensation-reports .container {
+    max-width: 1200px;
+  }
+
+  .compensation-reports h2 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .compensation-reports .subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 50px;
+  }
+
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .report-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+
+  .report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+  }
+
+  .report-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    color: #000;
+  }
+
+  .report-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .report-card h4 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #000;
+  }
+
+  .report-location {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .no-reports {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 1.2rem;
+    grid-column: 1 / -1;
+  }
+</style>
 
 <!-- CV Upload Section -->
 <section id="cv-upload" class="cv-upload section-animate">
@@ -330,7 +441,6 @@
       <p><a href="https://eecompanies.lursoft.lv/en/company/talflow-ou/17250215#taxInfoTable" target="_blank" rel="noopener noreferrer" style="color: #000; text-decoration: underline;">View Company Registration</a></p>
       <p>Represented by: Laurenz Gerold <a href="https://linkedin.com/in/laurenzgerold" target="_blank" rel="noopener noreferrer" style="color: #0077b5; text-decoration: none;"><i class="fab fa-linkedin"></i></a></p>
       <p>Email: contact@geroldpartners.com</p>
-      <p>Phone: +44 7456 252 602</p>
       <p class="disclaimer">All information provided on this website is for informational purposes only.
       Services are provided in compliance with applicable regulations.</p>
     </div>

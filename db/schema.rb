@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_20_150103) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_20_152951) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -59,6 +59,13 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_20_150103) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mandate_id"], name: "index_applications_on_mandate_id"
+  end
+
+  create_table "compensation_reports", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "contacts", force: :cascade do |t|
