@@ -1,4 +1,6 @@
 class TalentPoolMailer < ApplicationMailer
+  default from: 'laurenz@geroldpartners.com'
+
   def new_application(talent_pool_application)
     @application = talent_pool_application
 
