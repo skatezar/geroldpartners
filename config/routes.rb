@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :mandates
   end
 
-  resources :mandates, only: [:index] do
+  resources :mandates, only: [:index, :show] do
     member do
       post :apply
     end

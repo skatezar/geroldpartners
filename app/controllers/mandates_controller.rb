@@ -1,4 +1,8 @@
 class MandatesController < ApplicationController
+  def show
+    @mandate = Mandate.find(params[:id])
+  end
+
   def apply
     @mandate = Mandate.find(params[:id])
     @application = JobApplication.new(

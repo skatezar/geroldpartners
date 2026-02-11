@@ -1,9 +1,12 @@
 class Admin::MandatesController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_mandate, only: [:edit, :update, :destroy]
+  before_action :set_mandate, only: [:show, :edit, :update, :destroy]
 
   def index
     @mandates = Mandate.all.order(created_at: :desc)
+  end
+
+  def show
   end
 
   def new
@@ -42,6 +45,6 @@ class Admin::MandatesController < ApplicationController
   end
 
   def mandate_params
-    params.require(:mandate).permit(:title, :description, :location, :firm_name, :firm_size, :active)
+    params.require(:mandate).permit(:title, :description, :extended_description, :location, :firm_name, :firm_size, :active)
   end
 end

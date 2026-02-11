@@ -1,0 +1,190 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h1><%= @mandate.title %></h1>
+    <div class="header-actions">
+      <%= link_to "Edit", edit_admin_mandate_path(@mandate), class: "btn-primary" %>
+      <%= link_to "Back", admin_mandates_path, class: "btn-secondary" %>
+    </div>
+  </div>
+
+  <div class="mandate-details">
+    <div class="detail-section">
+      <h2>Basic Information</h2>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Location:</label>
+          <p><%= @mandate.location %></p>
+        </div>
+        <div class="detail-item">
+          <label>Firm Name:</label>
+          <p><%= @mandate.firm_name.present? ? @mandate.firm_name : "Confidential" %></p>
+        </div>
+        <% if @mandate.firm_size.present? %>
+          <div class="detail-item">
+            <label>Firm Size:</label>
+            <p><%= @mandate.firm_size %></p>
+          </div>
+        <% end %>
+        <div class="detail-item">
+          <label>Status:</label>
+          <p>
+            <span class="status-badge <%= @mandate.active? ? 'active' : 'inactive' %>">
+              <%= @mandate.active? ? 'Active' : 'Inactive' %>
+            </span>
+          </p>
+        </div>
+        <div class="detail-item">
+          <label>Applications:</label>
+          <p><%= @mandate.job_applications.count %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h2>Description</h2>
+      <div class="description-content">
+        <%= simple_format(@mandate.description) %>
+      </div>
+    </div>
+
+    <% if @mandate.extended_description.present? %>
+      <div class="detail-section">
+        <h2>Extended Description</h2>
+        <div class="extended-description-content">
+          <% @mandate.extended_description.split(';').each do |line| %>
+            <% trimmed_line = line.strip %>
+            <% if trimmed_line.present? %>
+              <p><%= trimmed_line %></p>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .admin-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Garamond', serif;
+  }
+
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000;
+  }
+
+  .admin-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 15px;
+  }
+
+  .mandate-details {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .detail-section {
+    margin-bottom: 40px;
+  }
+
+  .detail-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .detail-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+  }
+
+  .detail-item label {
+    display: block;
+    font-weight: 600;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .detail-item p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+  }
+
+  .status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .status-badge.active {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .status-badge.inactive {
+    background: #f8d7da;
+    color: #721c24;
+  }
+
+  .description-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  .extended-description-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  .extended-description-content p {
+    margin-bottom: 15px;
+  }
+
+  .extended-description-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .admin-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .mandate-details {
+      padding: 25px;
+    }
+  }
+</style>

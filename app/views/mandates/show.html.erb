@@ -1,0 +1,305 @@
+<!-- Fixed Left Navigation -->
+<nav class="side-nav">
+  <div class="nav-logo">GP</div>
+  <ul class="nav-links">
+    <li><a href="/#hero" class="nav-link">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Home</span>
+    </a></li>
+    <li><a href="/#services" class="nav-link">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Services</span>
+    </a></li>
+    <li><a href="/#success" class="nav-link">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Success Stories</span>
+    </a></li>
+    <li><a href="/#opportunities" class="nav-link active">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Mandates</span>
+    </a></li>
+    <li><a href="/#cv-upload" class="nav-link">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Talent Bank</span>
+    </a></li>
+    <li><a href="/#contact" class="nav-link">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Contact</span>
+    </a></li>
+  </ul>
+</nav>
+
+<div class="mandate-show-container">
+  <div class="mandate-header">
+    <%= link_to "← Back to Opportunities", root_path(anchor: "opportunities"), class: "back-link" %>
+    <h1><%= @mandate.title %></h1>
+    <div class="mandate-meta">
+      <span class="meta-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="meta-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <%= @mandate.location %>
+      </span>
+      <span class="meta-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="meta-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+        <%= @mandate.firm_name.present? ? @mandate.firm_name : "Confidential" %>
+      </span>
+      <% if @mandate.firm_size.present? %>
+        <span class="meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="meta-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          <%= @mandate.firm_size %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mandate-content">
+    <section class="content-section">
+      <h2>About the Role</h2>
+      <div class="content-text">
+        <%= simple_format(@mandate.description) %>
+      </div>
+    </section>
+
+    <% if @mandate.extended_description.present? %>
+      <section class="content-section extended-section">
+        <h2>Additional Details</h2>
+        <div class="content-text extended-content">
+          <% @mandate.extended_description.split(';').each do |line| %>
+            <% trimmed_line = line.strip %>
+            <% if trimmed_line.present? %>
+              <p><%= trimmed_line %></p>
+            <% end %>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+
+    <div class="apply-section">
+      <h2>Interested in this opportunity?</h2>
+      <p>Click below to express your interest and apply for this position.</p>
+      <button class="btn-apply express-interest-btn" data-mandate-id="<%= @mandate.id %>">Express Interest</button>
+    </div>
+  </div>
+</div>
+
+<!-- Application Modal -->
+<div id="applicationModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2 id="modalTitle">Apply for Position</h2>
+    <%= form_with url: "#", id: "applicationForm", multipart: true, local: false do |f| %>
+      <input type="hidden" id="modalMandateId" name="mandate_id">
+
+      <div class="form-group">
+        <%= f.label :name, "Full Name" %>
+        <%= f.text_field :name, required: true, class: "modal-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :email, "Email" %>
+        <%= f.email_field :email, required: true, class: "modal-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :linkedin_url, "LinkedIn URL (Optional)" %>
+        <%= f.text_field :linkedin_url, placeholder: "https://linkedin.com/in/yourprofile", class: "modal-input" %>
+      </div>
+
+      <div class="form-group">
+        <label>CV (Optional if LinkedIn provided)</label>
+        <div class="cv-drop-zone modal-drop-zone" id="modalCvDropZone">
+          <div class="drop-zone-content">
+            <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <p class="drop-zone-text">Drop your CV here</p>
+            <p class="drop-zone-subtext">or click to browse (PDF only)</p>
+            <p class="file-name" id="modalFileName"></p>
+          </div>
+          <%= f.file_field :cv, accept: ".pdf", id: "modalCvFileInput", style: "display: none;" %>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <%= f.submit "Submit Application", class: "btn-primary modal-submit" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .mandate-show-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    font-family: 'Garamond', serif;
+  }
+
+  .mandate-header {
+    margin-bottom: 50px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    transition: color 0.3s ease;
+  }
+
+  .back-link:hover {
+    color: #000;
+  }
+
+  .mandate-header h1 {
+    font-size: 3rem;
+    color: #000;
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .mandate-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 20px;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #555;
+    font-size: 1.1rem;
+  }
+
+  .meta-icon {
+    width: 20px;
+    height: 20px;
+    color: #333;
+  }
+
+  .mandate-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
+  .content-section {
+    padding: 40px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .content-section:last-child {
+    border-bottom: none;
+  }
+
+  .content-section h2 {
+    font-size: 2rem;
+    color: #000;
+    margin-bottom: 25px;
+    font-weight: 600;
+  }
+
+  .content-text {
+    color: #333;
+    font-size: 1.15rem;
+    line-height: 1.8;
+  }
+
+  .content-text p {
+    margin-bottom: 15px;
+  }
+
+  .content-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .extended-section {
+    background: #f9f9f9;
+  }
+
+  .extended-content p {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .extended-content p:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #000;
+    font-weight: 700;
+  }
+
+  .apply-section {
+    padding: 50px 40px;
+    text-align: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  }
+
+  .apply-section h2 {
+    font-size: 2rem;
+    color: #000;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  .apply-section p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+
+  .btn-apply {
+    display: inline-block;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-family: inherit;
+  }
+
+  .btn-apply:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #1a1a1a 0%, #444444 100%);
+  }
+
+  @media (max-width: 768px) {
+    .mandate-header h1 {
+      font-size: 2rem;
+    }
+
+    .mandate-meta {
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .content-section {
+      padding: 25px;
+    }
+
+    .apply-section {
+      padding: 35px 25px;
+    }
+  }
+</style>

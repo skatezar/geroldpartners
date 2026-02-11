@@ -30,6 +30,7 @@
               </td>
               <td><%= mandate.job_applications.count %></td>
               <td class="actions">
+                <%= link_to "View More", admin_mandate_path(mandate), class: "btn-small btn-view" %>
                 <%= link_to "Edit", edit_admin_mandate_path(mandate), class: "btn-small" %>
                 <%= button_to "Delete", admin_mandate_path(mandate), method: :delete,
                     data: { confirm: "Are you sure?" }, class: "btn-small btn-danger" %>
@@ -140,6 +141,14 @@
 
   .btn-small:hover {
     background: #000;
+  }
+
+  .btn-view {
+    background: #007bff;
+  }
+
+  .btn-view:hover {
+    background: #0056b3;
   }
 
   .btn-danger {

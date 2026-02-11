@@ -154,7 +154,10 @@
           <h4><%= mandate.title %></h4>
           <p class="company"><%= mandate.firm_name.present? ? mandate.firm_name : "Confidential" %> | <%= mandate.location %></p>
           <p class="description"><%= mandate.description %></p>
-          <button class="btn-link express-interest-btn" data-mandate-id="<%= mandate.id %>">Express Interest</button>
+          <div class="job-card-actions">
+            <%= link_to "View More", mandate_path(mandate), class: "btn-link view-more-btn" %>
+            <button class="btn-link express-interest-btn" data-mandate-id="<%= mandate.id %>">Express Interest</button>
+          </div>
         </div>
       <% end %>
       <% if @mandates.empty? %>

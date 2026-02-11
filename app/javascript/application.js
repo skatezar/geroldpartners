@@ -178,7 +178,18 @@ document.addEventListener('turbo:load', function() {
   expressInterestBtns.forEach(btn => {
     btn.addEventListener('click', function() {
       const mandateId = this.getAttribute('data-mandate-id');
-      const jobTitle = this.closest('.job-card').querySelector('h4').textContent;
+
+      // Try to find job title from job-card or mandate header
+      let jobTitle = 'Position';
+      const jobCard = this.closest('.job-card');
+      if (jobCard) {
+        jobTitle = jobCard.querySelector('h4').textContent;
+      } else {
+        const mandateHeader = document.querySelector('.mandate-header h1');
+        if (mandateHeader) {
+          jobTitle = mandateHeader.textContent;
+        }
+      }
 
       modalTitle.textContent = `Apply for ${jobTitle}`;
       modalMandateId.value = mandateId;
