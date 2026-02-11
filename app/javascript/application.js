@@ -347,3 +347,6 @@ document.addEventListener('turbo:load', function() {
     });
   }
 });
+
+import "trix"
+import "@rails/actiontext"

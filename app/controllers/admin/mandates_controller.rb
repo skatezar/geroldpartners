@@ -45,6 +45,6 @@ class Admin::MandatesController < ApplicationController
   end
 
   def mandate_params
-    params.require(:mandate).permit(:title, :description, :extended_description, :location, :firm_name, :firm_size, :active)
+    params.require(:mandate).permit(:title, :description, :location, :firm_name, :firm_size, :active, :extended_description)
   end
 end

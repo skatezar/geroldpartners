@@ -22,7 +22,7 @@
 
   <div class="form-group">
     <%= f.label :extended_description, "Extended Description (Optional)" %>
-    <%= f.text_area :extended_description, rows: 8, placeholder: "Additional detailed description for the show page..." %>
+    <%= f.rich_text_area :extended_description, placeholder: "Additional detailed description for the show page..." %>
   </div>
 
   <div class="form-row">
@@ -119,6 +119,22 @@
 
   .form-group textarea {
     resize: vertical;
+  }
+
+  .form-group trix-editor {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 15px;
+    min-height: 200px;
+    font-family: 'Garamond', serif;
+    font-size: 1rem;
+  }
+
+  .form-group trix-toolbar {
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    background: #f8f9fa;
   }
 
   .checkbox-group label {

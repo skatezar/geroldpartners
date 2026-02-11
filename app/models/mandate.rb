@@ -1,9 +1,8 @@
 class Mandate < ApplicationRecord
   has_many :job_applications, class_name: 'JobApplication', dependent: :destroy
+  has_rich_text :extended_description
 
   validates :title, :description, :location, presence: true
 
   scope :active, -> { where(active: true) }
-
-  # Extended description for detailed mandate information
 end

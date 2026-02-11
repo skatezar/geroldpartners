@@ -51,12 +51,7 @@
       <div class="detail-section">
         <h2>Extended Description</h2>
         <div class="extended-description-content">
-          <% @mandate.extended_description.split(';').each do |line| %>
-            <% trimmed_line = line.strip %>
-            <% if trimmed_line.present? %>
-              <p><%= trimmed_line %></p>
-            <% end %>
-          <% end %>
+          <%= @mandate.extended_description %>
         </div>
       </div>
     <% end %>

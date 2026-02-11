@@ -70,12 +70,7 @@
       <section class="content-section extended-section">
         <h2>Additional Details</h2>
         <div class="content-text extended-content">
-          <% @mandate.extended_description.split(';').each do |line| %>
-            <% trimmed_line = line.strip %>
-            <% if trimmed_line.present? %>
-              <p><%= trimmed_line %></p>
-            <% end %>
-          <% end %>
+          <%= @mandate.extended_description %>
         </div>
       </section>
     <% end %>
@@ -229,18 +224,8 @@
     background: #f9f9f9;
   }
 
-  .extended-content p {
-    margin-bottom: 20px;
-    padding-left: 20px;
-    position: relative;
-  }
-
-  .extended-content p:before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: #000;
-    font-weight: 700;
+  .extended-content {
+    line-height: 1.8;
   }
 
   .apply-section {
