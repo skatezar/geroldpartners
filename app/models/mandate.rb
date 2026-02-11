@@ -4,4 +4,6 @@ class Mandate < ApplicationRecord
   validates :title, :description, :location, presence: true
 
   scope :active, -> { where(active: true) }
+
+  # Extended description for detailed mandate information
 end
