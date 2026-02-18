@@ -346,6 +346,105 @@ document.addEventListener('turbo:load', function() {
       }
     });
   }
+
+  // Download Report Modal functionality
+  const downloadModal = document.getElementById('downloadModal');
+  const downloadModalClose = document.getElementById('downloadModalClose');
+  const downloadReportBtns = document.querySelectorAll('.download-report-btn');
+  const downloadForm = document.getElementById('downloadForm');
+  const downloadReportId = document.getElementById('downloadReportId');
+  const downloadUrlInput = document.getElementById('downloadUrl');
+
+  // Open download modal when Download button is clicked
+  if (downloadReportBtns) {
+    downloadReportBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const reportId = this.getAttribute('data-report-id');
+        const reportName = this.getAttribute('data-report-name');
+        const downloadUrl = this.getAttribute('data-download-url');
+
+        downloadReportId.value = reportId;
+        downloadUrlInput.value = downloadUrl;
+
+        downloadModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+  }
+
+  // Close download modal when X is clicked
+  if (downloadModalClose) {
+    downloadModalClose.addEventListener('click', () => {
+      downloadModal.classList.remove('show');
+      document.body.style.overflow = 'auto';
+      downloadForm.reset();
+    });
+  }
+
+  // Close download modal when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === downloadModal) {
+      downloadModal.classList.remove('show');
+      document.body.style.overflow = 'auto';
+      downloadForm.reset();
+    }
+  });
+
+  // Handle download form submission
+  if (downloadForm) {
+    downloadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(downloadForm);
+      const submitBtn = document.getElementById('downloadSubmitBtn');
+      const originalText = submitBtn.value;
+      const downloadUrl = downloadUrlInput.value;
+
+      submitBtn.disabled = true;
+      submitBtn.value = 'Downloading...';
+
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      try {
+        // Submit the form data to track the download
+        const response = await fetch('/compensation_reports/download', {
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': csrfToken,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            report_id: formData.get('report_id'),
+            name: formData.get('name'),
+            email: formData.get('email')
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Trigger the download
+          window.open(downloadUrl, '_blank');
+
+          // Close modal and reset form
+          downloadModal.classList.remove('show');
+          document.body.style.overflow = 'auto';
+          downloadForm.reset();
+          submitBtn.value = originalText;
+          submitBtn.disabled = false;
+        } else {
+          alert('Error: ' + (result.errors ? result.errors.join(', ') : 'Something went wrong'));
+          submitBtn.value = originalText;
+          submitBtn.disabled = false;
+        }
+      } catch (error) {
+        alert('Error submitting form. Please try again.');
+        submitBtn.value = originalText;
+        submitBtn.disabled = false;
+        console.error('Error:', error);
+      }
+    });
+  }
 });
 
 import "trix"

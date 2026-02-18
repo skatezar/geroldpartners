@@ -183,7 +183,12 @@
           <h4><%= report.name %></h4>
           <p class="report-location"><%= report.location %></p>
           <% if report.pdf.attached? %>
-            <%= link_to "Download PDF", rails_blob_path(report.pdf, disposition: "attachment"), class: "btn-link", target: "_blank" %>
+            <button class="btn-link download-report-btn"
+                    data-report-id="<%= report.id %>"
+                    data-report-name="<%= report.name %>"
+                    data-download-url="<%= rails_blob_path(report.pdf, disposition: "attachment") %>">
+              Download PDF
+            </button>
           <% end %>
         </div>
       <% end %>
@@ -503,6 +508,33 @@
 
       <div class="modal-footer">
         <%= f.submit "Submit Application", class: "btn-primary modal-submit" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Download Report Modal -->
+<div id="downloadModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" id="downloadModalClose">&times;</span>
+    <h2 id="downloadModalTitle">Download Report</h2>
+    <p style="text-align: center; color: #666; margin-bottom: 25px;">Please provide your details to download this report</p>
+    <%= form_with url: "#", id: "downloadForm", local: false do |f| %>
+      <input type="hidden" id="downloadReportId" name="report_id">
+      <input type="hidden" id="downloadUrl" name="download_url">
+
+      <div class="form-group">
+        <%= f.label :name, "Full Name" %>
+        <%= f.text_field :name, required: true, class: "modal-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :email, "Email" %>
+        <%= f.email_field :email, required: true, class: "modal-input" %>
+      </div>
+
+      <div class="modal-footer">
+        <%= f.submit "Download", class: "btn-primary modal-submit", id: "downloadSubmitBtn" %>
       </div>
     <% end %>
   </div>

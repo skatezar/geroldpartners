@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   resources :contacts, only: [:create]
   resources :talent_pool_applications, only: [:create]
 
+  post 'compensation_reports/download', to: 'compensation_reports#download'
+
   get "home/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_11_111035) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_18_181123) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -98,6 +98,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_11_111035) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "report_downloads", force: :cascade do |t|
+    t.integer "compensation_report_id", null: false
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["compensation_report_id"], name: "index_report_downloads_on_compensation_report_id"
+  end
+
   create_table "talent_pool_applications", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -109,4 +118,5 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_11_111035) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "applications", "mandates"
+  add_foreign_key "report_downloads", "compensation_reports"
 end
