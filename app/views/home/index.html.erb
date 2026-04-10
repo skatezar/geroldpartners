@@ -465,6 +465,7 @@
   <div class="container">
     <p>&copy; 2025 Gerold & Partners. All rights reserved.</p>
     <p>Executive Search & Advisory | Founded by Laurenz Gerold</p>
+    <p><a href="#" id="termsLink" style="color: rgba(255,255,255,0.8); text-decoration: underline; cursor: pointer;">Standard Terms of Business</a></p>
   </div>
 </footer>
 
@@ -537,6 +538,40 @@
         <%= f.submit "Download", class: "btn-primary modal-submit", id: "downloadSubmitBtn" %>
       </div>
     <% end %>
+  </div>
+</div>
+
+<!-- Standard Terms Modal -->
+<div id="termsModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" id="termsModalClose">&times;</span>
+    <h2>Standard Terms of Business</h2>
+    <div style="color: #333; line-height: 1.8; font-size: 1rem; max-height: 60vh; overflow-y: auto; padding-right: 10px;">
+      <p style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-left: 3px solid #000; font-style: italic; color: #555;">These are our standard terms of business. Any signed contract or written agreement between Gerold & Partners and the client will supersede these terms.</p>
+
+      <h3 style="font-size: 1.3rem; margin-top: 20px; margin-bottom: 15px; color: #000;">Candidate Ownership</h3>
+      <p style="margin-bottom: 15px;">Gerold & Partners retains exclusive rights to any candidate introduced to a client for a period of <strong>12 months</strong> from the date of introduction. During this period, the client agrees not to engage, hire, or otherwise enter into any employment relationship with the candidate without compensating Gerold & Partners according to the agreed fee structure.</p>
+
+      <h3 style="font-size: 1.3rem; margin-top: 25px; margin-bottom: 15px; color: #000;">Fee Structure</h3>
+      <p style="margin-bottom: 15px;">Our standard fee is <strong>25% of the candidate's total guaranteed compensation</strong> in their first year of employment. Guaranteed compensation includes:</p>
+      <ul style="margin-left: 25px; margin-bottom: 15px;">
+        <li>Base salary</li>
+        <li>Guaranteed bonus (if applicable)</li>
+        <li>Sign-on bonus (if applicable)</li>
+        <li>Other guaranteed compensation elements</li>
+      </ul>
+
+      <h3 style="font-size: 1.3rem; margin-top: 25px; margin-bottom: 15px; color: #000;">Payment Terms</h3>
+      <p style="margin-bottom: 15px;">Fees are due within 30 days of the candidate's start date. Payment terms may be negotiated for specific engagements.</p>
+
+      <h3 style="font-size: 1.3rem; margin-top: 25px; margin-bottom: 15px; color: #000;">Confidentiality</h3>
+      <p style="margin-bottom: 15px;">All information shared between Gerold & Partners and the client, including candidate details, search specifications, and business information, will be treated as strictly confidential.</p>
+
+      <h3 style="font-size: 1.3rem; margin-top: 25px; margin-bottom: 15px; color: #000;">Governing Law</h3>
+      <p style="margin-bottom: 15px;">These terms are governed by the laws of England and Wales.</p>
+
+      <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.9rem; color: #666;">For specific engagement terms or questions regarding these standard terms, please contact us at contact@geroldpartners.com</p>
+    </div>
   </div>
 </div>
 

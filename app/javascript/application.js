@@ -390,6 +390,36 @@ document.addEventListener('turbo:load', function() {
     }
   });
 
+  // Standard Terms Modal functionality
+  const termsModal = document.getElementById('termsModal');
+  const termsModalClose = document.getElementById('termsModalClose');
+  const termsLink = document.getElementById('termsLink');
+
+  // Open terms modal when link is clicked
+  if (termsLink) {
+    termsLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      termsModal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  // Close terms modal when X is clicked
+  if (termsModalClose) {
+    termsModalClose.addEventListener('click', () => {
+      termsModal.classList.remove('show');
+      document.body.style.overflow = 'auto';
+    });
+  }
+
+  // Close terms modal when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === termsModal) {
+      termsModal.classList.remove('show');
+      document.body.style.overflow = 'auto';
+    }
+  });
+
   // Handle download form submission
   if (downloadForm) {
     downloadForm.addEventListener('submit', async (e) => {
