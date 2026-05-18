@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  devise_for :users
   devise_for :admins
 
   namespace :admin do
     resources :compensation_reports
     resources :mandates
+    resources :newsletter_subscriptions, only: [:index]
   end
 
   resources :mandates, only: [:index, :show] do
@@ -14,6 +16,11 @@ Rails.application.routes.draw do
 
   resources :contacts, only: [:create]
   resources :talent_pool_applications, only: [:create]
+  resources :newsletter_subscriptions, only: [:create] do
+    collection do
+      get 'confirm/:token', to: 'newsletter_subscriptions#confirm', as: :confirm
+    end
+  end
 
   post 'compensation_reports/download', to: 'compensation_reports#download'
 

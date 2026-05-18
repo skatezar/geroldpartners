@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #000;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      border: 1px solid #000;
+    }
+    .header {
+      background: #000;
+      padding: 50px 40px;
+      text-align: center;
+      color: white;
+      border-bottom: 1px solid #000;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .header .date {
+      margin: 15px 0 0;
+      font-size: 13px;
+      letter-spacing: 1px;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+    .content {
+      padding: 50px 40px;
+      background: #fff;
+    }
+    .subscription-list {
+      list-style: none;
+      padding: 0;
+      margin: 30px 0;
+    }
+    .subscription-item {
+      padding: 20px;
+      background: #f8f9fa;
+      border-left: 3px solid #000;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .email {
+      font-weight: 500;
+      color: #000;
+      letter-spacing: 0.3px;
+    }
+    .timestamp {
+      font-size: 13px;
+      color: #666;
+      letter-spacing: 0.5px;
+    }
+    .count {
+      font-size: 32px;
+      font-weight: 300;
+      color: #000;
+      text-align: center;
+      padding: 30px;
+      background: #f8f9fa;
+      margin: 30px 0;
+      border: 1px solid #e0e0e0;
+      letter-spacing: 1px;
+    }
+    .no-subscriptions {
+      text-align: center;
+      color: #666;
+      padding: 50px 20px;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    .footer {
+      background: #f8f9fa;
+      padding: 40px;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+      border-top: 1px solid #e0e0e0;
+      line-height: 1.8;
+    }
+    .footer strong {
+      color: #000;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Newsletter Digest</h1>
+      <p class="date"><%= @date.strftime('%B %d, %Y') %></p>
+    </div>
+    <div class="content">
+      <% if @new_subscriptions.any? %>
+        <div class="count">
+          <%= @new_subscriptions.count %> New <%= 'Subscription'.pluralize(@new_subscriptions.count) %>
+        </div>
+        <ul class="subscription-list">
+          <% @new_subscriptions.each do |subscription| %>
+            <li class="subscription-item">
+              <span class="email"><%= subscription.email %></span>
+              <span class="timestamp"><%= subscription.confirmed_at.strftime('%I:%M %p') %></span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="no-subscriptions">
+          No new newsletter subscriptions for <%= @date.strftime('%B %d, %Y') %>.
+        </p>
+      <% end %>
+    </div>
+    <div class="footer">
+      <p><strong>Gerold & Partners</strong><br>
+      Executive Search & Advisory</p>
+    </div>
+  </div>
+</body>
+</html>

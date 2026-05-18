@@ -1,0 +1,15 @@
+Newsletter Subscriptions Digest - <%= @date.strftime('%B %d, %Y') %>
+================================================================
+
+<% if @new_subscriptions.any? %>
+Total: <%= @new_subscriptions.count %> New <%= 'Subscription'.pluralize(@new_subscriptions.count) %>
+
+<% @new_subscriptions.each do |subscription| %>
+- <%= subscription.email %> (Confirmed at: <%= subscription.confirmed_at.strftime('%I:%M %p') %>)
+<% end %>
+<% else %>
+No new newsletter subscriptions for <%= @date.strftime('%B %d, %Y') %>.
+<% end %>
+
+---
+Gerold & Partners

@@ -1,0 +1,176 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h1>Newsletter Subscriptions</h1>
+    <div class="stats">
+      <span class="stat-badge confirmed"><%= @confirmed_count %> Confirmed</span>
+      <span class="stat-badge pending"><%= @unconfirmed_count %> Pending</span>
+    </div>
+  </div>
+
+  <% if @subscriptions.any? %>
+    <div class="subscriptions-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Subscribed At</th>
+            <th>Confirmed At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @subscriptions.each do |subscription| %>
+            <tr>
+              <td><%= subscription.email %></td>
+              <td>
+                <span class="status-badge <%= subscription.confirmed? ? 'confirmed' : 'pending' %>">
+                  <%= subscription.confirmed? ? 'Confirmed' : 'Pending' %>
+                </span>
+              </td>
+              <td><%= subscription.created_at.strftime('%B %d, %Y at %I:%M %p') %></td>
+              <td>
+                <%= subscription.confirmed_at ? subscription.confirmed_at.strftime('%B %d, %Y at %I:%M %p') : '-' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="no-data">No newsletter subscriptions yet.</p>
+  <% end %>
+
+  <div class="back-link">
+    <%= link_to "← Back to Home", root_path, class: "btn-secondary" %>
+  </div>
+</div>
+
+<style>
+  .admin-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000;
+  }
+
+  .admin-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 15px;
+  }
+
+  .stat-badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-badge.confirmed {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .stat-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+  }
+
+  .subscriptions-table {
+    background: white;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: #000;
+    color: white;
+  }
+
+  th, td {
+    padding: 18px;
+    text-align: left;
+  }
+
+  th {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+  }
+
+  tbody tr:hover {
+    background: #f8f8f8;
+  }
+
+  .status-badge {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  .status-badge.confirmed {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .status-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+  }
+
+  .no-data {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 1.2rem;
+  }
+
+  .back-link {
+    margin-top: 30px;
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: background 0.3s;
+  }
+
+  .btn-secondary:hover {
+    background: #5a6268;
+  }
+</style>

@@ -1,5 +1,5 @@
 class Admin::CompensationReportsController < ApplicationController
-  before_action :authenticate_admin!
+  include AdminAuthorizable
   before_action :set_compensation_report, only: [:edit, :update, :destroy]
 
   def index
@@ -12,6 +12,7 @@ class Admin::CompensationReportsController < ApplicationController
 
   def create
     @compensation_report = CompensationReport.new(compensation_report_params)
+    @compensation_report.user = current_user
     if @compensation_report.save
       redirect_to admin_compensation_reports_path, notice: 'Compensation report was successfully created.'
     else

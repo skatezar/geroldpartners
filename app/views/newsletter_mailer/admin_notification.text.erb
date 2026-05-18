@@ -1,0 +1,11 @@
+New Newsletter Subscription
+================================================================
+
+A new user has signed up for the newsletter.
+
+Email: <%= @subscription.email %>
+Signed Up: <%= @subscription.created_at.strftime('%B %d, %Y at %I:%M %p') %>
+Status: <%= @subscription.confirmed? ? 'Confirmed' : 'Pending Confirmation' %>
+
+---
+Gerold & Partners

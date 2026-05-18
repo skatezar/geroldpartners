@@ -1,5 +1,5 @@
 class Admin::MandatesController < ApplicationController
-  before_action :authenticate_admin!
+  include AdminAuthorizable
   before_action :set_mandate, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -15,6 +15,7 @@ class Admin::MandatesController < ApplicationController
 
   def create
     @mandate = Mandate.new(mandate_params)
+    @mandate.user = current_user
     if @mandate.save
       redirect_to admin_mandates_path, notice: 'Mandate was successfully created.'
     else

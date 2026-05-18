@@ -1,10 +1,11 @@
 <!-- Admin Controls -->
-<% if admin_signed_in? %>
+<% if user_signed_in? && current_user.admin? %>
   <div class="admin-controls">
     <%= link_to "Add Job", new_admin_mandate_path, class: "admin-btn" %>
     <%= link_to "Manage Jobs", admin_mandates_path, class: "admin-btn" %>
     <%= link_to "Manage Compensation Reports", admin_compensation_reports_path, class: "admin-btn" %>
-    <%= link_to "Logout", destroy_admin_session_path, method: :delete, class: "admin-btn-secondary" %>
+    <%= link_to "Newsletter Email List", admin_newsletter_subscriptions_path, class: "admin-btn" %>
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "admin-btn-secondary" %>
   </div>
 <% end %>
 
@@ -49,12 +50,133 @@
     <h1 class="fade-in-up">Gerold & Partners</h1>
     <p class="tagline fade-in-up delay-1">Executive Search & Advisory</p>
     <p class="founder fade-in-up delay-2">Founded by Laurenz Gerold, Former Goldman Sachs Banker</p>
+
+    <!-- Newsletter Subscription -->
+    <div class="newsletter-subscription fade-in-up delay-3">
+      <h3>Stay Updated</h3>
+      <p>Subscribe to receive updates on new opportunities and industry insights</p>
+      <%= form_with url: newsletter_subscriptions_path, scope: :newsletter_subscription, id: "newsletterForm", class: "newsletter-form" do |f| %>
+        <div class="newsletter-input-group">
+          <%= f.email_field :email, placeholder: "Enter your email", required: true, class: "newsletter-input" %>
+          <%= f.submit "Subscribe", class: "newsletter-btn" %>
+        </div>
+        <div id="newsletterMessage" class="newsletter-message"></div>
+      <% end %>
+    </div>
   </div>
   <div class="scroll-indicator">
     <div class="scroll-arrow"></div>
     <div class="scroll-arrow"></div>
   </div>
 </section>
+
+<style>
+  .newsletter-subscription {
+    margin-top: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .newsletter-subscription h3 {
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .newsletter-subscription p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 20px;
+  }
+
+  .newsletter-form {
+    width: 100%;
+  }
+
+  .newsletter-input-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    padding: 15px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .newsletter-input:focus {
+    outline: none;
+    border-color: white;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .newsletter-btn {
+    padding: 15px 30px;
+    background: white;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .newsletter-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+  }
+
+  .newsletter-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .newsletter-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    display: none;
+  }
+
+  .newsletter-message.success {
+    background: rgba(40, 167, 69, 0.2);
+    border: 1px solid rgba(40, 167, 69, 0.4);
+    color: #28a745;
+    display: block;
+  }
+
+  .newsletter-message.error {
+    background: rgba(220, 53, 69, 0.2);
+    border: 1px solid rgba(220, 53, 69, 0.4);
+    color: #dc3545;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .newsletter-input-group {
+      flex-direction: column;
+    }
+
+    .newsletter-btn {
+      width: 100%;
+    }
+  }
+</style>
 
 <!-- Services Section -->
 <section id="services" class="services section-animate">
@@ -63,15 +185,7 @@
     <div class="services-grid">
       <div class="service-card">
         <h3>Financial Services Executive Search</h3>
-        <p>We specialize in identifying and recruiting top-tier talent for financial services with a focus on front office roles. From analysts to managing directors, our deep network and rigorous selection process ensure the perfect match for your organization.</p>
-      </div>
-      <div class="service-card">
-        <h3>Structured Finance Advisory</h3>
-        <p>Providing strategic advisory services across structured finance markets, leveraging deep industry expertise and relationships to support our clients' objectives.</p>
-        <ul style="text-align: left; margin-top: 15px; padding-left: 20px;">
-          <li>Family office LP introductions</li>
-          <li>Advising on FinTech funding strategies for ABS warehouses</li>
-        </ul>
+        <p>Gerold & Partners is a specialist recruitment agency founded by <a href="https://linkedin.com/in/laurenzgerold" target="_blank" rel="noopener noreferrer" style="color: #0077b5; text-decoration: underline;">Laurenz Gerold</a>, an ex-Goldman Sachs banker. We focus exclusively on analyst to director level hires in front-office finance, with a specialty focus on structured finance.</p>
       </div>
     </div>
 
@@ -107,38 +221,82 @@
         </div>
       </div>
     </div>
+
+    <!-- Client Testimonials -->
+    <div class="testimonials-section">
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Laurenz spent four years as a structured finance banker at Goldman Sachs — giving them a genuine edge in assessing on the technical front while also being able to assess personal fit to a high degree."</p>
+        <p class="testimonial-author">- Investment Director, Private Credit Fund</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"GP only sent us 13 Candidate CVs. But, they were all relevant. So much so that we interviewed 12, took 7 to advanced rounds and offered 3 candidates the role. It has been extremely time-efficient and low-touch to work with them."</p>
+        <p class="testimonial-author">- Portfolio Manager, Hedge Fund</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- Success Stories 2025 -->
+<style>
+  .testimonials-section {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+  }
+
+  .testimonial-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-left: 4px solid #000;
+  }
+
+  .testimonial-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-author {
+    font-weight: 600;
+    color: #000;
+    text-align: right;
+  }
+
+  @media (max-width: 768px) {
+    .testimonials-section {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- Success Stories -->
 <section id="success" class="success-stories section-animate">
   <div class="container">
-    <h2>2025 Success Stories</h2>
-    <p class="subtitle">7 Successful Searches This Year</p>
+    <h2>Success Stories</h2>
     <div class="stories-grid">
       <div class="story-card">
-        <h4>Analyst</h4>
-        <p>$3B Private Credit Fund | Madrid</p>
-      </div>
-      <div class="story-card">
-        <h4>Associate</h4>
-        <p>$3B Private Credit Fund | Madrid</p>
-      </div>
-      <div class="story-card">
-        <h4>Associate VP, Real Estate</h4>
-        <p>$1B Real Estate Manager | London</p>
-      </div>
-      <div class="story-card">
-        <h4>Portfolio Manager</h4>
-        <p>Hedge Fund | London</p>
-      </div>
-      <div class="story-card">
-        <h4>CLO Structurer</h4>
-        <p>$40B US PE Fund | New York City</p>
+        <h4>Investment Professional</h4>
+        <p>$3B Real Assets Credit Fund | Madrid</p>
       </div>
       <div class="story-card">
         <h4>Trading Associate</h4>
         <p>$500M Hedge Fund | London</p>
+      </div>
+      <div class="story-card">
+        <h4>Vice President, Structured Credit Sales</h4>
+        <p>Top 10 Bank by Assets | London</p>
+      </div>
+      <div class="story-card">
+        <h4>Euro CLO Tranche Investment Professional</h4>
+        <p>$12B Hedge Fund | London</p>
+      </div>
+      <div class="story-card">
+        <h4>Senior Lead Client Portfolio Manager</h4>
+        <p>$200B+ Securitised Asset Manager | London</p>
       </div>
     </div>
   </div>
@@ -391,6 +549,53 @@
   }
 
   document.addEventListener('turbo:load', function() {
+    // Newsletter form handler
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(newsletterForm);
+        const submitBtn = newsletterForm.querySelector('.newsletter-btn');
+        const messageDiv = document.getElementById('newsletterMessage');
+        const originalText = submitBtn.value;
+
+        submitBtn.disabled = true;
+        submitBtn.value = 'Subscribing...';
+        messageDiv.className = 'newsletter-message';
+        messageDiv.textContent = '';
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        try {
+          const response = await fetch(newsletterForm.action, {
+            method: 'POST',
+            headers: {
+              'X-CSRF-Token': csrfToken
+            },
+            body: formData
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            messageDiv.className = 'newsletter-message success';
+            messageDiv.textContent = result.message || 'Please check your email to confirm your subscription.';
+            newsletterForm.reset();
+          } else {
+            messageDiv.className = 'newsletter-message error';
+            messageDiv.textContent = result.error || 'Something went wrong. Please try again.';
+          }
+        } catch (error) {
+          messageDiv.className = 'newsletter-message error';
+          messageDiv.textContent = 'Error submitting form. Please try again.';
+        } finally {
+          submitBtn.value = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+    }
+
     // Set form timestamp
     const timestampField = document.getElementById('contactFormTimestamp');
     if (timestampField) {
