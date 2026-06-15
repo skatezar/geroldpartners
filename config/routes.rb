@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  devise_for :admins
+
+  get "admins/sign_in", to: redirect("/users/sign_in")
+  get "admins/sign_up", to: redirect("/users/sign_in")
 
   namespace :admin do
     resources :compensation_reports
