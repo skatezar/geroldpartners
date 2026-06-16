@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_16_000003) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_16_000004) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -123,7 +123,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_16_000003) do
     t.string "compensation_expectation"
     t.string "visa_requirement"
     t.string "earliest_start"
+    t.string "status", default: "not_interviewed", null: false
     t.index ["client_id"], name: "index_recommendations_on_client_id"
+    t.index ["status"], name: "index_recommendations_on_status"
   end
 
   create_table "report_downloads", force: :cascade do |t|

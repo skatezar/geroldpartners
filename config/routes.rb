@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   get  "clients/:slug",          to: "clients#show",         as: :client
   post "clients/:slug/authenticate", to: "clients#authenticate", as: :authenticate_client
+  patch "clients/:slug/recommendations/:recommendation_id/status",
+        to: "clients#update_recommendation_status", as: :update_client_recommendation_status
 
   resources :mandates, only: [:index, :show] do
     member do

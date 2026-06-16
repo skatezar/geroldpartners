@@ -8,12 +8,35 @@
     </div>
   </header>
 
+  <% if flash[:notice] %>
+    <div class="flash flash-notice"><%= flash[:notice] %></div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="flash flash-alert"><%= flash[:alert] %></div>
+  <% end %>
+
+  <% if @client.recommendations.any? %>
+    <nav class="status-filter">
+      <span class="filter-label">Filter by status:</span>
+      <%= link_to "All (#{@client.recommendations.size})", client_path(@client.slug),
+                  class: "filter-chip #{'active' unless @status_filter.present?}" %>
+      <% Recommendation::STATUSES.each do |key, label| %>
+        <% count = @client.recommendations.where(status: key).count %>
+        <%= link_to "#{label} (#{count})", client_path(@client.slug, status: key),
+                    class: "filter-chip status-#{key.dasherize} #{'active' if @status_filter == key}" %>
+      <% end %>
+    </nav>
+  <% end %>
+
   <main class="recs">
-    <% if @client.recommendations.any? %>
-      <% @client.recommendations.order(created_at: :desc).each do |rec| %>
+    <% if @recommendations.any? %>
+      <% @recommendations.each do |rec| %>
         <article class="rec">
           <div class="rec-head">
-            <h2><%= rec.name %></h2>
+            <div>
+              <h2><%= rec.name %></h2>
+              <span class="status-badge status-<%= rec.status.dasherize %>"><%= rec.status_label %></span>
+            </div>
             <div class="rec-links">
               <% if rec.linkedin_url.present? %>
                 <%= link_to "LinkedIn ↗", rec.linkedin_url, target: "_blank", rel: "noopener", class: "rec-link" %>
@@ -23,6 +46,16 @@
               <% end %>
             </div>
           </div>
+
+          <%= form_with url: update_client_recommendation_status_path(@client.slug, rec),
+                        method: :patch, class: "status-update-form", local: true do |f| %>
+            <%= hidden_field_tag :current_filter, @status_filter %>
+            <label for="status-<%= rec.id %>">Update status:</label>
+            <%= select_tag :status,
+                  options_for_select(Recommendation::STATUSES.map { |k, v| [v, k] }, rec.status),
+                  id: "status-#{rec.id}", onchange: "this.form.requestSubmit()" %>
+            <noscript><button type="submit" class="rec-link">Save</button></noscript>
+          <% end %>
           <% details = [
                ["Compensation", rec.compensation_expectation],
                ["Visa", rec.visa_requirement],
@@ -40,16 +73,12 @@
           <% end %>
 
           <% if rec.description.present? %>
-            <% plain_text = rec.description.to_plain_text %>
-            <% word_count = plain_text.split(/\s+/).reject(&:blank?).size %>
+            <% word_count = rec.description.to_plain_text.scan(/\S+/).size %>
             <% if word_count > 200 %>
-              <% teaser = plain_text.split(/\s+/).reject(&:blank?).first(200).join(" ") %>
               <details class="rec-desc-toggle">
-                <summary>
-                  <div class="rec-desc rec-desc-teaser"><%= simple_format(teaser + "…") %></div>
-                  <span class="view-more-btn">View more</span>
-                </summary>
+                <div class="rec-desc rec-desc-teaser"><%= truncate_rich_html(rec.description.body.to_html, 200) %></div>
                 <div class="rec-desc rec-desc-full"><%= rec.description %></div>
+                <summary class="view-more-btn"><span class="more-label">View more</span><span class="less-label">View less</span></summary>
               </details>
             <% else %>
               <div class="rec-desc"><%= rec.description %></div>
@@ -58,7 +87,11 @@
         </article>
       <% end %>
     <% else %>
-      <p class="empty">No candidates have been added yet.</p>
+      <% if @client.recommendations.any? %>
+        <p class="empty">No candidates match this status filter. <%= link_to "Show all", client_path(@client.slug) %></p>
+      <% else %>
+        <p class="empty">No candidates have been added yet.</p>
+      <% end %>
     <% end %>
   </main>
 
@@ -96,14 +129,32 @@
   .rec-desc blockquote { margin: 0 0 12px; padding-left: 16px; border-left: 3px solid #ddd; color: #555; }
   .rec-desc strong { font-weight: 700; }
   .rec-desc-toggle { position: relative; }
-  .rec-desc-toggle > summary { list-style: none; cursor: pointer; }
-  .rec-desc-toggle > summary::-webkit-details-marker { display: none; }
-  .view-more-btn { display: inline-block; margin-top: 12px; padding: 8px 18px; background: #000; color: white; border-radius: 6px; font-size: 0.95rem; font-family: 'Garamond', serif; }
+  .view-more-btn { list-style: none; cursor: pointer; display: inline-block; margin-top: 12px; padding: 8px 18px; background: #000; color: white; border-radius: 6px; font-size: 0.95rem; font-family: 'Garamond', serif; }
+  .view-more-btn::-webkit-details-marker { display: none; }
+  .view-more-btn::marker { content: ""; }
   .view-more-btn:hover { background: #333; }
-  .rec-desc-toggle[open] > summary .rec-desc-teaser { display: none; }
-  .rec-desc-toggle[open] > summary .view-more-btn { display: none; }
   .rec-desc-full { display: none; }
+  .less-label { display: none; }
+  .rec-desc-toggle[open] .rec-desc-teaser { display: none; }
   .rec-desc-toggle[open] .rec-desc-full { display: block; }
+  .rec-desc-toggle[open] .more-label { display: none; }
+  .rec-desc-toggle[open] .less-label { display: inline; }
+  .flash { padding: 12px 18px; border-radius: 8px; margin-bottom: 20px; font-size: 1rem; }
+  .flash-notice { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  .flash-alert { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+  .status-filter { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 30px; padding: 14px 18px; background: white; border: 1px solid #eee; border-radius: 8px; }
+  .filter-label { font-size: 0.9rem; color: #666; margin-right: 6px; text-transform: uppercase; letter-spacing: 1px; }
+  .filter-chip { padding: 6px 14px; background: #f0f0f0; color: #333; text-decoration: none; border-radius: 999px; font-size: 0.9rem; }
+  .filter-chip:hover { background: #e2e2e2; }
+  .filter-chip.active { background: #000; color: white; }
+  .status-badge { display: inline-block; margin-top: 6px; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .status-badge.status-not-interviewed { background: #eef2f7; color: #4a5568; }
+  .status-badge.status-interviewed-round-1 { background: #fff3cd; color: #856404; }
+  .status-badge.status-interviewed-round-2 { background: #cce5ff; color: #004085; }
+  .status-badge.status-rejected { background: #f8d7da; color: #721c24; }
+  .status-update-form { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 12px 14px; background: #fafafa; border: 1px solid #eee; border-radius: 8px; }
+  .status-update-form label { font-size: 0.85rem; color: #555; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+  .status-update-form select { padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Garamond', serif; font-size: 0.95rem; background: white; cursor: pointer; }
   .empty { text-align: center; padding: 60px 20px; color: #666; }
   .client-foot { margin-top: 60px; padding-top: 24px; border-top: 1px solid #ddd; text-align: center; color: #888; font-size: 0.9rem; }
 </style>
