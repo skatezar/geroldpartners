@@ -24,6 +24,7 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Details</th>
             <th>LinkedIn</th>
             <th>CV</th>
             <th>Actions</th>
@@ -33,6 +34,16 @@
           <% @recommendations.each do |rec| %>
             <tr>
               <td><%= rec.name %></td>
+              <td style="font-size: 0.9rem; color: #444;">
+                <% [["Comp", rec.compensation_expectation], ["Visa", rec.visa_requirement], ["Start", rec.earliest_start]].each do |label, value| %>
+                  <% if value.present? %>
+                    <div><strong><%= label %>:</strong> <%= value %></div>
+                  <% end %>
+                <% end %>
+                <% if rec.compensation_expectation.blank? && rec.visa_requirement.blank? && rec.earliest_start.blank? %>
+                  <span style="color:#999;">—</span>
+                <% end %>
+              </td>
               <td>
                 <% if rec.linkedin_url.present? %>
                   <%= link_to "Profile", rec.linkedin_url, target: "_blank" %>

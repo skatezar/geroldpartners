@@ -1,6 +1,7 @@
 class Recommendation < ApplicationRecord
   belongs_to :client
   has_one_attached :cv
+  has_rich_text :description
 
   validates :name, presence: true
   validate :cv_content_type
