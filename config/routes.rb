@@ -8,7 +8,13 @@ Rails.application.routes.draw do
     resources :compensation_reports
     resources :mandates
     resources :newsletter_subscriptions, only: [:index]
+    resources :clients do
+      resources :recommendations, only: [:new, :create, :edit, :update, :destroy]
+    end
   end
+
+  get  "clients/:slug",          to: "clients#show",         as: :client
+  post "clients/:slug/authenticate", to: "clients#authenticate", as: :authenticate_client
 
   resources :mandates, only: [:index, :show] do
     member do

@@ -1,0 +1,62 @@
+<% content_for :title, "#{@client.name} — Recommended Candidates" %>
+<div class="client-view">
+  <header class="client-header">
+    <div>
+      <p class="kicker">Gerold &amp; Partners</p>
+      <h1><%= @client.name %></h1>
+      <p class="lede">Recommended candidates</p>
+    </div>
+  </header>
+
+  <main class="recs">
+    <% if @client.recommendations.any? %>
+      <% @client.recommendations.order(created_at: :desc).each do |rec| %>
+        <article class="rec">
+          <div class="rec-head">
+            <h2><%= rec.name %></h2>
+            <div class="rec-links">
+              <% if rec.linkedin_url.present? %>
+                <%= link_to "LinkedIn ↗", rec.linkedin_url, target: "_blank", rel: "noopener", class: "rec-link" %>
+              <% end %>
+              <% if rec.cv.attached? %>
+                <%= link_to "Download CV (PDF)", rails_blob_path(rec.cv, disposition: "attachment"), class: "rec-link cv-link" %>
+              <% end %>
+            </div>
+          </div>
+          <% if rec.description.present? %>
+            <div class="rec-desc"><%= simple_format(rec.description) %></div>
+          <% end %>
+        </article>
+      <% end %>
+    <% else %>
+      <p class="empty">No candidates have been added yet.</p>
+    <% end %>
+  </main>
+
+  <footer class="client-foot">
+    <p>This brief is confidential and intended for <%= @client.name %>.</p>
+  </footer>
+</div>
+
+<style>
+  body { margin: 0; background: #fafafa; }
+  .client-view { max-width: 980px; margin: 0 auto; padding: 60px 24px 80px; font-family: 'Garamond', serif; color: #1a1a1a; }
+  .client-header { padding-bottom: 28px; border-bottom: 2px solid #000; margin-bottom: 40px; }
+  .kicker { margin: 0 0 6px; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; color: #666; }
+  .client-header h1 { margin: 0 0 6px; font-size: 3rem; line-height: 1.1; }
+  .lede { margin: 0; font-size: 1.15rem; color: #555; }
+  .recs { display: flex; flex-direction: column; gap: 24px; }
+  .rec { background: white; padding: 32px 34px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eee; }
+  .rec-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+  .rec h2 { margin: 0; font-size: 1.7rem; }
+  .rec-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .rec-link { padding: 8px 16px; background: #f0f0f0; color: #1a1a1a; text-decoration: none; border-radius: 6px; font-size: 0.95rem; }
+  .rec-link:hover { background: #e2e2e2; }
+  .cv-link { background: #000; color: white; }
+  .cv-link:hover { background: #333; }
+  .rec-desc { line-height: 1.65; font-size: 1.05rem; color: #2a2a2a; }
+  .rec-desc p { margin: 0 0 12px; }
+  .rec-desc p:last-child { margin-bottom: 0; }
+  .empty { text-align: center; padding: 60px 20px; color: #666; }
+  .client-foot { margin-top: 60px; padding-top: 24px; border-top: 1px solid #ddd; text-align: center; color: #888; font-size: 0.9rem; }
+</style>

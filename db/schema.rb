@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_15_000000) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_16_000001) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -59,6 +59,17 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_15_000000) do
     t.index ["mandate_id"], name: "index_applications_on_mandate_id"
   end
 
+  create_table "clients", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.string "password_digest", null: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_clients_on_slug", unique: true
+    t.index ["user_id"], name: "index_clients_on_user_id"
+  end
+
   create_table "compensation_reports", force: :cascade do |t|
     t.string "name"
     t.string "location"
@@ -103,6 +114,16 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_15_000000) do
     t.index ["email"], name: "index_newsletter_subscriptions_on_email", unique: true
   end
 
+  create_table "recommendations", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.string "name", null: false
+    t.string "linkedin_url"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_recommendations_on_client_id"
+  end
+
   create_table "report_downloads", force: :cascade do |t|
     t.integer "compensation_report_id", null: false
     t.string "name"
@@ -136,7 +157,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_15_000000) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "applications", "mandates"
+  add_foreign_key "clients", "users"
   add_foreign_key "compensation_reports", "users"
   add_foreign_key "mandates", "users"
+  add_foreign_key "recommendations", "clients"
   add_foreign_key "report_downloads", "compensation_reports"
 end

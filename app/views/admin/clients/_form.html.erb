@@ -1,0 +1,52 @@
+<%= form_with model: [:admin, client], class: "mandate-form" do |f| %>
+  <% if client.errors.any? %>
+    <div class="error-messages">
+      <h3><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h3>
+      <ul>
+        <% client.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, "Client Name" %>
+    <%= f.text_field :name, required: true, placeholder: "e.g. Fund ABC" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :slug, "URL Slug (Optional)" %>
+    <%= f.text_field :slug, placeholder: "Auto-generated from name if blank, e.g. fund-abc" %>
+    <small style="display:block; color:#666; margin-top:6px;">Used in the client link URL. Lowercase letters, numbers and dashes only.</small>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password, client.new_record? ? "Access Password" : "New Password (leave blank to keep current)" %>
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation, "Confirm Password" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit client.new_record? ? "Create Client" : "Update Client", class: "btn-primary" %>
+    <%= link_to "Cancel", admin_clients_path, class: "btn-secondary" %>
+  </div>
+<% end %>
+
+<style>
+  .mandate-form { max-width: 800px; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-family: 'Garamond', serif; }
+  .error-messages { background: #f8d7da; color: #721c24; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
+  .form-group { margin-bottom: 25px; }
+  .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; font-size: 1rem; }
+  .form-group input[type="text"], .form-group input[type="password"], .form-group input[type="url"], .form-group textarea, .form-group input[type="file"] { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; font-family: 'Garamond', serif; box-sizing: border-box; }
+  .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #000; }
+  .form-group textarea { resize: vertical; }
+  .form-actions { display: flex; gap: 15px; margin-top: 30px; padding-top: 30px; border-top: 1px solid #eee; }
+  .btn-primary { padding: 12px 28px; background: #000; color: white; text-decoration: none; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+  .btn-primary:hover { background: #333; }
+  .btn-secondary { padding: 12px 28px; background: #eee; color: #333; text-decoration: none; border-radius: 6px; font-size: 1rem; }
+</style>

@@ -1,0 +1,54 @@
+<%= form_with model: [:admin, client, recommendation], class: "mandate-form", multipart: true do |f| %>
+  <% if recommendation.errors.any? %>
+    <div class="error-messages">
+      <h3><%= pluralize(recommendation.errors.count, "error") %> prohibited this recommendation from being saved:</h3>
+      <ul>
+        <% recommendation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, "Candidate Name" %>
+    <%= f.text_field :name, required: true, placeholder: "e.g. Jane Doe" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :linkedin_url, "LinkedIn URL" %>
+    <%= f.url_field :linkedin_url, placeholder: "https://linkedin.com/in/..." %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description, "Description / Notes" %>
+    <%= f.text_area :description, rows: 8, placeholder: "Why this candidate is being recommended..." %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :cv, "CV (PDF)" %>
+    <% if recommendation.cv.attached? %>
+      <p style="margin: 0 0 8px;">Current: <%= link_to recommendation.cv.filename.to_s, rails_blob_path(recommendation.cv), target: "_blank" %></p>
+    <% end %>
+    <%= f.file_field :cv, accept: "application/pdf" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit recommendation.new_record? ? "Add Recommendation" : "Update Recommendation", class: "btn-primary" %>
+    <%= link_to "Cancel", admin_client_path(client), class: "btn-secondary" %>
+  </div>
+<% end %>
+
+<style>
+  .mandate-form { max-width: 800px; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-family: 'Garamond', serif; }
+  .error-messages { background: #f8d7da; color: #721c24; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
+  .form-group { margin-bottom: 25px; }
+  .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; font-size: 1rem; }
+  .form-group input[type="text"], .form-group input[type="url"], .form-group input[type="password"], .form-group textarea, .form-group input[type="file"] { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; font-family: 'Garamond', serif; box-sizing: border-box; }
+  .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #000; }
+  .form-group textarea { resize: vertical; }
+  .form-actions { display: flex; gap: 15px; margin-top: 30px; padding-top: 30px; border-top: 1px solid #eee; }
+  .btn-primary { padding: 12px 28px; background: #000; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+  .btn-primary:hover { background: #333; }
+  .btn-secondary { padding: 12px 28px; background: #eee; color: #333; text-decoration: none; border-radius: 6px; font-size: 1rem; }
+</style>

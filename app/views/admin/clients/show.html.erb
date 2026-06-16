@@ -1,0 +1,90 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h1><%= @client.name %></h1>
+    <div style="display:flex; gap:10px;">
+      <%= link_to "Edit Client", edit_admin_client_path(@client), class: "btn-secondary" %>
+      <%= link_to "← All Clients", admin_clients_path, class: "btn-secondary" %>
+    </div>
+  </div>
+
+  <div class="link-card">
+    <strong>Client link:</strong>
+    <a href="<%= client_url(@client.slug) %>" target="_blank"><%= client_url(@client.slug) %></a>
+    <p class="hint">Share this URL with the client and provide the password separately.</p>
+  </div>
+
+  <div class="admin-header" style="margin-top: 40px;">
+    <h2>Recommendations (<%= @recommendations.size %>)</h2>
+    <%= link_to "Add Recommendation", new_admin_client_recommendation_path(@client), class: "btn-primary" %>
+  </div>
+
+  <% if @recommendations.any? %>
+    <div class="mandates-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>LinkedIn</th>
+            <th>CV</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @recommendations.each do |rec| %>
+            <tr>
+              <td><%= rec.name %></td>
+              <td>
+                <% if rec.linkedin_url.present? %>
+                  <%= link_to "Profile", rec.linkedin_url, target: "_blank" %>
+                <% else %>
+                  <span style="color:#999;">—</span>
+                <% end %>
+              </td>
+              <td>
+                <% if rec.cv.attached? %>
+                  <%= link_to "Download", rails_blob_path(rec.cv, disposition: "attachment"), target: "_blank" %>
+                <% else %>
+                  <span style="color:#999;">—</span>
+                <% end %>
+              </td>
+              <td class="actions">
+                <%= link_to "Edit", edit_admin_client_recommendation_path(@client, rec), class: "btn-small" %>
+                <%= button_to "Delete", admin_client_recommendation_path(@client, rec), method: :delete,
+                    data: { turbo_confirm: "Remove this recommendation?" }, class: "btn-small btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="no-data">No recommendations yet for this client.</p>
+  <% end %>
+</div>
+
+<style>
+  .admin-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; font-family: 'Garamond', serif; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #000; }
+  .admin-header h1, .admin-header h2 { margin: 0; }
+  .admin-header h1 { font-size: 2.5rem; }
+  .admin-header h2 { font-size: 1.6rem; }
+  .link-card { background: #f8f8f8; padding: 18px 22px; border-left: 4px solid #000; border-radius: 6px; font-size: 1rem; }
+  .link-card a { color: #007bff; text-decoration: none; word-break: break-all; }
+  .link-card a:hover { text-decoration: underline; }
+  .link-card .hint { margin: 8px 0 0; color: #666; font-size: 0.9rem; }
+  .mandates-table { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  table { width: 100%; border-collapse: collapse; }
+  thead { background: #000; color: white; }
+  th, td { padding: 15px; text-align: left; }
+  tbody tr { border-bottom: 1px solid #eee; }
+  tbody tr:hover { background: #f8f8f8; }
+  .actions { display: flex; gap: 10px; }
+  .btn-small { padding: 6px 16px; font-size: 0.9rem; background: #333; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; }
+  .btn-small:hover { background: #000; }
+  .btn-danger { background: #dc3545; }
+  .btn-danger:hover { background: #c82333; }
+  .btn-primary { padding: 10px 22px; background: #000; color: white; text-decoration: none; border-radius: 6px; }
+  .btn-primary:hover { background: #333; }
+  .btn-secondary { padding: 8px 18px; background: #eee; color: #333; text-decoration: none; border-radius: 6px; }
+  .no-data { text-align: center; padding: 60px 20px; color: #666; font-size: 1.2rem; }
+</style>

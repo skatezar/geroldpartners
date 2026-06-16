@@ -1,0 +1,63 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h1>Clients</h1>
+    <%= link_to "New Client", new_admin_client_path, class: "btn-primary" %>
+  </div>
+
+  <% if @clients.any? %>
+    <div class="mandates-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Slug</th>
+            <th>Recommendations</th>
+            <th>Client Link</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @clients.each do |client| %>
+            <tr>
+              <td><%= client.name %></td>
+              <td><%= client.slug %></td>
+              <td><%= client.recommendations.count %></td>
+              <td><%= link_to client_url(client.slug), client_url(client.slug), target: "_blank" %></td>
+              <td class="actions">
+                <%= link_to "View", admin_client_path(client), class: "btn-small btn-view" %>
+                <%= link_to "Edit", edit_admin_client_path(client), class: "btn-small" %>
+                <%= button_to "Delete", admin_client_path(client), method: :delete,
+                    data: { turbo_confirm: "Delete this client and all its recommendations?" }, class: "btn-small btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="no-data">No clients yet. Create your first client to get started.</p>
+  <% end %>
+</div>
+
+<style>
+  .admin-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; font-family: 'Garamond', serif; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #000; }
+  .admin-header h1 { margin: 0; font-size: 2.5rem; }
+  .mandates-table { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  table { width: 100%; border-collapse: collapse; }
+  thead { background: #000; color: white; }
+  th, td { padding: 15px; text-align: left; }
+  th { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px; }
+  tbody tr { border-bottom: 1px solid #eee; }
+  tbody tr:hover { background: #f8f8f8; }
+  .actions { display: flex; gap: 10px; }
+  .btn-small { padding: 6px 16px; font-size: 0.9rem; background: #333; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; }
+  .btn-small:hover { background: #000; }
+  .btn-view { background: #007bff; }
+  .btn-view:hover { background: #0056b3; }
+  .btn-danger { background: #dc3545; }
+  .btn-danger:hover { background: #c82333; }
+  .btn-primary { padding: 10px 22px; background: #000; color: white; text-decoration: none; border-radius: 6px; font-size: 1rem; }
+  .btn-primary:hover { background: #333; }
+  .no-data { text-align: center; padding: 60px 20px; color: #666; font-size: 1.2rem; }
+</style>
