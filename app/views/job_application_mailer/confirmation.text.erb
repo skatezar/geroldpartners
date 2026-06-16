@@ -1,0 +1,21 @@
+Thank you for applying, <%= @application.name %>
+
+We've received your application for <%= @mandate.title %> and will review it carefully. If your profile matches what our client is looking for, we'll be in touch directly. Given the volume of applications we receive, we're unfortunately not able to respond individually to every candidate.
+
+In the meantime, you're welcome to explore other open mandates on our website.
+
+---
+
+Privacy & your data
+
+The information you submitted (including your CV) is stored confidentially and used only to assess your suitability for this role and, where relevant, for similar opportunities. Full details on how we process your data are in our Privacy Notice:
+<%= url_for(controller: 'pages', action: 'gdpr', only_path: false) %>
+
+Want your data deleted?
+
+You can request deletion of your data at any time. Simply submit a short message via our contact form stating that you'd like your application data removed, or simply reply to this email. We'll confirm once it's done. Contact form:
+<%= url_for(controller: 'home', action: 'index', only_path: false) %>#contact
+
+Best regards,
+Laurenz Gerold
+Gerold & Partners

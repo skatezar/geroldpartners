@@ -22,6 +22,26 @@ class ClientsController < ApplicationController
     end
   end
 
+  def request_interview
+    unless authorized?
+      return redirect_to client_path(@client.slug), alert: "Please enter the password first."
+    end
+    rec = @client.recommendations.find(params[:recommendation_id])
+    if rec.email.blank?
+      return redirect_to client_path(@client.slug, status: params[:current_filter].presence),
+                         alert: "No email on file for #{rec.name}. Please ask the admin to add one."
+    end
+    begin
+      RecommendationsMailer.interview_request(rec).deliver_now
+      redirect_to client_path(@client.slug, status: params[:current_filter].presence),
+                  notice: "Interview request sent to #{rec.name}."
+    rescue => e
+      Rails.logger.error("Interview request email failed for rec=#{rec.id}: #{e.message}")
+      redirect_to client_path(@client.slug, status: params[:current_filter].presence),
+                  alert: "Could not send interview request. Please try again."
+    end
+  end
+
   def update_recommendation_status
     unless authorized?
       return redirect_to client_path(@client.slug), alert: "Please enter the password first."

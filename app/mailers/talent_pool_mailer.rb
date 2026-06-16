@@ -14,4 +14,13 @@ class TalentPoolMailer < ApplicationMailer
       subject: 'New Talent Pool Application'
     )
   end
+
+  def confirmation(talent_pool_application)
+    @application = talent_pool_application
+
+    mail(
+      to: @application.email,
+      subject: 'We received your talent pool application'
+    )
+  end
 end

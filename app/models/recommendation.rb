@@ -12,6 +12,7 @@ class Recommendation < ApplicationRecord
 
   validates :name, presence: true
   validates :status, inclusion: { in: STATUSES.keys }
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validate :cv_content_type
 
   def status_label

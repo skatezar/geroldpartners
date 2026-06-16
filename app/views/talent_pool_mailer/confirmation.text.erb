@@ -1,0 +1,19 @@
+Welcome to our talent pool, <%= @application.name %>
+
+Thank you for joining the Gerold & Partners talent pool. We'll keep your profile on file and reach out when a mandate matches your background. We typically only contact candidates when there's a strong fit, so you may not hear from us immediately.
+
+---
+
+Privacy & your data
+
+The information you submitted (including your CV) is stored confidentially and used only to assess your suitability for executive search mandates. Full details on how we process your data are in our Privacy Notice:
+<%= url_for(controller: 'pages', action: 'gdpr', only_path: false) %>
+
+Want your data deleted?
+
+You can request removal of your profile from the talent pool at any time. Simply submit a short message via our contact form stating that you'd like your data removed, or simply reply to this email. We'll confirm once it's done. Contact form:
+<%= url_for(controller: 'home', action: 'index', only_path: false) %>#contact
+
+Best regards,
+Laurenz Gerold
+Gerold & Partners

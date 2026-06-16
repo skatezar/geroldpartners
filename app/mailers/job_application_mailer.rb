@@ -15,4 +15,14 @@ class JobApplicationMailer < ApplicationMailer
       subject: "New Application for #{@mandate.title}"
     )
   end
+
+  def confirmation(job_application)
+    @application = job_application
+    @mandate = job_application.mandate
+
+    mail(
+      to: @application.email,
+      subject: "We received your application — #{@mandate.title}"
+    )
+  end
 end

@@ -44,6 +44,14 @@
               <% if rec.cv.attached? %>
                 <%= link_to "Download CV (PDF)", rails_blob_path(rec.cv, disposition: "attachment"), class: "rec-link cv-link" %>
               <% end %>
+              <% if rec.email.present? %>
+                <%= button_to "Request interview",
+                              request_client_recommendation_interview_path(@client.slug, rec),
+                              method: :post,
+                              params: { current_filter: @status_filter },
+                              form: { data: { turbo_confirm: "Are you sure you'd like to request an interview with #{rec.name}? An email will be sent to them automatically." } },
+                              class: "rec-link interview-btn" %>
+              <% end %>
             </div>
           </div>
 
@@ -76,9 +84,11 @@
             <% word_count = rec.description.to_plain_text.scan(/\S+/).size %>
             <% if word_count > 100 %>
               <details class="rec-desc-toggle">
-                <div class="rec-desc rec-desc-teaser"><%= truncate_rich_html(rec.description.body.to_html, 100) %></div>
+                <summary class="rec-desc-summary">
+                  <div class="rec-desc rec-desc-teaser"><%= truncate_rich_html(rec.description.body.to_html, 100) %></div>
+                  <span class="view-more-btn"><span class="more-label">View description</span><span class="less-label">View less</span></span>
+                </summary>
                 <div class="rec-desc rec-desc-full"><%= rec.description %></div>
-                <summary class="view-more-btn"><span class="more-label">View description</span><span class="less-label">View less</span></summary>
               </details>
             <% else %>
               <div class="rec-desc"><%= rec.description %></div>
@@ -116,6 +126,9 @@
   .rec-link:hover { background: #e2e2e2; }
   .cv-link { background: #000; color: white; }
   .cv-link:hover { background: #333; }
+  .interview-btn { background: #2a7a3a; color: white; border: none; cursor: pointer; font-family: 'Garamond', serif; }
+  .interview-btn:hover { background: #1f5e2c; }
+  .rec-links form { margin: 0; }
   .rec-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px 28px; margin: 0 0 22px; padding: 16px 18px; background: #f8f8f8; border-radius: 8px; }
   .rec-detail dt { margin: 0 0 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #777; font-weight: 600; }
   .rec-detail dd { margin: 0; font-size: 1rem; color: #1a1a1a; }
@@ -129,14 +142,13 @@
   .rec-desc blockquote { margin: 0 0 12px; padding-left: 16px; border-left: 3px solid #ddd; color: #555; }
   .rec-desc strong { font-weight: 700; }
   .rec-desc-toggle { position: relative; }
-  .view-more-btn { list-style: none; cursor: pointer; display: inline-block; margin-top: 12px; padding: 8px 18px; background: #000; color: white; border-radius: 6px; font-size: 0.95rem; font-family: 'Garamond', serif; }
-  .view-more-btn::-webkit-details-marker { display: none; }
-  .view-more-btn::marker { content: ""; }
+  .rec-desc-summary { list-style: none; cursor: pointer; display: block; }
+  .rec-desc-summary::-webkit-details-marker { display: none; }
+  .rec-desc-summary::marker { content: ""; }
+  .view-more-btn { display: inline-block; margin-top: 12px; padding: 8px 18px; background: #000; color: white; border-radius: 6px; font-size: 0.95rem; font-family: 'Garamond', serif; }
   .view-more-btn:hover { background: #333; }
-  .rec-desc-full { display: none; }
   .less-label { display: none; }
   .rec-desc-toggle[open] .rec-desc-teaser { display: none; }
-  .rec-desc-toggle[open] .rec-desc-full { display: block; }
   .rec-desc-toggle[open] .more-label { display: none; }
   .rec-desc-toggle[open] .less-label { display: inline; }
   .flash { padding: 12px 18px; border-radius: 8px; margin-bottom: 20px; font-size: 1rem; }

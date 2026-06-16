@@ -20,6 +20,11 @@ class MandatesController < ApplicationController
     if @application.save
       # Send email notification
       JobApplicationMailer.new_application(@application).deliver_now
+      begin
+        JobApplicationMailer.confirmation(@application).deliver_now
+      rescue => e
+        Rails.logger.error("Failed to send job application confirmation to #{@application.email}: #{e.message}")
+      end
 
       render json: { success: true, message: 'Application submitted successfully!' }
     else

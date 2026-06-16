@@ -1,0 +1,24 @@
+<div style="font-family: Garamond, Georgia, serif; color: #1a1a1a; line-height: 1.6; max-width: 620px; margin: 0 auto; padding: 30px 24px;">
+  <h2 style="margin: 0 0 18px; font-size: 1.6rem;">Thank you for applying, <%= @application.name %></h2>
+
+  <p>We've received your application for <strong><%= @mandate.title %></strong> and will review it carefully. If your profile matches what our client is looking for, we'll be in touch directly. Given the volume of applications we receive, we're unfortunately not able to respond individually to every candidate.</p>
+
+  <p>In the meantime, you're welcome to explore other open mandates on our website.</p>
+
+  <hr style="border: none; border-top: 1px solid #ddd; margin: 28px 0;">
+
+  <h3 style="margin: 0 0 10px; font-size: 1.1rem;">Privacy &amp; your data</h3>
+  <p style="font-size: 0.95rem; color: #444;">
+    The information you submitted (including your CV) is stored confidentially and used only to assess your suitability for this role and, where relevant, for similar opportunities. Full details on how we process your data are in our
+    <a href="<%= url_for(controller: 'pages', action: 'gdpr', only_path: false) %>" style="color: #000;">Privacy Notice</a>.
+  </p>
+
+  <h3 style="margin: 18px 0 10px; font-size: 1.1rem;">Want your data deleted?</h3>
+  <p style="font-size: 0.95rem; color: #444;">
+    You can request deletion of your data at any time. Simply submit a short message via our
+    <a href="<%= url_for(controller: 'home', action: 'index', only_path: false) %>#contact" style="color: #000;">contact form</a>
+    stating that you'd like your application data removed, or simply reply to this email. We'll confirm once it's done.
+  </p>
+
+  <p style="margin-top: 28px;">Best regards,<br>Laurenz Gerold<br>Gerold &amp; Partners</p>
+</div>

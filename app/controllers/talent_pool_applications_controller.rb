@@ -11,6 +11,11 @@ class TalentPoolApplicationsController < ApplicationController
 
     if @application.save
       TalentPoolMailer.new_application(@application).deliver_now
+      begin
+        TalentPoolMailer.confirmation(@application).deliver_now
+      rescue => e
+        Rails.logger.error("Failed to send talent pool confirmation to #{@application.email}: #{e.message}")
+      end
       render json: { success: true, message: 'Application submitted successfully!' }
     else
       render json: { success: false, errors: @application.errors.full_messages }, status: :unprocessable_entity
