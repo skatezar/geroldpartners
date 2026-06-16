@@ -74,11 +74,11 @@
 
           <% if rec.description.present? %>
             <% word_count = rec.description.to_plain_text.scan(/\S+/).size %>
-            <% if word_count > 200 %>
+            <% if word_count > 100 %>
               <details class="rec-desc-toggle">
-                <div class="rec-desc rec-desc-teaser"><%= truncate_rich_html(rec.description.body.to_html, 200) %></div>
+                <div class="rec-desc rec-desc-teaser"><%= truncate_rich_html(rec.description.body.to_html, 100) %></div>
                 <div class="rec-desc rec-desc-full"><%= rec.description %></div>
-                <summary class="view-more-btn"><span class="more-label">View more</span><span class="less-label">View less</span></summary>
+                <summary class="view-more-btn"><span class="more-label">View description</span><span class="less-label">View less</span></summary>
               </details>
             <% else %>
               <div class="rec-desc"><%= rec.description %></div>
