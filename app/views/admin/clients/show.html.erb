@@ -25,7 +25,7 @@
           <div class="role-chip">
             <span><%= role.title %></span>
             <%= button_to "×", admin_client_role_path(@client, role), method: :delete,
-                data: { turbo_confirm: "Remove role "#{role.title}"? Recommendations tagged to it will become unassigned." },
+                data: { turbo_confirm: "Remove role \"#{role.title}\"? Recommendations tagged to it will become unassigned." },
                 class: "role-remove" %>
           </div>
         <% end %>
