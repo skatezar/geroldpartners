@@ -29,10 +29,9 @@ class Admin::ClientsController < ApplicationController
   end
 
   def update
-    attrs = client_params.to_h
+    attrs = client_params
     if attrs[:password].blank?
-      attrs.delete(:password)
-      attrs.delete(:password_confirmation)
+      attrs = attrs.except(:password, :password_confirmation)
     end
     if @client.update(attrs)
       redirect_to admin_client_path(@client), notice: 'Client updated.'
