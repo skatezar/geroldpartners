@@ -93,8 +93,24 @@
                   </td>
                   <td class="actions">
                     <%= link_to "Edit", edit_admin_client_recommendation_path(@client, rec), class: "btn-small" %>
+                    <button type="button" class="btn-small btn-send"
+                            onclick="toggleSendForm('<%= dom_id(rec) %>-send')">
+                      Send to Client
+                    </button>
                     <%= button_to "Delete", admin_client_recommendation_path(@client, rec), method: :delete,
                         data: { turbo_confirm: "Remove this recommendation?" }, class: "btn-small btn-danger" %>
+                  </td>
+                </tr>
+                <tr id="<%= dom_id(rec) %>-send" class="send-form-row" style="display:none;">
+                  <td colspan="5" style="padding: 0;">
+                    <div class="send-form-panel">
+                      <strong>Send recommendation for <%= rec.name %> to client</strong>
+                      <%= form_with url: send_to_client_admin_client_recommendation_path(@client, rec), method: :post, class: "send-form" do |f| %>
+                        <%= f.email_field :client_email, placeholder: "Client email address", required: true, class: "send-email-input" %>
+                        <%= f.submit "Send Email", class: "btn-primary" %>
+                        <button type="button" class="btn-secondary" onclick="toggleSendForm('<%= dom_id(rec) %>-send')">Cancel</button>
+                      <% end %>
+                    </div>
                   </td>
                 </tr>
               <% end %>
@@ -144,6 +160,27 @@
   .btn-danger:hover { background: #c82333; }
   .btn-primary { padding: 10px 22px; background: #000; color: white; text-decoration: none; border-radius: 6px; border: none; font-size: 1rem; font-family: 'Garamond', serif; cursor: pointer; }
   .btn-primary:hover { background: #333; }
-  .btn-secondary { padding: 8px 18px; background: #eee; color: #333; text-decoration: none; border-radius: 6px; }
+  .btn-secondary { padding: 8px 18px; background: #eee; color: #333; text-decoration: none; border-radius: 6px; border: none; cursor: pointer; }
   .no-data { text-align: center; padding: 60px 20px; color: #666; font-size: 1.2rem; }
+  .btn-send { background: #1a5c2a; color: white; }
+  .btn-send:hover { background: #154a22; }
+  .send-form-row td, .send-form-row:hover td { background: #f0f7f2; }
+  .send-form-panel { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .send-form-panel strong { font-size: 0.95rem; color: #1a1a1a; }
+  .send-form { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .send-email-input { padding: 9px 14px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; font-family: 'Garamond', serif; min-width: 280px; }
+  .send-email-input:focus { outline: none; border-color: #1a5c2a; }
 </style>
+
+<script>
+  function toggleSendForm(id) {
+    var row = document.getElementById(id);
+    if (row) {
+      row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+      if (row.style.display === 'table-row') {
+        var input = row.querySelector('input[type="email"]');
+        if (input) input.focus();
+      }
+    }
+  }
+</script>

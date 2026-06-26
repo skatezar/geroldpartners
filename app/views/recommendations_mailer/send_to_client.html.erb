@@ -1,0 +1,77 @@
+<div style="font-family: Garamond, Georgia, serif; color: #1a1a1a; line-height: 1.7; max-width: 640px; margin: 0 auto; padding: 30px 24px;">
+
+  <p style="font-size: 1rem;">Dear Client,</p>
+
+  <p style="font-size: 1rem;">Please find below our candidate recommendation for your consideration.</p>
+
+  <!-- Candidate card -->
+  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 28px 32px; margin: 28px 0; background: #fafafa;">
+
+    <h2 style="margin: 0 0 4px; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.01em;">
+      <%= @recommendation.name %>
+    </h2>
+
+    <% if @recommendation.role.present? %>
+      <p style="margin: 0 0 20px; font-size: 1rem; color: #555;">
+        <%= @recommendation.role.title %>
+      </p>
+    <% else %>
+      <div style="margin-bottom: 20px;"></div>
+    <% end %>
+
+    <!-- Key details -->
+    <table style="border-collapse: collapse; font-size: 0.95rem; margin-bottom: 20px;">
+      <% if @recommendation.compensation_expectation.present? %>
+        <tr>
+          <td style="padding: 4px 16px 4px 0; color: #666; white-space: nowrap; vertical-align: top;">Compensation</td>
+          <td style="padding: 4px 0; color: #1a1a1a;"><%= @recommendation.compensation_expectation %></td>
+        </tr>
+      <% end %>
+      <% if @recommendation.visa_requirement.present? %>
+        <tr>
+          <td style="padding: 4px 16px 4px 0; color: #666; white-space: nowrap; vertical-align: top;">Visa</td>
+          <td style="padding: 4px 0; color: #1a1a1a;"><%= @recommendation.visa_requirement %></td>
+        </tr>
+      <% end %>
+      <% if @recommendation.earliest_start.present? %>
+        <tr>
+          <td style="padding: 4px 16px 4px 0; color: #666; white-space: nowrap; vertical-align: top;">Earliest Start</td>
+          <td style="padding: 4px 0; color: #1a1a1a;"><%= @recommendation.earliest_start %></td>
+        </tr>
+      <% end %>
+      <% if @recommendation.linkedin_url.present? %>
+        <tr>
+          <td style="padding: 4px 16px 4px 0; color: #666; white-space: nowrap; vertical-align: top;">LinkedIn</td>
+          <td style="padding: 4px 0;">
+            <a href="<%= @recommendation.linkedin_url %>" style="color: #0a66c2; text-decoration: none;">View Profile</a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <!-- Description -->
+    <% if @recommendation.description.present? && @recommendation.description.body.present? %>
+      <div style="border-top: 1px solid #e0e0e0; padding-top: 18px; font-size: 0.95rem; color: #2a2a2a; line-height: 1.7;">
+        <%= @recommendation.description %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <% if @recommendation.cv.attached? %>
+    <p style="font-size: 0.95rem; color: #444;">
+      The candidate's CV is attached to this email as a PDF.
+    </p>
+  <% end %>
+
+  <p style="font-size: 1rem; margin-top: 28px;">
+    Please don't hesitate to reach out if you have any questions or would like to schedule an interview.
+  </p>
+
+  <p style="margin-top: 32px; font-size: 1rem;">
+    Best regards,<br>
+    Laurenz Gerold<br>
+    <span style="color: #555;">Gerold &amp; Partners</span>
+  </p>
+
+</div>

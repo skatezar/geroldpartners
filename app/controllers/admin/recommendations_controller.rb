@@ -1,7 +1,7 @@
 class Admin::RecommendationsController < ApplicationController
   include AdminAuthorizable
   before_action :set_client
-  before_action :set_recommendation, only: [:edit, :update, :destroy]
+  before_action :set_recommendation, only: [:edit, :update, :destroy, :send_to_client]
 
   def new
     @recommendation = @client.recommendations.build
@@ -30,6 +30,15 @@ class Admin::RecommendationsController < ApplicationController
   def destroy
     @recommendation.destroy
     redirect_to admin_client_path(@client), notice: 'Recommendation removed.'
+  end
+
+  def send_to_client
+    client_email = params[:client_email].to_s.strip
+    unless client_email.match?(URI::MailTo::EMAIL_REGEXP)
+      return redirect_to admin_client_path(@client), alert: 'Please enter a valid email address.'
+    end
+    RecommendationsMailer.send_to_client(@recommendation, client_email).deliver_later
+    redirect_to admin_client_path(@client), notice: "Recommendation for #{@recommendation.name} sent to #{client_email}."
   end
 
   private
