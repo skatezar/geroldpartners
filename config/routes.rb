@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :mandates
     resources :newsletter_subscriptions, only: [:index]
     resources :clients do
+      resources :roles, only: [:create, :destroy]
       resources :recommendations, only: [:new, :create, :edit, :update, :destroy]
     end
   end

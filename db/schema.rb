@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_16_000005) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_26_112942) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -125,7 +125,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_16_000005) do
     t.string "earliest_start"
     t.string "status", default: "not_interviewed", null: false
     t.string "email"
+    t.integer "role_id"
     t.index ["client_id"], name: "index_recommendations_on_client_id"
+    t.index ["role_id"], name: "index_recommendations_on_role_id"
     t.index ["status"], name: "index_recommendations_on_status"
   end
 
@@ -136,6 +138,14 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_16_000005) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["compensation_report_id"], name: "index_report_downloads_on_compensation_report_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "title"
+    t.integer "client_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_roles_on_client_id"
   end
 
   create_table "talent_pool_applications", force: :cascade do |t|
@@ -166,5 +176,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_16_000005) do
   add_foreign_key "compensation_reports", "users"
   add_foreign_key "mandates", "users"
   add_foreign_key "recommendations", "clients"
+  add_foreign_key "recommendations", "roles"
   add_foreign_key "report_downloads", "compensation_reports"
+  add_foreign_key "roles", "clients"
 end

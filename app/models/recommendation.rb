@@ -7,6 +7,7 @@ class Recommendation < ApplicationRecord
   }.freeze
 
   belongs_to :client
+  belongs_to :role, optional: true
   has_one_attached :cv
   has_rich_text :description
 

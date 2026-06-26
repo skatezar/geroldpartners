@@ -44,6 +44,6 @@ class Admin::RecommendationsController < ApplicationController
 
   def recommendation_params
     params.require(:recommendation).permit(:name, :email, :linkedin_url, :description, :cv,
-                                           :compensation_expectation, :visa_requirement, :earliest_start)
+                                           :compensation_expectation, :visa_requirement, :earliest_start, :role_id)
   end
 end

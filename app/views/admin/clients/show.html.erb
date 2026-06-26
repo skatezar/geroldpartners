@@ -13,61 +13,96 @@
     <p class="hint">Share this URL with the client and provide the password separately.</p>
   </div>
 
+  <%# ── Roles ─────────────────────────────────────────────── %>
+  <div class="section-header" style="margin-top: 40px;">
+    <h2>Roles (<%= @roles.size %>)</h2>
+  </div>
+
+  <div class="roles-area">
+    <% if @roles.any? %>
+      <div class="roles-list">
+        <% @roles.each do |role| %>
+          <div class="role-chip">
+            <span><%= role.title %></span>
+            <%= button_to "×", admin_client_role_path(@client, role), method: :delete,
+                data: { turbo_confirm: "Remove role "#{role.title}"? Recommendations tagged to it will become unassigned." },
+                class: "role-remove" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="no-data" style="padding: 16px 0;">No roles yet.</p>
+    <% end %>
+
+    <%= form_with url: admin_client_roles_path(@client), method: :post, class: "add-role-form" do |f| %>
+      <%= f.text_field :title, placeholder: "New role title (e.g. CFO)", name: "role[title]", required: true %>
+      <%= f.submit "Add Role", class: "btn-primary" %>
+    <% end %>
+  </div>
+
+  <%# ── Recommendations ─────────────────────────────────── %>
   <div class="admin-header" style="margin-top: 40px;">
-    <h2>Recommendations (<%= @recommendations.size %>)</h2>
+    <h2>Recommendations (<%= @recommendations_by_role.values.flatten.size %>)</h2>
     <%= link_to "Add Recommendation", new_admin_client_recommendation_path(@client), class: "btn-primary" %>
   </div>
 
-  <% if @recommendations.any? %>
-    <div class="mandates-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Details</th>
-            <th>LinkedIn</th>
-            <th>CV</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @recommendations.each do |rec| %>
-            <tr>
-              <td><%= rec.name %></td>
-              <td style="font-size: 0.9rem; color: #444;">
-                <% [["Comp", rec.compensation_expectation], ["Visa", rec.visa_requirement], ["Start", rec.earliest_start]].each do |label, value| %>
-                  <% if value.present? %>
-                    <div><strong><%= label %>:</strong> <%= value %></div>
-                  <% end %>
-                <% end %>
-                <% if rec.compensation_expectation.blank? && rec.visa_requirement.blank? && rec.earliest_start.blank? %>
-                  <span style="color:#999;">—</span>
-                <% end %>
-              </td>
-              <td>
-                <% if rec.linkedin_url.present? %>
-                  <%= link_to "Profile", rec.linkedin_url, target: "_blank" %>
-                <% else %>
-                  <span style="color:#999;">—</span>
-                <% end %>
-              </td>
-              <td>
-                <% if rec.cv.attached? %>
-                  <%= link_to "Download", rails_blob_path(rec.cv, disposition: "attachment"), target: "_blank" %>
-                <% else %>
-                  <span style="color:#999;">—</span>
-                <% end %>
-              </td>
-              <td class="actions">
-                <%= link_to "Edit", edit_admin_client_recommendation_path(@client, rec), class: "btn-small" %>
-                <%= button_to "Delete", admin_client_recommendation_path(@client, rec), method: :delete,
-                    data: { turbo_confirm: "Remove this recommendation?" }, class: "btn-small btn-danger" %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+  <% if @recommendations_by_role.any? %>
+    <%# Sort so named roles come first (alphabetically), unassigned last %>
+    <% sorted_groups = @recommendations_by_role.sort_by { |role, _| role ? role.title : "\xFF" } %>
+    <% sorted_groups.each do |role, recs| %>
+      <div class="role-group">
+        <h3 class="role-group-title"><%= role ? role.title : "Unassigned" %></h3>
+        <div class="mandates-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Details</th>
+                <th>LinkedIn</th>
+                <th>CV</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recs.each do |rec| %>
+                <tr>
+                  <td><%= rec.name %></td>
+                  <td style="font-size: 0.9rem; color: #444;">
+                    <% [["Comp", rec.compensation_expectation], ["Visa", rec.visa_requirement], ["Start", rec.earliest_start]].each do |label, value| %>
+                      <% if value.present? %>
+                        <div><strong><%= label %>:</strong> <%= value %></div>
+                      <% end %>
+                    <% end %>
+                    <% if rec.compensation_expectation.blank? && rec.visa_requirement.blank? && rec.earliest_start.blank? %>
+                      <span style="color:#999;">—</span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if rec.linkedin_url.present? %>
+                      <%= link_to "Profile", rec.linkedin_url, target: "_blank" %>
+                    <% else %>
+                      <span style="color:#999;">—</span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if rec.cv.attached? %>
+                      <%= link_to "Download", rails_blob_path(rec.cv, disposition: "attachment"), target: "_blank" %>
+                    <% else %>
+                      <span style="color:#999;">—</span>
+                    <% end %>
+                  </td>
+                  <td class="actions">
+                    <%= link_to "Edit", edit_admin_client_recommendation_path(@client, rec), class: "btn-small" %>
+                    <%= button_to "Delete", admin_client_recommendation_path(@client, rec), method: :delete,
+                        data: { turbo_confirm: "Remove this recommendation?" }, class: "btn-small btn-danger" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
   <% else %>
     <p class="no-data">No recommendations yet for this client.</p>
   <% end %>
@@ -79,10 +114,23 @@
   .admin-header h1, .admin-header h2 { margin: 0; }
   .admin-header h1 { font-size: 2.5rem; }
   .admin-header h2 { font-size: 1.6rem; }
+  .section-header { display: flex; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #ddd; }
+  .section-header h2 { margin: 0; font-size: 1.4rem; }
   .link-card { background: #f8f8f8; padding: 18px 22px; border-left: 4px solid #000; border-radius: 6px; font-size: 1rem; }
   .link-card a { color: #007bff; text-decoration: none; word-break: break-all; }
   .link-card a:hover { text-decoration: underline; }
   .link-card .hint { margin: 8px 0 0; color: #666; font-size: 0.9rem; }
+  .roles-area { margin-bottom: 10px; }
+  .roles-list { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+  .role-chip { display: flex; align-items: center; gap: 6px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 999px; padding: 6px 14px 6px 16px; font-size: 0.95rem; }
+  .role-chip span { color: #1a1a1a; }
+  .role-remove { background: none; border: none; color: #999; font-size: 1.1rem; cursor: pointer; padding: 0 2px; line-height: 1; }
+  .role-remove:hover { color: #dc3545; }
+  .add-role-form { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
+  .add-role-form input[type="text"] { padding: 9px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: 'Garamond', serif; width: 280px; }
+  .add-role-form input:focus { outline: none; border-color: #000; }
+  .role-group { margin-bottom: 36px; }
+  .role-group-title { font-size: 1.15rem; font-weight: 700; margin: 0 0 12px; padding: 8px 14px; background: #f4f4f4; border-left: 4px solid #000; border-radius: 4px; }
   .mandates-table { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
   table { width: 100%; border-collapse: collapse; }
   thead { background: #000; color: white; }
@@ -94,7 +142,7 @@
   .btn-small:hover { background: #000; }
   .btn-danger { background: #dc3545; }
   .btn-danger:hover { background: #c82333; }
-  .btn-primary { padding: 10px 22px; background: #000; color: white; text-decoration: none; border-radius: 6px; }
+  .btn-primary { padding: 10px 22px; background: #000; color: white; text-decoration: none; border-radius: 6px; border: none; font-size: 1rem; font-family: 'Garamond', serif; cursor: pointer; }
   .btn-primary:hover { background: #333; }
   .btn-secondary { padding: 8px 18px; background: #eee; color: #333; text-decoration: none; border-radius: 6px; }
   .no-data { text-align: center; padding: 60px 20px; color: #666; font-size: 1.2rem; }

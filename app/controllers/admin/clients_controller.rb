@@ -7,7 +7,8 @@ class Admin::ClientsController < ApplicationController
   end
 
   def show
-    @recommendations = @client.recommendations.order(created_at: :desc)
+    @roles = @client.roles.order(:title)
+    @recommendations_by_role = @client.recommendations.includes(:role).order(created_at: :desc).group_by(&:role)
   end
 
   def new

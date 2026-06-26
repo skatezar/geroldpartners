@@ -5,11 +5,11 @@ class ClientsController < ApplicationController
     unless authorized?
       return render :password
     end
-    @recommendations = @client.recommendations.order(created_at: :desc)
     @status_filter = params[:status]
-    if @status_filter.present? && Recommendation::STATUSES.key?(@status_filter)
-      @recommendations = @recommendations.where(status: @status_filter)
-    end
+    recs = @client.recommendations.includes(:role).order(created_at: :desc)
+    recs = recs.where(status: @status_filter) if @status_filter.present? && Recommendation::STATUSES.key?(@status_filter)
+    @recommendations = recs
+    @recommendations_by_role = recs.group_by(&:role)
   end
 
   def authenticate

@@ -11,6 +11,15 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :role_id, "Role" %>
+    <%= f.select :role_id,
+          options_for_select(client.roles.order(:title).map { |r| [r.title, r.id] }, recommendation.role_id),
+          { include_blank: "— No role assigned —" },
+          class: "role-select" %>
+    <small style="display:block; color:#666; margin-top:6px;">Assign this candidate to one of the client's roles.</small>
+  </div>
+
+  <div class="form-group">
     <%= f.label :name, "Candidate Name" %>
     <%= f.text_field :name, required: true, placeholder: "e.g. Jane Doe" %>
   </div>
@@ -65,7 +74,7 @@
   .error-messages { background: #f8d7da; color: #721c24; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
   .form-group { margin-bottom: 25px; }
   .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; font-size: 1rem; }
-  .form-group input[type="text"], .form-group input[type="url"], .form-group input[type="email"], .form-group input[type="password"], .form-group textarea, .form-group input[type="file"] { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; font-family: 'Garamond', serif; box-sizing: border-box; }
+  .form-group input[type="text"], .form-group input[type="url"], .form-group input[type="email"], .form-group input[type="password"], .form-group textarea, .form-group input[type="file"], .role-select { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; font-family: 'Garamond', serif; box-sizing: border-box; background: white; }
   .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #000; }
   .form-group textarea { resize: vertical; }
   .form-group trix-editor { border: 1px solid #ddd; border-radius: 0 0 8px 8px; padding: 12px 15px; min-height: 200px; font-family: 'Garamond', serif; font-size: 1rem; background: white; }

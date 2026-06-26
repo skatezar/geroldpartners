@@ -2,6 +2,7 @@ class Client < ApplicationRecord
   has_secure_password
 
   belongs_to :user, optional: true
+  has_many :roles, dependent: :destroy
   has_many :recommendations, dependent: :destroy
 
   validates :name, presence: true
