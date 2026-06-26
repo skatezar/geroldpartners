@@ -8,9 +8,14 @@
   </div>
 
   <div class="link-card">
-    <strong>Client link:</strong>
-    <a href="<%= client_url(@client.slug) %>" target="_blank"><%= client_url(@client.slug) %></a>
-    <p class="hint">Share this URL with the client and provide the password separately.</p>
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap;">
+      <div>
+        <strong>Client link:</strong>
+        <a href="<%= client_url(@client.slug) %>" target="_blank"><%= client_url(@client.slug) %></a>
+        <p class="hint">Share this URL with the client and provide the password separately.</p>
+      </div>
+      <%= link_to "View on Dashboard →", client_url(@client.slug, token: @client.preview_token), target: "_blank", class: "btn-preview" %>
+    </div>
   </div>
 
   <%# ── Roles ─────────────────────────────────────────────── %>
@@ -170,6 +175,8 @@
   .btn-primary:hover { background: #333; }
   .btn-secondary { padding: 8px 18px; background: #eee; color: #333; text-decoration: none; border-radius: 6px; border: none; cursor: pointer; }
   .no-data { text-align: center; padding: 60px 20px; color: #666; font-size: 1.2rem; }
+  .btn-preview { display: inline-block; padding: 9px 18px; background: #000; color: #fff; text-decoration: none; border-radius: 6px; font-size: 0.95rem; white-space: nowrap; font-family: 'Garamond', serif; }
+  .btn-preview:hover { background: #333; }
   .btn-send { background: #1a5c2a; color: white; }
   .btn-send:hover { background: #154a22; }
   .send-form-row td, .send-form-row:hover td { background: #f0f7f2; }

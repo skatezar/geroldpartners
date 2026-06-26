@@ -2,6 +2,10 @@ class ClientsController < ApplicationController
   before_action :set_client
 
   def show
+    if params[:token].present? && ActiveSupport::SecurityUtils.secure_compare(params[:token].to_s, @client.preview_token.to_s)
+      session[session_key] = true
+      return redirect_to client_path(@client.slug)
+    end
     unless authorized?
       return render :password
     end

@@ -11,6 +11,7 @@ class Client < ApplicationRecord
   validates :password, length: { minimum: 6 }, if: -> { new_record? || !password.nil? }
 
   before_validation :generate_slug, on: :create
+  after_create :generate_preview_token
 
   def to_param
     slug
@@ -21,6 +22,10 @@ class Client < ApplicationRecord
   end
 
   private
+
+  def generate_preview_token
+    update_column(:preview_token, SecureRandom.urlsafe_base64(24))
+  end
 
   def generate_slug
     return if slug.present?
