@@ -53,6 +53,6 @@ class Admin::ClientsController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(:name, :slug, :password, :password_confirmation)
+    params.require(:client).permit(:name, :slug, :password, :password_confirmation, :contact_emails)
   end
 end

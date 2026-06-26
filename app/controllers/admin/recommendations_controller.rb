@@ -33,12 +33,15 @@ class Admin::RecommendationsController < ApplicationController
   end
 
   def send_to_client
-    client_email = params[:client_email].to_s.strip
-    unless client_email.match?(URI::MailTo::EMAIL_REGEXP)
-      return redirect_to admin_client_path(@client), alert: 'Please enter a valid email address.'
+    emails = params[:client_email].to_s.split(",").map(&:strip).reject(&:blank?)
+    invalid = emails.reject { |e| e.match?(URI::MailTo::EMAIL_REGEXP) }
+    if emails.empty? || invalid.any?
+      return redirect_to admin_client_path(@client),
+             alert: "Invalid email address#{"es" if invalid.size > 1}: #{invalid.join(", ")}. Please correct and try again."
     end
-    RecommendationsMailer.send_to_client(@recommendation, client_email).deliver_later
-    redirect_to admin_client_path(@client), notice: "Recommendation for #{@recommendation.name} sent to #{client_email}."
+    RecommendationsMailer.send_to_client(@recommendation, emails).deliver_later
+    redirect_to admin_client_path(@client),
+                notice: "Recommendation for #{@recommendation.name} sent to #{emails.join(", ")}."
   end
 
   private

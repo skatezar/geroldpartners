@@ -106,7 +106,15 @@
                     <div class="send-form-panel">
                       <strong>Send recommendation for <%= rec.name %> to client</strong>
                       <%= form_with url: send_to_client_admin_client_recommendation_path(@client, rec), method: :post, class: "send-form" do |f| %>
-                        <%= f.email_field :client_email, placeholder: "Client email address", required: true, class: "send-email-input" %>
+                        <div style="flex: 1; min-width: 280px;">
+                          <%= f.text_field :client_email,
+                                value: @client.contact_emails.to_s,
+                                placeholder: "e.g. jane@fund.com, john@fund.com",
+                                required: true,
+                                class: "send-email-input",
+                                style: "width: 100%;" %>
+                          <small style="color:#555; font-size:0.82rem;">Comma-separate multiple addresses</small>
+                        </div>
                         <%= f.submit "Send Email", class: "btn-primary" %>
                         <button type="button" class="btn-secondary" onclick="toggleSendForm('<%= dom_id(rec) %>-send')">Cancel</button>
                       <% end %>

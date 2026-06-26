@@ -16,6 +16,10 @@ class Client < ApplicationRecord
     slug
   end
 
+  def contact_email_list
+    contact_emails.to_s.split(",").map(&:strip).reject(&:blank?)
+  end
+
   private
 
   def generate_slug

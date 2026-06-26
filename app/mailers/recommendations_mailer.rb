@@ -13,7 +13,7 @@ class RecommendationsMailer < ApplicationMailer
     )
   end
 
-  def send_to_client(recommendation, client_email)
+  def send_to_client(recommendation, emails)
     @recommendation = recommendation
     @client = recommendation.client
 
@@ -22,7 +22,7 @@ class RecommendationsMailer < ApplicationMailer
     end
 
     mail(
-      to: client_email,
+      to: Array(emails),
       cc: 'laurenz@geroldpartners.com',
       reply_to: 'laurenz@geroldpartners.com',
       subject: "Candidate recommendation — #{@recommendation.name}"
