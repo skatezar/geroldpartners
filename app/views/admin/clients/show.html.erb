@@ -102,6 +102,10 @@
                             onclick="toggleSendForm('<%= dom_id(rec) %>-send')">
                       Send to Client
                     </button>
+                    <button type="button" class="btn-small btn-avail"
+                            onclick="toggleAvailForm('<%= dom_id(rec) %>-avail')">
+                      Availability Link
+                    </button>
                     <%= button_to "Delete", admin_client_recommendation_path(@client, rec), method: :delete,
                         data: { turbo_confirm: "Remove this recommendation?" }, class: "btn-small btn-danger" %>
                   </td>
@@ -126,6 +130,48 @@
                     </div>
                   </td>
                 </tr>
+                  <tr id="<%= dom_id(rec) %>-avail" class="send-form-row avail-form-row" style="display:none;">
+                    <td colspan="5" style="padding: 0;">
+                      <div class="send-form-panel avail-panel">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+                          <div>
+                            <strong>Availability link for <%= rec.name %></strong>
+                            <% if rec.email.present? %>
+                              <p style="margin:6px 0 0; font-size:0.88rem; color:#555;">An email will be sent to <em><%= rec.email %></em> with a link to pick interview slots. Once submitted, the client and you will be notified automatically.</p>
+                            <% else %>
+                              <p style="margin:6px 0 0; font-size:0.88rem; color:#b94a00;">No email on file — copy the link below and share it manually.</p>
+                            <% end %>
+                            <% if rec.availability_submitted_at.present? %>
+                              <p style="margin:8px 0 0; font-size:0.85rem; color:#1a5c2a;">
+                                ✓ Availability submitted on <%= rec.availability_submitted_at.strftime("%-d %b %Y at %H:%M") %>
+                              </p>
+                              <% slots = rec.availability_slots_parsed %>
+                              <% if slots.any? %>
+                                <ul style="margin:6px 0 0; padding-left:18px; font-size:0.88rem; color:#333;">
+                                  <% slots.each_with_index do |slot, i| %>
+                                    <li>Option <%= i+1 %>: <%= slot %></li>
+                                  <% end %>
+                                </ul>
+                              <% end %>
+                            <% end %>
+                          </div>
+                          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <% if rec.availability_token.present? %>
+                              <button type="button" class="btn-secondary" style="font-size:0.88rem;"
+                                      onclick="copyLink('<%= availability_url(rec.availability_token) %>', this)">
+                                Copy link
+                              </button>
+                            <% end %>
+                            <% if rec.email.present? %>
+                              <%= button_to "Send email", send_availability_link_admin_client_recommendation_path(@client, rec),
+                                  method: :post, class: "btn-primary", style: "font-size:0.9rem; padding:9px 18px;" %>
+                            <% end %>
+                            <button type="button" class="btn-secondary" onclick="toggleAvailForm('<%= dom_id(rec) %>-avail')">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
               <% end %>
             </tbody>
           </table>
@@ -179,8 +225,12 @@
   .btn-preview:hover { background: #333; }
   .btn-send { background: #1a5c2a; color: white; }
   .btn-send:hover { background: #154a22; }
+  .btn-avail { background: #1a3c6a; color: white; }
+  .btn-avail:hover { background: #142e52; }
   .send-form-row td, .send-form-row:hover td { background: #f0f7f2; }
+  .avail-form-row td, .avail-form-row:hover td { background: #eef2f8; }
   .send-form-panel { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .avail-panel { padding: 18px 22px; }
   .send-form-panel strong { font-size: 0.95rem; color: #1a1a1a; }
   .send-form { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .send-email-input { padding: 9px 14px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; font-family: 'Garamond', serif; min-width: 280px; }
@@ -197,5 +247,20 @@
         if (input) input.focus();
       }
     }
+  }
+
+  function toggleAvailForm(id) {
+    var row = document.getElementById(id);
+    if (row) {
+      row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+    }
+  }
+
+  function copyLink(url, btn) {
+    navigator.clipboard.writeText(url).then(function() {
+      var orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = orig; }, 2000);
+    });
   }
 </script>

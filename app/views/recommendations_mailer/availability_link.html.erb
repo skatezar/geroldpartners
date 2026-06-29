@@ -1,0 +1,20 @@
+<div style="font-family: Garamond, Georgia, serif; color: #1a1a1a; line-height: 1.6; max-width: 620px; margin: 0 auto; padding: 30px 24px;">
+  <p>Dear <%= @recommendation.name.to_s.split.first %>,</p>
+
+  <p>I hope you're well. <strong><%= @client.name %></strong> has reviewed your profile and would like to invite you for an interview.</p>
+
+  <p>Could you please share your availability using the link below?</p>
+
+  <p style="margin: 28px 0;">
+    <a href="<%= @availability_url %>"
+       style="display: inline-block; padding: 13px 28px; background: #000; color: #fff; text-decoration: none; border-radius: 6px; font-size: 1rem;">
+      Share my availability →
+    </a>
+  </p>
+
+  <p style="font-size: 0.9rem; color: #666;">Or copy this link: <a href="<%= @availability_url %>" style="color: #007bff;"><%= @availability_url %></a></p>
+
+  <p>Once you've submitted your slots, we'll confirm the time that works best with the client and share any additional details ahead of the call.</p>
+
+  <p style="margin-top: 28px;">Best regards,<br>Laurenz Gerold<br>Gerold &amp; Partners</p>
+</div>

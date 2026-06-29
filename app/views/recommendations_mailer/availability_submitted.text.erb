@@ -1,0 +1,14 @@
+Hi,
+
+Please see below the availabilities for a first round interview with <%= @recommendation.name %>.
+
+Available slots<%= @client.timezone.present? ? " — #{@client.timezone}" : "" %>:
+<% @slots.each_with_index do |slot, i| %>
+Option <%= i + 1 %>: <%= slot %>
+<% end %>
+
+Please feel free to send a calendar invite with a call link directly to <%= @recommendation.name %> (cc).
+
+Best regards,
+Laurenz Gerold
+Gerold & Partners

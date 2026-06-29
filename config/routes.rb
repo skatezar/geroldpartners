@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :recommendations, only: [:new, :create, :edit, :update, :destroy] do
         member do
           post :send_to_client
+          post :send_availability_link
         end
       end
     end
@@ -24,6 +25,10 @@ Rails.application.routes.draw do
         to: "clients#update_recommendation_status", as: :update_client_recommendation_status
   post  "clients/:slug/recommendations/:recommendation_id/request_interview",
         to: "clients#request_interview", as: :request_client_recommendation_interview
+
+  get  "availability/:token",      to: "availability#show",   as: :availability
+  post "availability/:token",      to: "availability#submit",  as: :submit_availability
+  get  "availability/:token/done", to: "availability#done",    as: :availability_done
 
   resources :mandates, only: [:index, :show] do
     member do

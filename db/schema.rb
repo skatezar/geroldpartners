@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_26_152925) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_29_153600) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_26_152925) do
     t.datetime "updated_at", null: false
     t.string "contact_emails"
     t.string "preview_token"
+    t.string "timezone"
     t.index ["preview_token"], name: "index_clients_on_preview_token"
     t.index ["slug"], name: "index_clients_on_slug", unique: true
     t.index ["user_id"], name: "index_clients_on_user_id"
@@ -129,6 +130,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_26_152925) do
     t.string "status", default: "not_interviewed", null: false
     t.string "email"
     t.integer "role_id"
+    t.string "availability_token"
+    t.text "availability_slots"
+    t.datetime "availability_submitted_at"
+    t.index ["availability_token"], name: "index_recommendations_on_availability_token", unique: true
     t.index ["client_id"], name: "index_recommendations_on_client_id"
     t.index ["role_id"], name: "index_recommendations_on_role_id"
     t.index ["status"], name: "index_recommendations_on_status"

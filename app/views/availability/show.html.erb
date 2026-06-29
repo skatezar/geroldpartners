@@ -1,0 +1,371 @@
+<% content_for :title, "Share Your Availability" %>
+<div class="avail-wrap">
+  <header class="avail-header">
+    <p class="kicker">Gerold &amp; Partners</p>
+    <h1>Interview availability</h1>
+    <p class="lede">Dear <%= @recommendation.name.to_s.split.first %>, please share <strong>three</strong> time slots on three different days.</p>
+  </header>
+
+  <% if flash[:alert] %>
+    <div class="flash flash-alert"><%= flash[:alert] %></div>
+  <% end %>
+
+  <% tz = @recommendation.client.timezone.presence %>
+  <% if tz %>
+    <p class="tz-note">Please share times in <strong><%= tz %></strong>.</p>
+  <% end %>
+
+  <%= form_with url: submit_availability_path(@recommendation.availability_token), method: :post, id: "avail-form", data: { turbo: false } do |f| %>
+    <div id="slots-container">
+      <% 5.times do |i| %>
+        <div class="slot-row<%= i >= 3 ? ' slot-optional' : '' %>" id="slot-<%= i %>" style="<%= i >= 3 ? 'display:none;' : '' %>">
+          <span class="slot-label">Option <%= i + 1 %></span>
+          <div class="slot-display" data-slot="<%= i %>">
+            <span class="slot-placeholder" id="slot-placeholder-<%= i %>">Click to pick date &amp; time</span>
+            <span class="slot-chosen" id="slot-chosen-<%= i %>" style="display:none;"></span>
+            <span class="slot-edit-icon">✎</span>
+          </div>
+          <input type="hidden" name="slots[<%= i %>][date]"       id="slot-date-<%= i %>">
+          <input type="hidden" name="slots[<%= i %>][start_time]" id="slot-time-<%= i %>">
+          <input type="hidden" name="slots[<%= i %>][duration]"   id="slot-dur-<%= i %>">
+        </div>
+      <% end %>
+    </div>
+
+    <button type="button" id="add-slot-btn" class="btn-add-slot">+ Add another slot</button>
+
+    <div class="avail-footer">
+      <%= f.submit "Submit availability →", class: "btn-submit" %>
+    </div>
+  <% end %>
+
+  <footer class="page-foot">
+    <p>This link was sent to you by Gerold &amp; Partners on behalf of the hiring company.</p>
+  </footer>
+</div>
+
+<%# ── Picker modal ──────────────────────────────────────── %>
+<div id="picker-overlay">
+  <div id="picker-modal">
+    <div id="picker-step-next" class="picker-step" style="display:none;">
+      <p class="picker-slot-label" id="picker-next-label"></p>
+      <p class="picker-prompt" id="picker-next-heading"></p>
+      <button type="button" id="picker-next-btn" class="picker-confirm-btn">Add next option →</button>
+    </div>
+    <div id="picker-step-month" class="picker-step">
+      <p class="picker-slot-label" id="picker-slot-label"></p>
+      <p class="picker-prompt">Which month?</p>
+      <% if tz %>
+        <p class="picker-tz"><%= tz %></p>
+      <% end %>
+      <div id="month-grid" class="picker-grid"></div>
+    </div>
+    <div id="picker-step-day" class="picker-step" style="display:none;">
+      <button type="button" class="picker-back" id="back-to-month">← Back</button>
+      <p class="picker-prompt">Which day?</p>
+      <div id="day-grid" class="picker-grid"></div>
+    </div>
+    <div id="picker-step-time" class="picker-step" style="display:none;">
+      <button type="button" class="picker-back" id="back-to-day">← Back</button>
+      <p class="picker-prompt">What time?</p>
+      <div id="time-grid" class="picker-grid time-grid"></div>
+      <div class="duration-row">
+        <label class="dur-label">Duration</label>
+        <div class="dur-slider-wrap">
+          <input type="range" id="dur-slider" min="30" max="180" step="15" value="45">
+          <span id="dur-display">45 min</span>
+        </div>
+      </div>
+      <button type="button" id="picker-confirm" class="picker-confirm-btn" disabled>Confirm</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  body { margin: 0; background: #fafafa; }
+  .avail-wrap { max-width: 620px; margin: 0 auto; padding: 60px 24px 80px; font-family: 'Garamond', serif; color: #1a1a1a; }
+  .avail-header { padding-bottom: 28px; border-bottom: 2px solid #000; margin-bottom: 40px; }
+  .kicker { margin: 0 0 6px; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; color: #666; }
+  .avail-header h1 { margin: 0 0 10px; font-size: 2.6rem; line-height: 1.1; }
+  .lede { margin: 0; font-size: 1.1rem; color: #555; line-height: 1.6; }
+  .flash { padding: 12px 18px; border-radius: 8px; margin-bottom: 20px; font-size: 1rem; }
+  .flash-alert { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+  .tz-note { margin: 0 0 28px; padding: 12px 18px; background: #f4f4f4; border-left: 3px solid #000; border-radius: 4px; font-size: 0.95rem; color: #444; }
+
+  .slot-row { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: white; border: 1px solid #eee; border-radius: 10px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .slot-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #777; font-weight: 600; min-width: 66px; }
+  .slot-display { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; border: 1px dashed #ccc; border-radius: 8px; background: #fafafa; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .slot-display:hover { border-color: #000; background: #f4f4f4; }
+  .slot-display.filled { border-style: solid; border-color: #000; background: white; }
+  .slot-placeholder { color: #aaa; font-size: 0.95rem; font-style: italic; }
+  .slot-chosen { font-size: 1rem; color: #1a1a1a; font-weight: 600; }
+  .slot-edit-icon { color: #bbb; font-size: 0.9rem; flex-shrink: 0; }
+  .slot-display.filled .slot-edit-icon { color: #555; }
+
+  .btn-add-slot { background: none; border: 1px dashed #bbb; color: #666; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-family: 'Garamond', serif; font-size: 1rem; margin: 4px 0 28px; display: block; width: 100%; text-align: center; box-sizing: border-box; }
+  .btn-add-slot:hover { border-color: #000; color: #000; }
+  .avail-footer { display: flex; }
+  .btn-submit { padding: 14px 30px; background: #000; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-family: 'Garamond', serif; cursor: pointer; }
+  .btn-submit:hover { background: #333; }
+  .page-foot { margin-top: 60px; padding-top: 24px; border-top: 1px solid #ddd; text-align: center; color: #888; font-size: 0.88rem; }
+
+  /* Overlay */
+  #picker-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 9999; align-items: center; justify-content: center; }
+  #picker-overlay.open { display: flex; }
+  #picker-modal { background: white; border-radius: 16px; padding: 32px 28px; width: 360px; max-width: 92vw; box-shadow: 0 8px 40px rgba(0,0,0,0.2); font-family: 'Garamond', serif; }
+
+  .picker-step { }
+  .picker-slot-label { margin: 0 0 4px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #999; font-weight: 600; }
+  .picker-prompt { margin: 0 0 18px; font-size: 1.25rem; font-weight: 700; color: #1a1a1a; }
+  .picker-tz { margin: -10px 0 16px; font-size: 0.85rem; color: #888; font-style: italic; }
+  .picker-back { background: none; border: none; color: #777; font-size: 0.9rem; cursor: pointer; padding: 0; margin-bottom: 14px; font-family: 'Garamond', serif; display: block; }
+  .picker-back:hover { color: #000; }
+
+  .picker-grid { display: grid; gap: 8px; }
+  #month-grid { grid-template-columns: repeat(3, 1fr); }
+  #day-grid   { grid-template-columns: repeat(7, 1fr); }
+  .time-grid  { grid-template-columns: repeat(3, 1fr); }
+
+  .picker-cell { padding: 10px 6px; border: 1px solid #eee; border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.95rem; background: white; transition: background 0.12s, border-color 0.12s; user-select: none; font-family: 'Garamond', serif; }
+  .picker-cell:hover { background: #f0f0f0; border-color: #bbb; }
+  .picker-cell.selected { background: #000; color: white; border-color: #000; }
+  .picker-cell.disabled { color: #ddd; cursor: default; pointer-events: none; border-color: #f5f5f5; }
+  .day-cell { padding: 8px 2px; font-size: 0.9rem; }
+  .day-header { padding: 4px 2px; font-size: 0.75rem; color: #999; text-align: center; font-weight: 600; }
+
+  .duration-row { display: flex; align-items: center; gap: 14px; margin: 20px 0 18px; padding: 14px 16px; background: #f8f8f8; border-radius: 8px; }
+  .dur-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #777; font-weight: 600; white-space: nowrap; }
+  .dur-slider-wrap { display: flex; align-items: center; gap: 12px; flex: 1; }
+  #dur-slider { flex: 1; accent-color: #000; cursor: pointer; }
+  #dur-display { font-size: 1rem; font-weight: 700; color: #1a1a1a; min-width: 54px; text-align: right; }
+
+  .picker-confirm-btn { width: 100%; padding: 13px; background: #000; color: white; border: none; border-radius: 8px; font-size: 1.05rem; font-family: 'Garamond', serif; cursor: pointer; }
+  .picker-confirm-btn:hover:not(:disabled) { background: #333; }
+  .picker-confirm-btn:disabled { background: #ccc; cursor: default; }
+</style>
+
+<script>
+(function() {
+  var currentSlot = null;
+  var pickedMonthIdx = null; // 0-based month index
+  var pickedYear     = null;
+  var pickedDay      = null;
+  var pickedTime     = null; // "HH:MM"
+  var pickedDur      = 45;
+  var nextOptional   = 3;
+  var maxSlots       = 5;
+
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function formatTime(h, min) {
+    var suffix = h < 12 ? 'am' : 'pm';
+    var h12 = h % 12 || 12;
+    return h12 + (min ? ':' + pad(min) : '') + suffix;
+  }
+
+  // ── Show/hide overlay ──────────────────────────────────
+  function showOverlay() { document.getElementById('picker-overlay').classList.add('open'); }
+  function hideOverlay() { document.getElementById('picker-overlay').classList.remove('open'); }
+
+  function showStep(name) {
+    ['next','month','day','time'].forEach(function(s) {
+      document.getElementById('picker-step-' + s).style.display = s === name ? 'block' : 'none';
+    });
+  }
+
+  // ── Open picker ────────────────────────────────────────
+  function openPicker(idx) {
+    currentSlot    = idx;
+    pickedMonthIdx = null;
+    pickedYear     = null;
+    pickedDay      = null;
+    pickedTime     = null;
+    pickedDur      = 45;
+    document.getElementById('dur-slider').value = 45;
+    document.getElementById('dur-display').textContent = '45 min';
+    document.getElementById('picker-confirm').disabled = true;
+    document.getElementById('picker-slot-label').textContent = 'Option ' + (idx + 1);
+    buildMonthGrid();
+    showStep('month');
+    showOverlay();
+  }
+
+  // ── Month grid ─────────────────────────────────────────
+  function buildMonthGrid() {
+    var grid = document.getElementById('month-grid');
+    grid.innerHTML = '';
+    var nowMonth = today.getMonth();
+    var nowYear  = today.getFullYear();
+    for (var i = 0; i < 6; i++) {
+      var totalMonth = nowMonth + i;
+      var m  = totalMonth % 12;
+      var yr = nowYear + Math.floor(totalMonth / 12);
+      var label = MONTHS_SHORT[m] + (yr !== nowYear ? ' \'' + String(yr).slice(2) : '');
+      (function(month, year, lbl) {
+        var cell = document.createElement('div');
+        cell.className = 'picker-cell';
+        cell.textContent = lbl;
+        cell.addEventListener('click', function() {
+          pickedMonthIdx = month;
+          pickedYear     = year;
+          pickedDay      = null;
+          grid.querySelectorAll('.picker-cell').forEach(function(c) { c.classList.remove('selected'); });
+          cell.classList.add('selected');
+          buildDayGrid(month, year);
+          setTimeout(function() { showStep('day'); }, 100);
+        });
+        grid.appendChild(cell);
+      })(m, yr, label);
+    }
+  }
+
+  // ── Day grid ───────────────────────────────────────────
+  function buildDayGrid(month, year) {
+    var grid = document.getElementById('day-grid');
+    grid.innerHTML = '';
+    ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(function(d) {
+      var h = document.createElement('div');
+      h.className = 'day-header';
+      h.textContent = d;
+      grid.appendChild(h);
+    });
+    var firstWeekday = new Date(year, month, 1).getDay();
+    var daysInMonth  = new Date(year, month + 1, 0).getDate();
+    for (var i = 0; i < firstWeekday; i++) {
+      grid.appendChild(document.createElement('div'));
+    }
+    for (var d = 1; d <= daysInMonth; d++) {
+      var date  = new Date(year, month, d);
+      var isPast = date < today;
+      var cell  = document.createElement('div');
+      cell.className = 'picker-cell day-cell' + (isPast ? ' disabled' : '');
+      cell.textContent = d;
+      if (!isPast) {
+        (function(day) {
+          cell.addEventListener('click', function() {
+            pickedDay = day;
+            grid.querySelectorAll('.day-cell').forEach(function(c) { c.classList.remove('selected'); });
+            cell.classList.add('selected');
+            buildTimeGrid();
+            setTimeout(function() { showStep('time'); }, 100);
+          });
+        })(d);
+      }
+      grid.appendChild(cell);
+    }
+  }
+
+  // ── Time grid (8am–7pm, every 30 min) ─────────────────
+  function buildTimeGrid() {
+    var grid = document.getElementById('time-grid');
+    grid.innerHTML = '';
+    pickedTime = null;
+    document.getElementById('picker-confirm').disabled = true;
+    for (var h = 8; h <= 19; h++) {
+      [0, 30].forEach(function(min) {
+        if (h === 19 && min === 30) return;
+        var val   = pad(h) + ':' + pad(min);
+        var label = formatTime(h, min);
+        (function(v, lbl) {
+          var cell = document.createElement('div');
+          cell.className = 'picker-cell';
+          cell.textContent = lbl;
+          cell.addEventListener('click', function() {
+            pickedTime = v;
+            grid.querySelectorAll('.picker-cell').forEach(function(c) { c.classList.remove('selected'); });
+            cell.classList.add('selected');
+            document.getElementById('picker-confirm').disabled = false;
+          });
+          grid.appendChild(cell);
+        })(val, label);
+      });
+    }
+  }
+
+  // ── Confirm ────────────────────────────────────────────
+  function confirmPick() {
+    var parts  = pickedTime.split(':');
+    var h = parseInt(parts[0]), min = parseInt(parts[1]);
+    var label  = MONTHS_SHORT[pickedMonthIdx] + ' ' + pickedDay + ', ' + formatTime(h, min) + ' (' + pickedDur + ' min)';
+    var dateStr = pickedYear + '-' + pad(pickedMonthIdx + 1) + '-' + pad(pickedDay);
+
+    document.getElementById('slot-date-' + currentSlot).value = dateStr;
+    document.getElementById('slot-time-' + currentSlot).value = pickedTime;
+    document.getElementById('slot-dur-'  + currentSlot).value = pickedDur;
+
+    var placeholder = document.getElementById('slot-placeholder-' + currentSlot);
+    var chosen      = document.getElementById('slot-chosen-'      + currentSlot);
+    placeholder.style.display = 'none';
+    chosen.style.display      = 'inline';
+    chosen.textContent        = label;
+    document.querySelector('#slot-' + currentSlot + ' .slot-display').classList.add('filled');
+
+    // Find next unfilled required slot
+    var nextUnfilled = null;
+    for (var i = currentSlot + 1; i < 3; i++) {
+      if (!document.getElementById('slot-date-' + i).value) { nextUnfilled = i; break; }
+    }
+
+    if (nextUnfilled !== null) {
+      // Show interstitial before next slot
+      document.getElementById('picker-next-label').textContent = 'Option ' + (currentSlot + 1) + ' saved';
+      document.getElementById('picker-next-heading').textContent = 'Ready for option ' + (nextUnfilled + 1) + '?';
+      var nextIdx = nextUnfilled;
+      document.getElementById('picker-next-btn').onclick = function() { openPicker(nextIdx); };
+      showStep('next');
+    } else {
+      hideOverlay();
+    }
+  }
+
+  // ── Init ───────────────────────────────────────────────
+  function init() {
+    // Slot display clicks
+    document.querySelectorAll('.slot-display').forEach(function(el) {
+      el.addEventListener('click', function() {
+        openPicker(parseInt(el.dataset.slot));
+      });
+    });
+
+    // Overlay background click closes
+    document.getElementById('picker-overlay').addEventListener('click', function(e) {
+      if (e.target === this) hideOverlay();
+    });
+
+    // Back buttons
+    document.getElementById('back-to-month').addEventListener('click', function() { showStep('month'); });
+    document.getElementById('back-to-day').addEventListener('click',   function() { showStep('day'); });
+
+    // Duration slider
+    document.getElementById('dur-slider').addEventListener('input', function() {
+      pickedDur = parseInt(this.value);
+      document.getElementById('dur-display').textContent = pickedDur + ' min';
+    });
+
+    // Confirm button
+    document.getElementById('picker-confirm').addEventListener('click', confirmPick);
+
+    // Add slot button
+    document.getElementById('add-slot-btn').addEventListener('click', function() {
+      if (nextOptional < maxSlots) {
+        var row = document.getElementById('slot-' + nextOptional);
+        if (row) row.style.display = 'flex';
+        nextOptional++;
+        if (nextOptional >= maxSlots) this.style.display = 'none';
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
