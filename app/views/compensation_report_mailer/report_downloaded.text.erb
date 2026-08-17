@@ -1,0 +1,14 @@
+Compensation Report Downloaded
+
+Report: <%= @compensation_report.name %>
+Location: <%= @compensation_report.location %>
+
+Downloaded by
+Name: <%= @report_download.name %>
+Email: <%= @report_download.email %>
+Time: <%= @report_download.created_at.strftime("%B %-d, %Y at %H:%M UTC") %>
+<% if @report_download.compensation_details.present? %>
+
+Their Compensation Details
+<%= @report_download.compensation_details %>
+<% end %>

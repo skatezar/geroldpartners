@@ -17,7 +17,8 @@ class AvailabilityController < ApplicationController
 
     @recommendation.update!(
       availability_slots: slots.to_json,
-      availability_submitted_at: Time.current
+      availability_submitted_at: Time.current,
+      availability_timezone: params[:timezone].to_s.strip.presence
     )
 
     RecommendationsMailer.availability_submitted(@recommendation).deliver_now

@@ -446,7 +446,8 @@ document.addEventListener('turbo:load', function() {
           body: JSON.stringify({
             report_id: formData.get('report_id'),
             name: formData.get('name'),
-            email: formData.get('email')
+            email: formData.get('email'),
+            compensation_details: formData.get('compensation_details')
           })
         });
 

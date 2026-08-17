@@ -2,7 +2,7 @@ Hi,
 
 Please see below the availabilities for a first round interview with <%= @recommendation.name %>.
 
-Available slots<%= @client.timezone.present? ? " — #{@client.timezone}" : "" %>:
+Available slots<%= @timezone.present? ? " — #{@timezone}" : "" %>:
 <% @slots.each_with_index do |slot, i| %>
 Option <%= i + 1 %>: <%= slot %>
 <% end %>

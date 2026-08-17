@@ -16,6 +16,7 @@
   <% end %>
 
   <%= form_with url: submit_availability_path(@recommendation.availability_token), method: :post, id: "avail-form", data: { turbo: false } do |f| %>
+    <%= f.hidden_field :timezone, id: "candidate-timezone" %>
     <div id="slots-container">
       <% 5.times do |i| %>
         <div class="slot-row<%= i >= 3 ? ' slot-optional' : '' %>" id="slot-<%= i %>" style="<%= i >= 3 ? 'display:none;' : '' %>">
@@ -326,6 +327,12 @@
 
   // ── Init ───────────────────────────────────────────────
   function init() {
+    // Detect and store candidate's browser timezone
+    try {
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (tz) document.getElementById('candidate-timezone').value = tz;
+    } catch(e) {}
+
     // Slot display clicks
     document.querySelectorAll('.slot-display').forEach(function(el) {
       el.addEventListener('click', function() {

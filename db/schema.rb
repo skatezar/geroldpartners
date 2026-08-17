@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_29_153600) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_17_132613) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -133,6 +133,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_29_153600) do
     t.string "availability_token"
     t.text "availability_slots"
     t.datetime "availability_submitted_at"
+    t.string "availability_timezone"
     t.index ["availability_token"], name: "index_recommendations_on_availability_token", unique: true
     t.index ["client_id"], name: "index_recommendations_on_client_id"
     t.index ["role_id"], name: "index_recommendations_on_role_id"
@@ -145,6 +146,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_29_153600) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "compensation_details"
     t.index ["compensation_report_id"], name: "index_report_downloads_on_compensation_report_id"
   end
 

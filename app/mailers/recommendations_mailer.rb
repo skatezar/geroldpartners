@@ -30,6 +30,7 @@ class RecommendationsMailer < ApplicationMailer
     @recommendation = recommendation
     @client = recommendation.client
     @slots = recommendation.availability_slots_parsed
+    @timezone = recommendation.availability_timezone.presence || @client.timezone.presence
 
     client_emails = @client.contact_emails.to_s.split(",").map(&:strip).reject(&:blank?)
     to_emails = client_emails.presence || ['laurenz@geroldpartners.com']

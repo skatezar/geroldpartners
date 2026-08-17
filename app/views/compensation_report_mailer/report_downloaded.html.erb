@@ -1,0 +1,14 @@
+<h2>Compensation Report Downloaded</h2>
+
+<p><strong>Report:</strong> <%= @compensation_report.name %></p>
+<p><strong>Location:</strong> <%= @compensation_report.location %></p>
+
+<h3>Downloaded by</h3>
+<p><strong>Name:</strong> <%= @report_download.name %></p>
+<p><strong>Email:</strong> <%= @report_download.email %></p>
+<p><strong>Time:</strong> <%= @report_download.created_at.strftime("%B %-d, %Y at %H:%M UTC") %></p>
+
+<% if @report_download.compensation_details.present? %>
+<h3>Their Compensation Details</h3>
+<p><%= simple_format(@report_download.compensation_details) %></p>
+<% end %>
