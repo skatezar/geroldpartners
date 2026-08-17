@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   end
 
   post 'compensation_reports/download', to: 'compensation_reports#download'
+  get  'compensation_reports/:id', to: 'compensation_reports#show', as: :compensation_report
 
   get "home/index"
   get "gdpr", to: "pages#gdpr"

@@ -1,6 +1,10 @@
 class CompensationReportsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:download]
 
+  def show
+    @report = CompensationReport.find(params[:id])
+  end
+
   def download
     report_id = params[:report_id]
     name = params[:name]
