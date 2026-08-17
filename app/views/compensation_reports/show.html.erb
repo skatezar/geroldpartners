@@ -1,17 +1,131 @@
+<!-- Sidebar -->
+<nav class="side-nav">
+  <div class="nav-logo">GP</div>
+  <ul class="nav-links">
+    <li><a href="/" class="nav-link">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Home</span>
+    </a></li>
+    <li><a href="/#compensation-reports" class="nav-link active">
+      <span class="nav-dot"></span>
+      <span class="nav-text">Reports</span>
+    </a></li>
+  </ul>
+</nav>
+
+<!-- Top header -->
+<header class="report-show-header">
+  <a href="/" class="report-show-back">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="vertical-align:middle;margin-right:6px;">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+    Back
+  </a>
+  <span class="report-show-header-title">Gerold &amp; Partners</span>
+</header>
+
+<!-- Main content -->
+<div class="report-show-page">
+  <div class="report-show-card">
+    <div class="report-show-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    </div>
+
+    <h1><%= @report.name %></h1>
+    <p class="report-show-location"><%= @report.location %></p>
+
+    <% if @report.pdf.attached? %>
+      <button class="btn-primary" id="openDownloadModal"
+              data-report-id="<%= @report.id %>"
+              data-download-url="<%= rails_blob_path(@report.pdf, disposition: "attachment") %>">
+        Download Report
+      </button>
+    <% else %>
+      <p style="color:#999;margin-top:10px;">This report is not yet available.</p>
+    <% end %>
+  </div>
+</div>
+
+<!-- Download Modal -->
+<div id="downloadModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" id="downloadModalClose">&times;</span>
+    <h2>Download Report</h2>
+    <p style="text-align:center;color:#666;margin-bottom:20px;font-size:0.9rem;">Please provide your details to download this report</p>
+
+    <input type="hidden" id="downloadReportId">
+    <input type="hidden" id="downloadUrl">
+
+    <div class="form-group">
+      <label for="downloadName">Full Name</label>
+      <input type="text" id="downloadName" class="modal-input" required placeholder="Jane Smith">
+    </div>
+
+    <div class="form-group">
+      <label for="downloadEmail">Email</label>
+      <input type="email" id="downloadEmail" class="modal-input" required placeholder="jane@company.com">
+    </div>
+
+    <div class="form-group">
+      <label for="downloadCompDetails">Your Compensation (optional)</label>
+      <p style="font-size:0.82rem;color:#888;margin:2px 0 8px;">Share your current comp — role, base, bonus, equity — and we'll add it to our dataset. We may follow up to verify and can share anonymised benchmarks in return.</p>
+      <textarea id="downloadCompDetails" class="modal-input" rows="3" placeholder="e.g. CFO, €180k base + 20% bonus, Series B SaaS"></textarea>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-primary modal-submit" id="downloadSubmitBtn">Download</button>
+    </div>
+  </div>
+</div>
+
 <style>
-  .report-show {
+  .report-show-header {
+    position: fixed;
+    top: 0;
+    left: 255px;
+    right: 0;
+    height: 60px;
+    background: white;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    z-index: 500;
+    justify-content: space-between;
+  }
+
+  .report-show-back {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+  }
+
+  .report-show-back:hover { color: #000; }
+
+  .report-show-header-title {
+    font-size: 0.9rem;
+    color: #999;
+    letter-spacing: 0.5px;
+  }
+
+  .report-show-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 100px 20px;
+    padding: 100px 20px 60px;
   }
 
   .report-show-card {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     padding: 60px;
     max-width: 540px;
     width: 100%;
@@ -42,144 +156,15 @@
     margin-bottom: 36px;
   }
 
-  /* reuse modal styles from home page */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    align-items: center;
-    justify-content: center;
+  @media (max-width: 768px) {
+    .report-show-header {
+      left: 0;
+    }
+    .report-show-card {
+      padding: 40px 24px;
+    }
   }
-
-  .modal.show { display: flex; }
-
-  .modal-content {
-    background: white;
-    border-radius: 12px;
-    padding: 40px;
-    max-width: 480px;
-    width: 90%;
-    position: relative;
-  }
-
-  .modal-content h2 {
-    font-size: 1.6rem;
-    margin-bottom: 8px;
-    text-align: center;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 16px; right: 20px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #666;
-  }
-
-  .modal-close:hover { color: #000; }
-
-  .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-
-  .form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-    font-size: 0.9rem;
-  }
-
-  .modal-input {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-
-  .modal-input:focus {
-    outline: none;
-    border-color: #000;
-  }
-
-  .modal-footer {
-    margin-top: 24px;
-    text-align: center;
-  }
-
-  .btn-primary {
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 12px 32px;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  .btn-primary:hover { background: #333; }
-  .btn-primary:disabled { background: #999; cursor: not-allowed; }
 </style>
-
-<section class="report-show">
-  <div class="report-show-card">
-    <div class="report-show-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-    </div>
-
-    <h1><%= @report.name %></h1>
-    <p class="report-show-location"><%= @report.location %></p>
-
-    <% if @report.pdf.attached? %>
-      <button class="btn-primary" id="openDownloadModal"
-              data-report-id="<%= @report.id %>"
-              data-download-url="<%= rails_blob_path(@report.pdf, disposition: "attachment") %>">
-        Download Report
-      </button>
-    <% else %>
-      <p style="color:#999;">This report is not yet available.</p>
-    <% end %>
-  </div>
-</section>
-
-<div id="downloadModal" class="modal">
-  <div class="modal-content">
-    <span class="modal-close" id="downloadModalClose">&times;</span>
-    <h2>Download Report</h2>
-    <p style="text-align:center;color:#666;margin-bottom:20px;font-size:0.9rem;">Please provide your details to download this report</p>
-
-    <input type="hidden" id="downloadReportId">
-    <input type="hidden" id="downloadUrl">
-
-    <div class="form-group">
-      <label for="downloadName">Full Name</label>
-      <input type="text" id="downloadName" class="modal-input" required placeholder="Jane Smith">
-    </div>
-
-    <div class="form-group">
-      <label for="downloadEmail">Email</label>
-      <input type="email" id="downloadEmail" class="modal-input" required placeholder="jane@company.com">
-    </div>
-
-    <div class="form-group">
-      <label for="downloadCompDetails">Your Compensation (optional)</label>
-      <p style="font-size:0.82rem;color:#888;margin:2px 0 8px;">Share your current comp — role, base, bonus, equity — and we'll add it to our dataset. We may follow up to verify and can share anonymised benchmarks in return.</p>
-      <textarea id="downloadCompDetails" class="modal-input" rows="3" placeholder="e.g. CFO, €180k base + 20% bonus, Series B SaaS"></textarea>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn-primary" id="downloadSubmitBtn">Download</button>
-    </div>
-  </div>
-</div>
 
 <script>
   const modal = document.getElementById('downloadModal');
@@ -224,10 +209,7 @@
     try {
       const response = await fetch('/compensation_reports/download', {
         method: 'POST',
-        headers: {
-          'X-CSRF-Token': csrfToken,
-          'Content-Type': 'application/json'
-        },
+        headers: { 'X-CSRF-Token': csrfToken, 'Content-Type': 'application/json' },
         body: JSON.stringify({ report_id: reportId, name, email, compensation_details: compensationDetails })
       });
 

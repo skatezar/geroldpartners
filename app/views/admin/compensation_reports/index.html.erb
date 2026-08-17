@@ -28,6 +28,7 @@
                 <% end %>
               </td>
               <td class="actions">
+                <button class="btn-small btn-copy" onclick="copyReportLink('<%= compensation_report_url(report) %>', this)">Copy Link</button>
                 <%= link_to "Edit", edit_admin_compensation_report_path(report), class: "btn-small" %>
                 <%= button_to "Delete", admin_compensation_report_path(report), method: :delete,
                     data: { confirm: "Are you sure?" }, class: "btn-small btn-danger" %>
@@ -151,4 +152,29 @@
     color: #666;
     font-size: 1.2rem;
   }
+
+  .btn-copy {
+    background: #555;
+  }
+
+  .btn-copy:hover {
+    background: #333;
+  }
+
+  .btn-copy.copied {
+    background: #28a745;
+  }
 </style>
+
+<script>
+  function copyReportLink(url, btn) {
+    navigator.clipboard.writeText(url).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy Link';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
