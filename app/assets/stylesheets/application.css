@@ -1087,21 +1087,27 @@ html {
   border-color: rgba(255, 255, 255, 0.5);
 }
 
-/* WhatsApp Link */
+/* WhatsApp Button */
 .whatsapp-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  color: #25D366;
+  justify-content: center;
+  gap: 8px;
+  background: #25D366;
+  color: #fff;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 600;
-  margin-top: 16px;
-  transition: opacity 0.2s;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-top: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background 0.2s;
 }
 
 .whatsapp-link:hover {
-  opacity: 0.75;
+  background: #1ebe5d;
 }
 
 /* Responsive Design */
