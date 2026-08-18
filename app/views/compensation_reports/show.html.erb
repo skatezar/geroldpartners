@@ -68,6 +68,12 @@
       <input type="email" id="downloadEmail" class="modal-input" required placeholder="jane@company.com">
     </div>
 
+    <div class="form-group">
+      <label for="downloadCompDetails">Compensation Details (Optional)</label>
+      <p style="font-size:0.82rem;color:#888;margin:2px 0 8px;">Share your current comp — role, base, bonus, equity. Helps us improve our benchmarks.</p>
+      <textarea id="downloadCompDetails" class="modal-input" rows="3" placeholder="e.g. CFO, €180k base + 20% bonus, Series B SaaS"></textarea>
+    </div>
+
     <div class="form-group" style="display:flex;align-items:flex-start;gap:10px;">
       <input type="checkbox" id="downloadNewsletter" style="margin-top:3px;flex-shrink:0;width:16px;height:16px;cursor:pointer;">
       <label for="downloadNewsletter" style="font-weight:normal;font-size:0.95rem;cursor:pointer;margin:0;">Join our newsletter for executive insights and market updates</label>
@@ -191,6 +197,7 @@
   submitBtn.addEventListener('click', async () => {
     const name = document.getElementById('downloadName').value.trim();
     const email = document.getElementById('downloadEmail').value.trim();
+    const compensationDetails = document.getElementById('downloadCompDetails').value.trim();
     const newsletter = document.getElementById('downloadNewsletter').checked;
     const reportId = document.getElementById('downloadReportId').value;
     const downloadUrl = document.getElementById('downloadUrl').value;
@@ -209,7 +216,7 @@
       const response = await fetch('/compensation_reports/download', {
         method: 'POST',
         headers: { 'X-CSRF-Token': csrfToken, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ report_id: reportId, name, email, newsletter })
+        body: JSON.stringify({ report_id: reportId, name, email, compensation_details: compensationDetails, newsletter })
       });
 
       const result = await response.json();

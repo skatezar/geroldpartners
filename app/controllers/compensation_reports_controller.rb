@@ -26,7 +26,8 @@ class CompensationReportsController < ApplicationController
     report_download = ReportDownload.new(
       compensation_report: compensation_report,
       name: name,
-      email: email
+      email: email,
+      compensation_details: params[:compensation_details].presence
     )
 
     if report_download.save
