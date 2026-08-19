@@ -32,6 +32,7 @@ class CompensationReportsController < ApplicationController
 
     if report_download.save
       CompensationReportMailer.report_downloaded(report_download).deliver_later
+      CompensationReportMailer.report_sent(report_download).deliver_later
 
       if newsletter
         subscription = NewsletterSubscription.find_or_initialize_by(email: email.downcase)

@@ -431,12 +431,11 @@ document.addEventListener('turbo:load', function() {
       const downloadUrl = downloadUrlInput.value;
 
       submitBtn.disabled = true;
-      submitBtn.value = 'Downloading...';
+      submitBtn.value = 'Sending...';
 
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
       try {
-        // Submit the form data to track the download
         const response = await fetch('/compensation_reports/download', {
           method: 'POST',
           headers: {
@@ -455,15 +454,12 @@ document.addEventListener('turbo:load', function() {
         const result = await response.json();
 
         if (result.success) {
-          // Trigger the download
-          window.open(downloadUrl, '_blank');
-
-          // Close modal and reset form
           downloadModal.classList.remove('show');
           document.body.style.overflow = 'auto';
           downloadForm.reset();
           submitBtn.value = originalText;
           submitBtn.disabled = false;
+          alert('The report has been sent to your email.');
         } else {
           alert('Error: ' + (result.errors ? result.errors.join(', ') : 'Something went wrong'));
           submitBtn.value = originalText;
