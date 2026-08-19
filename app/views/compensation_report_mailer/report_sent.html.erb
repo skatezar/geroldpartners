@@ -1,7 +1,35 @@
-<p>Hi <%= @report_download.name %>,</p>
+<div style="font-family: Garamond, Georgia, serif; color: #1a1a1a; line-height: 1.7; max-width: 640px; margin: 0 auto; padding: 30px 24px;">
 
-<p>Thank you for your interest. Please find your copy of the <strong><%= @compensation_report.name %></strong> compensation report attached.</p>
+  <p style="font-size: 1rem;">Hi <%= @report_download.name %>,</p>
 
-<p>If you'd like to discuss market-level compensation data in more detail, feel free to reach out to us on WhatsApp or reply to this email.</p>
+  <p style="font-size: 1rem;">Thank you for your interest. Please find your copy of the <strong><%= @compensation_report.name %></strong> compensation report attached.</p>
 
-<p>Best regards,<br>Gerold &amp; Partners</p>
+  <!-- Report card -->
+  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 28px 32px; margin: 28px 0; background: #fafafa;">
+
+    <h2 style="margin: 0 0 4px; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.01em;">
+      <%= @compensation_report.name %>
+    </h2>
+
+    <p style="margin: 0 0 20px; font-size: 1rem; color: #555;">
+      <%= @compensation_report.location %>
+    </p>
+
+    <div style="border-top: 1px solid #e0e0e0; padding-top: 18px; font-size: 0.95rem; color: #2a2a2a; line-height: 1.7;">
+      This report provides market-level compensation benchmarks for senior finance professionals. If you'd like to discuss the data in more detail or explore like-for-like metrics tailored to your exact role, feel free to reach out.
+    </div>
+
+  </div>
+
+  <p style="font-size: 1rem; margin-top: 28px;">
+    Please don't hesitate to get in touch if you have any questions.
+  </p>
+
+  <p style="margin-top: 32px; font-size: 1rem;">
+    Best regards,<br>
+    Laurenz Gerold<br>
+    <span style="color: #555;">Gerold &amp; Partners</span><br>
+    <span style="color: #555;">+44 7456 252 602</span>
+  </p>
+
+</div>
