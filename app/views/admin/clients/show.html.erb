@@ -51,25 +51,34 @@
     <%= link_to "Add Recommendation", new_admin_client_recommendation_path(@client), class: "btn-primary" %>
   </div>
 
-  <% if @recommendations_by_role.any? %>
-    <%# Sort so named roles come first (alphabetically), unassigned last %>
-    <% sorted_groups = @recommendations_by_role.sort_by { |role, _| role ? role.title : "\xFF" } %>
-    <% sorted_groups.each do |role, recs| %>
+  <%# Merge all roles that appear in either recommendations or employers %>
+  <% all_roles = ((@recommendations_by_role.keys + @employers_by_role.keys).uniq).sort_by { |r| r ? r.title : "\xFF" } %>
+
+  <% if all_roles.any? %>
+    <% all_roles.each do |role| %>
+      <% recs = @recommendations_by_role[role] || [] %>
+      <% employers = @employers_by_role[role] || [] %>
       <div class="role-group">
         <h3 class="role-group-title"><%= role ? role.title : "Unassigned" %></h3>
-        <div class="mandates-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Details</th>
-                <th>LinkedIn</th>
-                <th>CV</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% recs.each do |rec| %>
+        <div class="role-columns">
+
+          <%# ── Candidates column ── %>
+          <div class="role-col">
+            <h4 class="col-heading">Candidates (<%= recs.size %>)</h4>
+            <% if recs.any? %>
+            <div class="mandates-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Details</th>
+                    <th>LinkedIn</th>
+                    <th>CV</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% recs.each do |rec| %>
                 <tr>
                   <td><%= rec.name %></td>
                   <td style="font-size: 0.9rem; color: #444;">
@@ -172,14 +181,68 @@
                       </div>
                     </td>
                   </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+            <% else %>
+              <p class="col-empty">No candidates yet.</p>
+            <% end %>
+          </div>
+
+          <%# ── Employers column ── %>
+          <div class="role-col employers-col">
+            <h4 class="col-heading">Target Employers (<%= employers.size %>)</h4>
+
+            <% employers.each do |employer| %>
+              <div class="employer-card" id="employer-<%= employer.id %>">
+                <div class="employer-header">
+                  <div>
+                    <strong class="employer-name"><%= employer.name %></strong>
+                    <% if employer.website.present? %>
+                      <a href="<%= employer.website.start_with?('http') ? employer.website : "https://#{employer.website}" %>"
+                         target="_blank" class="employer-website"><%= employer.website %></a>
+                    <% end %>
+                  </div>
+                  <div class="employer-actions">
+                    <button class="btn-icon" title="Edit" onclick="toggleEmployerEdit(<%= employer.id %>)">✎</button>
+                    <%= button_to "×", admin_client_employer_path(@client, employer), method: :delete,
+                        data: { turbo_confirm: "Remove #{employer.name}?" },
+                        class: "btn-icon btn-icon-danger" %>
+                  </div>
+                </div>
+                <div class="employer-notes" id="employer-notes-<%= employer.id %>">
+                  <%= employer.notes.present? ? employer.notes : "<span style='color:#bbb;font-style:italic;'>No notes yet</span>".html_safe %>
+                </div>
+                <div class="employer-edit-form" id="employer-edit-<%= employer.id %>" style="display:none;">
+                  <input type="text" class="employer-input" value="<%= employer.name %>" placeholder="Employer name" id="employer-name-<%= employer.id %>">
+                  <input type="text" class="employer-input" value="<%= employer.website %>" placeholder="Website (optional)" id="employer-website-<%= employer.id %>">
+                  <textarea class="employer-textarea" placeholder="Annotations / notes..." id="employer-textarea-<%= employer.id %>"><%= employer.notes %></textarea>
+                  <div style="display:flex;gap:8px;margin-top:8px;">
+                    <button class="btn-small btn-send" onclick="saveEmployer(<%= employer.id %>, '<%= admin_client_employer_path(@client, employer) %>')">Save</button>
+                    <button class="btn-small" onclick="toggleEmployerEdit(<%= employer.id %>)">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <%# Add employer form %>
+            <div class="add-employer-form-wrap">
+              <%= form_with url: admin_client_employers_path(@client), method: :post, class: "add-employer-form" do |f| %>
+                <%= f.hidden_field :role_id, value: role&.id %>
+                <%= f.text_field :name, placeholder: "Employer name", required: true, class: "employer-input" %>
+                <%= f.text_field :website, placeholder: "Website (optional)", class: "employer-input" %>
+                <%= f.text_area :notes, placeholder: "Annotations / notes...", class: "employer-textarea", rows: 2 %>
+                <%= f.submit "+ Add Employer", class: "btn-small btn-send" %>
               <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
+            </div>
+          </div>
+
+        </div><%# end role-columns %>
+      </div><%# end role-group %>
     <% end %>
   <% else %>
-    <p class="no-data">No recommendations yet for this client.</p>
+    <p class="no-data">No recommendations or employers yet for this client.</p>
   <% end %>
 </div>
 
@@ -235,6 +298,36 @@
   .send-form { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .send-email-input { padding: 9px 14px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; font-family: 'Garamond', serif; min-width: 280px; }
   .send-email-input:focus { outline: none; border-color: #1a5c2a; }
+
+  /* Role two-column layout */
+  .role-columns { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+  .role-col {}
+  .col-heading { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: #666; margin: 0 0 12px; }
+  .col-empty { color: #999; font-style: italic; font-size: 0.95rem; padding: 8px 0; }
+
+  /* Employer cards */
+  .employers-col { display: flex; flex-direction: column; gap: 12px; }
+  .employer-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 14px 16px; }
+  .employer-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .employer-name { font-size: 1rem; color: #1a1a1a; display: block; }
+  .employer-website { font-size: 0.82rem; color: #007bff; text-decoration: none; display: block; margin-top: 2px; }
+  .employer-website:hover { text-decoration: underline; }
+  .employer-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .btn-icon { background: none; border: 1px solid #ddd; border-radius: 4px; padding: 3px 8px; font-size: 0.9rem; cursor: pointer; color: #555; }
+  .btn-icon:hover { background: #f4f4f4; }
+  .btn-icon-danger { color: #dc3545; border-color: #dc3545; }
+  .btn-icon-danger:hover { background: #fff0f0; }
+  .employer-notes { font-size: 0.9rem; color: #444; line-height: 1.5; white-space: pre-wrap; }
+  .employer-input { width: 100%; padding: 7px 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.9rem; font-family: 'Garamond', serif; box-sizing: border-box; margin-bottom: 6px; }
+  .employer-input:focus { outline: none; border-color: #000; }
+  .employer-textarea { width: 100%; padding: 7px 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.9rem; font-family: 'Garamond', serif; box-sizing: border-box; resize: vertical; min-height: 70px; }
+  .employer-textarea:focus { outline: none; border-color: #000; }
+  .add-employer-form-wrap { margin-top: 4px; background: #f8f8f8; border: 1px dashed #ccc; border-radius: 8px; padding: 14px 16px; }
+  .add-employer-form { display: flex; flex-direction: column; gap: 6px; }
+
+  @media (max-width: 900px) {
+    .role-columns { grid-template-columns: 1fr; }
+  }
 </style>
 
 <script>
@@ -254,6 +347,30 @@
     if (row) {
       row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
     }
+  }
+
+  function toggleEmployerEdit(id) {
+    var notes = document.getElementById('employer-notes-' + id);
+    var form  = document.getElementById('employer-edit-' + id);
+    var isHidden = form.style.display === 'none';
+    notes.style.display = isHidden ? 'none' : 'block';
+    form.style.display  = isHidden ? 'block' : 'none';
+  }
+
+  function saveEmployer(id, url) {
+    var name    = document.getElementById('employer-name-' + id).value;
+    var website = document.getElementById('employer-website-' + id).value;
+    var notes   = document.getElementById('employer-textarea-' + id).value;
+    var csrf    = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    fetch(url, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf },
+      body: JSON.stringify({ employer: { name: name, website: website, notes: notes } })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.success) { location.reload(); }
+      else { alert('Error: ' + data.errors.join(', ')); }
+    });
   }
 
   function copyLink(url, btn) {

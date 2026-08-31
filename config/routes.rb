@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :newsletter_subscriptions, only: [:index]
     resources :clients do
       resources :roles, only: [:create, :destroy]
+      resources :employers, only: [:create, :update, :destroy]
       resources :recommendations, only: [:new, :create, :edit, :update, :destroy] do
         member do
           post :send_to_client

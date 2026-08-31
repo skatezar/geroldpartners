@@ -4,6 +4,7 @@ class Client < ApplicationRecord
   belongs_to :user, optional: true
   has_many :roles, dependent: :destroy
   has_many :recommendations, dependent: :destroy
+  has_many :employers, dependent: :destroy
 
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: true,

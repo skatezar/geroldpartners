@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_08_17_132613) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_31_111053) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -90,6 +90,18 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_17_132613) do
     t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "employers", force: :cascade do |t|
+    t.string "name"
+    t.string "website"
+    t.text "notes"
+    t.integer "client_id", null: false
+    t.integer "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_employers_on_client_id"
+    t.index ["role_id"], name: "index_employers_on_role_id"
   end
 
   create_table "mandates", force: :cascade do |t|
@@ -184,6 +196,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_17_132613) do
   add_foreign_key "applications", "mandates"
   add_foreign_key "clients", "users"
   add_foreign_key "compensation_reports", "users"
+  add_foreign_key "employers", "clients"
+  add_foreign_key "employers", "roles"
   add_foreign_key "mandates", "users"
   add_foreign_key "recommendations", "clients"
   add_foreign_key "recommendations", "roles"
