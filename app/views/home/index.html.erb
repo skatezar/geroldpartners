@@ -57,6 +57,7 @@
       <h3>Stay Updated</h3>
       <p>Subscribe to receive updates on new opportunities and industry insights</p>
       <%= form_with url: newsletter_subscriptions_path, scope: :newsletter_subscription, id: "newsletterForm", class: "newsletter-form" do |f| %>
+        <div style="position:absolute;left:-9999px;opacity:0;"><input type="text" name="website_url" tabindex="-1" autocomplete="off"></div>
         <div class="newsletter-input-group">
           <%= f.email_field :email, placeholder: "Enter your email", required: true, class: "newsletter-input" %>
           <%= f.submit "Subscribe", class: "newsletter-btn" %>
@@ -451,6 +452,7 @@
       <h2 style="color: black;">Join Our Network</h2>
       <p style="text-align: center;">Upload your CV to be considered for current and future opportunities</p>
       <%= form_with url: talent_pool_applications_path, multipart: true, id: "cvForm", class: "cv-form" do |f| %>
+        <div style="position:absolute;left:-9999px;opacity:0;"><input type="text" name="website_url" tabindex="-1" autocomplete="off"></div>
         <div class="form-group">
           <%= f.label :name, "Full Name" %>
           <%= f.text_field :name, required: true %>
@@ -733,6 +735,7 @@
     <h2 id="downloadModalTitle">Download Report</h2>
     <p style="text-align: center; color: #666; margin-bottom: 25px;">Enter your details and we'll send the report to your email</p>
     <%= form_with url: "#", id: "downloadForm", local: false do |f| %>
+      <div style="position:absolute;left:-9999px;opacity:0;"><input type="text" name="website_url" tabindex="-1" autocomplete="off"></div>
       <input type="hidden" id="downloadReportId" name="report_id">
       <input type="hidden" id="downloadUrl" name="download_url">
 

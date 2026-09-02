@@ -89,6 +89,7 @@
     <span class="modal-close">&times;</span>
     <h2 id="modalTitle">Apply for Position</h2>
     <%= form_with url: "#", id: "applicationForm", multipart: true, local: false do |f| %>
+      <div style="position:absolute;left:-9999px;opacity:0;"><input type="text" name="website_url" tabindex="-1" autocomplete="off"></div>
       <input type="hidden" id="modalMandateId" name="mandate_id">
 
       <div class="form-group">

@@ -1,5 +1,10 @@
 class NewsletterSubscriptionsController < ApplicationController
   def create
+    if bot_submission? || rate_limited?("newsletter")
+      render json: { success: true, message: 'Please check your email to confirm your subscription.' }
+      return
+    end
+
     @subscription = NewsletterSubscription.new(subscription_params)
 
     if @subscription.save

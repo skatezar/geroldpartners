@@ -61,6 +61,7 @@
     <h2>Download Report</h2>
     <p style="text-align:center;color:#666;margin-bottom:20px;font-size:0.9rem;">Enter your details and we'll send the report to your email</p>
 
+    <div style="position:absolute;left:-9999px;opacity:0;"><input type="text" id="hp_website_url" tabindex="-1" autocomplete="off"></div>
     <input type="hidden" id="downloadReportId">
     <input type="hidden" id="downloadUrl">
 
@@ -227,7 +228,7 @@
       const response = await fetch('/compensation_reports/download', {
         method: 'POST',
         headers: { 'X-CSRF-Token': csrfToken, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ report_id: reportId, name, email, compensation_details: compensationDetails, newsletter })
+        body: JSON.stringify({ report_id: reportId, name, email, compensation_details: compensationDetails, newsletter, website_url: document.getElementById('hp_website_url').value })
       });
 
       const result = await response.json();

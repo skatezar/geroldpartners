@@ -4,6 +4,11 @@ class MandatesController < ApplicationController
   end
 
   def apply
+    if bot_submission? || rate_limited?("mandate_apply", limit: 5)
+      render json: { success: true, message: 'Application submitted successfully!' }
+      return
+    end
+
     @mandate = Mandate.find(params[:id])
     @application = JobApplication.new(
       mandate: @mandate,

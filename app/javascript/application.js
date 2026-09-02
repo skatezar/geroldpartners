@@ -447,7 +447,8 @@ document.addEventListener('turbo:load', function() {
             name: formData.get('name'),
             email: formData.get('email'),
             compensation_details: formData.get('compensation_details'),
-            newsletter: formData.get('newsletter') === 'on'
+            newsletter: formData.get('newsletter') === 'on',
+            website_url: formData.get('website_url')
           })
         });
 

@@ -2,6 +2,11 @@ class TalentPoolApplicationsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def create
+    if bot_submission? || rate_limited?("talent_pool", limit: 5)
+      render json: { success: true, message: 'Application submitted successfully!' }
+      return
+    end
+
     @application = TalentPoolApplication.new(talent_pool_params)
 
     # Attach CV if present

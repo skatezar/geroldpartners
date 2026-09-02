@@ -6,6 +6,11 @@ class CompensationReportsController < ApplicationController
   end
 
   def download
+    if bot_submission? || rate_limited?("comp_report", limit: 10)
+      render json: { success: false, errors: ["Too many requests. Please try again later."] }, status: :too_many_requests
+      return
+    end
+
     report_id = params[:report_id]
     name = params[:name]
     email = params[:email]
