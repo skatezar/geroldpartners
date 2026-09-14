@@ -3,7 +3,9 @@ class Admin::CompensationReportsController < ApplicationController
   before_action :set_compensation_report, only: [:edit, :update, :destroy]
 
   def index
-    @compensation_reports = CompensationReport.all.order(created_at: :desc)
+    @compensation_reports = CompensationReport.includes(:report_downloads).all.order(created_at: :desc)
+    subscriber_emails = NewsletterSubscription.pluck(:email).map(&:downcase).to_set
+    @subscriber_emails = subscriber_emails
   end
 
   def new

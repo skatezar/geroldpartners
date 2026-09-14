@@ -34,6 +34,43 @@
                     data: { confirm: "Are you sure?" }, class: "btn-small btn-danger" %>
               </td>
             </tr>
+            <% if report.report_downloads.any? %>
+              <tr class="downloads-row">
+                <td colspan="4" style="padding: 0;">
+                  <div class="downloads-panel">
+                    <div class="downloads-panel-header">
+                      <%= report.report_downloads.size %> download<%= report.report_downloads.size == 1 ? "" : "s" %>
+                    </div>
+                    <table class="downloads-table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Newsletter</th>
+                          <th>Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% report.report_downloads.order(created_at: :desc).each do |dl| %>
+                          <tr>
+                            <td><%= dl.name %></td>
+                            <td><%= dl.email %></td>
+                            <td>
+                              <% if @subscriber_emails.include?(dl.email.to_s.downcase) %>
+                                <span class="badge-yes">Subscribed</span>
+                              <% else %>
+                                <span class="badge-no">No</span>
+                              <% end %>
+                            </td>
+                            <td><%= dl.created_at.strftime("%-d %b %Y") %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
@@ -164,6 +201,18 @@
   .btn-copy.copied {
     background: #28a745;
   }
+
+  .downloads-row td { padding: 0 !important; background: #f4f4f4; }
+  .downloads-row:hover td { background: #f4f4f4; }
+  .downloads-panel { padding: 12px 20px 16px; }
+  .downloads-panel-header { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 8px; }
+  .downloads-table { width: 100%; border-collapse: collapse; background: white; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .downloads-table thead { background: #333; }
+  .downloads-table th { padding: 8px 12px; font-size: 0.78rem; color: white; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 600; }
+  .downloads-table td { padding: 8px 12px; font-size: 0.9rem; border-bottom: 1px solid #f0f0f0; color: #333; }
+  .downloads-table tbody tr:last-child td { border-bottom: none; }
+  .badge-yes { background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 10px; font-size: 0.78rem; font-weight: 600; }
+  .badge-no  { background: #f0f0f0; color: #999; padding: 2px 8px; border-radius: 10px; font-size: 0.78rem; }
 </style>
 
 <script>
