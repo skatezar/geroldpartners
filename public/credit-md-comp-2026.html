@@ -545,12 +545,12 @@ footer a:hover { color: var(--white); }
       </div>
       <div style="padding:18px 20px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)">
         <div style="font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#aaa;margin-bottom:6px">Cash Bonus</div>
-        <div style="font-size:18px;font-weight:600;color:var(--black)">$500–700k</div>
+        <div style="font-size:18px;font-weight:600;color:var(--black)">$500–750k</div>
         <div style="font-size:11px;color:#aaa;margin-top:2px">Annual, discretionary</div>
       </div>
       <div style="padding:18px 20px;border-bottom:1px solid var(--border)">
         <div style="font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#aaa;margin-bottom:6px">Fund Shares Bonus</div>
-        <div style="font-size:18px;font-weight:600;color:var(--black)">$500–780k</div>
+        <div style="font-size:18px;font-weight:600;color:var(--black)">$150–400k</div>
         <div style="font-size:11px;color:#aaa;margin-top:2px">Grant value, 3–5yr vest</div>
       </div>
       <div style="padding:18px 20px;border-right:1px solid var(--border)">
@@ -639,9 +639,49 @@ footer a:hover { color: var(--white); }
 <section class="comp-section" id="cash-bonus">
   <div class="section-label">02 — Annual Bonus</div>
   <h2>Annual Bonus</h2>
-  <div class="headline-range">$1m – $1.45m <span class="sub">total bonus (cash + fund shares)</span></div>
+  <div class="headline-range">$1m – $1.75m <span class="sub">total bonus (cash + fund shares)</span></div>
 
-  <p>Most funds set cash bonus and fund shares as separate components, determined independently. The table below reflects the observed market norms for how much of total annual bonus ends up deferred into fund shares at different total bonus levels.</p>
+  <p>Most funds set a single total bonus figure, then apply a deferred vesting schedule to determine how much is paid in cash immediately and how much is awarded as fund shares. The split works like tax brackets — each threshold applies only to the slice above it, not the whole amount.</p>
+
+  <div style="margin-bottom:12px;padding:18px 24px;border:1px solid var(--border);border-radius:4px;background:#fff5e6">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:10px">Walkthrough — $1.5m total bonus illustration</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px;color:var(--mid)">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:left;padding:5px 0;font-weight:600;color:var(--black);width:28%">Slice</th>
+          <th style="text-align:left;padding:5px 0;font-weight:600;color:var(--black);width:18%">Amount</th>
+          <th style="text-align:left;padding:5px 0;font-weight:600;color:var(--black)">Cash</th>
+          <th style="text-align:left;padding:5px 0;font-weight:600;color:var(--black)">Fund shares</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f0f0f0">
+          <td style="padding:7px 0">$0 – $600k</td>
+          <td style="padding:7px 0">$600k</td>
+          <td style="padding:7px 0">$600k (100%)</td>
+          <td style="padding:7px 0">—</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0f0f0">
+          <td style="padding:7px 0">$600k – $1.1m</td>
+          <td style="padding:7px 0">$500k</td>
+          <td style="padding:7px 0">~$363k (72.5%)</td>
+          <td style="padding:7px 0">~$138k (27.5%)</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0f0f0">
+          <td style="padding:7px 0">$1.1m – $1.5m</td>
+          <td style="padding:7px 0">$400k</td>
+          <td style="padding:7px 0">~$260k (65%)</td>
+          <td style="padding:7px 0">~$140k (35%)</td>
+        </tr>
+        <tr style="font-weight:600;color:var(--black);border-top:1px solid #ccc">
+          <td style="padding:8px 0">Total</td>
+          <td style="padding:8px 0">$1.5m</td>
+          <td style="padding:8px 0">~$1.22m</td>
+          <td style="padding:8px 0">~$278k</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div style="margin-bottom:36px;padding:22px 24px;border:1px solid var(--border);border-radius:4px;background:var(--bg)">
     <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px">Bonus Split — Cash vs. Fund Shares</div>
@@ -675,7 +715,7 @@ footer a:hover { color: var(--white); }
 
   <div class="section-label" style="margin-top:8px">02.1 — Cash Bonus</div>
   <h2 style="font-size:22px;margin-bottom:4px">Cash Bonus</h2>
-  <div class="headline-range">$500k – $700k</div>
+  <div class="headline-range">$500k – $750k</div>
 
   <div class="chart-wrap">
     <div class="chart-title">Individual data prints — annual cash bonus (USD)</div>
@@ -736,7 +776,7 @@ footer a:hover { color: var(--white); }
 <section class="comp-section" id="fund-shares">
   <div class="section-label">02.2 — Fund Shares Bonus</div>
   <h2>Fund Shares Bonus</h2>
-  <div class="headline-range">$500k – $780k <span class="sub">grant value, 3–5yr vest</span></div>
+  <div class="headline-range">$150k – $400k <span class="sub">grant value, 3–5yr vest</span></div>
 
   <div class="chart-wrap">
     <div class="chart-title">Individual data prints — fund shares award at grant value (USD)</div>
