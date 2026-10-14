@@ -1,9 +1,12 @@
 <div class="admin-container">
   <div class="admin-header">
     <h1>Newsletter Subscriptions</h1>
-    <div class="stats">
-      <span class="stat-badge confirmed"><%= @confirmed_count %> Confirmed</span>
-      <span class="stat-badge pending"><%= @unconfirmed_count %> Pending</span>
+    <div class="header-right">
+      <div class="stats">
+        <span class="stat-badge confirmed"><%= @confirmed_count %> Confirmed</span>
+        <span class="stat-badge pending"><%= @unconfirmed_count %> Pending</span>
+      </div>
+      <button id="copy-emails-btn" onclick="copyAllEmails()" class="btn-copy">Copy All Emails</button>
     </div>
   </div>
 
@@ -69,10 +72,33 @@
     letter-spacing: 1px;
   }
 
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
   .stats {
     display: flex;
     gap: 15px;
   }
+
+  .btn-copy {
+    padding: 9px 20px;
+    background: #000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-copy:hover { background: #333; }
+  .btn-copy.copied { background: #155724; }
 
   .stat-badge {
     padding: 8px 20px;
@@ -174,3 +200,22 @@
     background: #5a6268;
   }
 </style>
+
+<script>
+function copyAllEmails() {
+  const emails = Array.from(document.querySelectorAll('tbody tr td:first-child'))
+    .map(td => td.textContent.trim())
+    .filter(e => e.length > 0)
+    .join(', ');
+
+  navigator.clipboard.writeText(emails).then(() => {
+    const btn = document.getElementById('copy-emails-btn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy All Emails';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
