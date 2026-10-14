@@ -481,7 +481,7 @@ footer a:hover { color: var(--white); }
 <!-- ═══ INTRO -->
 <div class="intro-section">
   <p class="lede">At Gerold &amp; Partners, we've recently placed a managing director at a credit fund. Through this process, we've had the privilege of speaking to many MD-level candidates in private markets, discussing compensation details and structural differences between different employers.</p>
-  <p>In an effort to boost transparency, we've put together a more detailed compensation report below, while ensuring full anonymity by adding between 1–8% up or down on each datapoint at random.</p>
+  <p>In an effort to boost transparency, we've put together a more detailed compensation report below. Figures are presented as aggregated ranges to protect anonymity — individual data points are not disclosed.</p>
   <p><em>Note: this is relevant only to front office investment professionals (deal sourcing, execution, and portfolio management) at specialist private market (mainly credit) funds in the $10–50bn AUM segment. It does not cover IR, operations, or risk functions. Based on 27 data points.</em></p>
 </div>
 
@@ -510,7 +510,7 @@ footer a:hover { color: var(--white); }
       </div>
       <div style="padding:18px 20px;border-right:1px solid var(--border)">
         <div style="font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#aaa;margin-bottom:6px">Carry (2 funds stacked)</div>
-        <div style="font-size:18px;font-weight:600;color:var(--black)">$3–6m</div>
+        <div style="font-size:18px;font-weight:600;color:var(--black)">$1.2–5.4m</div>
         <div style="font-size:11px;color:#aaa;margin-top:2px">Expected, over fund life</div>
       </div>
       <div style="padding:18px 20px">
@@ -559,9 +559,9 @@ footer a:hover { color: var(--white); }
       <text x="183" y="18" font-size="9" fill="#bbb" text-anchor="middle">Q1 $260k</text>
       <text x="337" y="18" font-size="9" fill="#bbb" text-anchor="middle">Q3 $315k</text>
     </svg>
-    <div class="chart-note">Whiskers show min/max. Box spans Q1–Q3. Line = median.</div>
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median.</div>
   </div>
-  <p style="font-size:12px;color:#bbb;font-style:italic;margin-top:8px">Figures amended with ±1–8% at random to ensure full anonymity.</p>
+  <p style="font-size:12px;color:#bbb;font-style:italic;margin-top:8px">Figures presented as aggregated statistics to protect anonymity.</p>
 
   <ul style="color:var(--mid);font-size:15.5px;line-height:1.8;padding-left:20px;margin-top:0">
     <li>Base is the least negotiable component — most funds treat it as a fixed cost and won't flex it materially at MD level</li>
@@ -681,9 +681,9 @@ footer a:hover { color: var(--white); }
       <text x="149" y="18" font-size="9" fill="#bbb" text-anchor="middle">Q1 $720k</text>
       <text x="320" y="18" font-size="9" fill="#bbb" text-anchor="middle">Q3 $1.05m</text>
     </svg>
-    <div class="chart-note">Whiskers show min/max. Box spans Q1–Q3. Line = median.</div>
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median.</div>
   </div>
-  <p style="font-size:12px;color:#bbb;font-style:italic;margin-top:8px">Figures amended with ±1–8% at random to ensure full anonymity.</p>
+  <p style="font-size:12px;color:#bbb;font-style:italic;margin-top:8px">Figures presented as aggregated statistics to protect anonymity.</p>
 
   <ul style="color:var(--mid);font-size:15.5px;line-height:1.8;padding-left:20px;margin-top:0">
     <li>Paid in Q1 for the prior year; some funds split into two tranches (Q1 and Q3)</li>
@@ -726,9 +726,9 @@ footer a:hover { color: var(--white); }
       <text x="145" y="18" font-size="9" fill="#bbb" text-anchor="middle">Q1 $110k</text>
       <text x="327" y="18" font-size="9" fill="#bbb" text-anchor="middle">Q3 $300k</text>
     </svg>
-    <div class="chart-note">Actual realisable value depends on NAV performance over the vesting window. Whiskers show min/max. Box spans Q1–Q3. Line = median.</div>
+    <div class="chart-note">Actual realisable value depends on NAV performance over the vesting window. Whiskers show P10–P90. Box spans Q1–Q3. Line = median.</div>
   </div>
-  <p style="font-size:12px;color:#bbb;font-style:italic;margin-top:8px">Figures amended with ±1–8% at random to ensure full anonymity.</p>
+  <p style="font-size:12px;color:#bbb;font-style:italic;margin-top:8px">Figures presented as aggregated statistics to protect anonymity.</p>
 
   <ul style="color:var(--mid);font-size:15.5px;line-height:1.8;padding-left:20px;margin-top:0">
     <li>A number of credit funds pay the deferred portion as shares in an employee-managed fund — a separate vehicle from the main fund, run specifically for staff investment</li>
@@ -743,67 +743,70 @@ footer a:hover { color: var(--white); }
 <section class="comp-section" id="carry">
   <div class="section-label">03 — Carried Interest</div>
   <h2>Carried Interest</h2>
-  <div class="headline-range">1 – 1.5 pts <span class="sub">of carry pool (per fund, typically $500m–$3bn)</span></div>
+  <div class="headline-range">1 – 1.5 pts <span class="sub">of carry pool (per fund, typically $1bn–$3bn)</span></div>
 
   <div class="chart-wrap">
     <div class="chart-title">Carry — expected value by fund stack (USD)</div>
 
-    <div class="row-label" style="margin-top:0">Single fund — min $1.5m · median $2.2m · max $3m</div>
-    <!-- scale 1m–3.5m → x 40–480; 440/2500k = 0.176px per $k -->
+    <div class="row-label" style="margin-top:0">Single fund — min $0.6m · median $2.2m · max $2.7m</div>
+    <!-- scale 0.5m–3m → x 40–480; 440/2500k = 0.176px/k; offset base=500k -->
+    <!-- 0.6m→x=58, Q1 1.8m→x=269, median 2.2m→x=339, Q3 2.5m→x=392, max 2.7m→x=427 -->
     <svg class="bw-chart" viewBox="0 0 500 72" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="44" x2="480" y2="44" stroke="#ddd" stroke-width="1"/>
-      <!-- whisker left: 1.5m→x=128 to Q1 1.8m→x=181 -->
-      <line x1="128" y1="32" x2="181" y2="32" stroke="#888" stroke-width="1.5"/>
-      <line x1="128" y1="25" x2="128" y2="39" stroke="#888" stroke-width="1.5"/>
-      <!-- box: Q1 1.8m→x=181 to Q3 2.7m→x=340 -->
-      <rect x="181" y="19" width="159" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <!-- median: 2.2m→x=251 -->
-      <line x1="251" y1="19" x2="251" y2="45" stroke="#000" stroke-width="2.5"/>
-      <!-- whisker right: Q3 2.7m→x=340 to max 3m→x=392 -->
-      <line x1="340" y1="32" x2="392" y2="32" stroke="#888" stroke-width="1.5"/>
-      <line x1="392" y1="25" x2="392" y2="39" stroke="#888" stroke-width="1.5"/>
-      <!-- axis labels -->
+      <!-- whisker left: P10 0.6m→x=58 to Q1 1.8m→x=269 -->
+      <line x1="58" y1="32" x2="269" y2="32" stroke="#888" stroke-width="1.5"/>
+      <line x1="58" y1="25" x2="58" y2="39" stroke="#888" stroke-width="1.5"/>
+      <!-- box: Q1 1.8m→x=269 to Q3 2.5m→x=392 -->
+      <rect x="269" y="19" width="123" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <!-- median: 2.2m→x=339 -->
+      <line x1="339" y1="19" x2="339" y2="45" stroke="#000" stroke-width="2.5"/>
+      <!-- whisker right: Q3 2.5m→x=392 to P90 2.7m→x=427 -->
+      <line x1="392" y1="32" x2="427" y2="32" stroke="#888" stroke-width="1.5"/>
+      <line x1="427" y1="25" x2="427" y2="39" stroke="#888" stroke-width="1.5"/>
+      <!-- axis labels: $0.5m intervals -->
+      <text x="40" y="60" font-size="10" fill="#bbb" text-anchor="middle">$0.5m</text>
+      <text x="128" y="60" font-size="10" fill="#bbb" text-anchor="middle">$1m</text>
+      <text x="216" y="60" font-size="10" fill="#bbb" text-anchor="middle">$1.5m</text>
+      <text x="304" y="60" font-size="10" fill="#bbb" text-anchor="middle">$2m</text>
+      <text x="392" y="60" font-size="10" fill="#bbb" text-anchor="middle">$2.5m</text>
+      <text x="480" y="60" font-size="10" fill="#bbb" text-anchor="middle">$3m</text>
+      <text x="339" y="12" font-size="9" fill="#999" text-anchor="middle">median $2.2m</text>
+    </svg>
+
+    <div class="row-label">2 funds stacked (typical) — min $1.2m · median $4.5m · max $5.4m</div>
+    <!-- scale 1m–6m → x 40–480; 440/5000k = 0.088px/k; base=1000k -->
+    <!-- 1.2m→x=58, Q1 3.5m→x=260, median 4.5m→x=348, Q3 5.0m→x=392, max 5.4m→x=427 -->
+    <svg class="bw-chart" viewBox="0 0 500 72" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="44" x2="480" y2="44" stroke="#ddd" stroke-width="1"/>
+      <!-- whisker left: P10 1.2m→x=58 to Q1 3.5m→x=260 -->
+      <line x1="58" y1="32" x2="260" y2="32" stroke="#888" stroke-width="1.5"/>
+      <line x1="58" y1="25" x2="58" y2="39" stroke="#888" stroke-width="1.5"/>
+      <!-- box: Q1 3.5m→x=260 to Q3 5.0m→x=392 -->
+      <rect x="260" y="19" width="132" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <!-- median: 4.5m→x=348 -->
+      <line x1="348" y1="19" x2="348" y2="45" stroke="#000" stroke-width="2.5"/>
+      <!-- whisker right: Q3 5.0m→x=392 to P90 5.4m→x=427 -->
+      <line x1="392" y1="32" x2="427" y2="32" stroke="#888" stroke-width="1.5"/>
+      <line x1="427" y1="25" x2="427" y2="39" stroke="#888" stroke-width="1.5"/>
+      <!-- axis labels: $1m intervals -->
       <text x="40" y="60" font-size="10" fill="#bbb" text-anchor="middle">$1m</text>
-      <text x="128" y="60" font-size="10" fill="#bbb" text-anchor="middle">$1.5m</text>
-      <text x="216" y="60" font-size="10" fill="#bbb" text-anchor="middle">$2m</text>
-      <text x="304" y="60" font-size="10" fill="#bbb" text-anchor="middle">$2.5m</text>
-      <text x="392" y="60" font-size="10" fill="#bbb" text-anchor="middle">$3m</text>
-      <text x="480" y="60" font-size="10" fill="#bbb" text-anchor="middle">$3.5m</text>
-      <text x="251" y="12" font-size="9" fill="#999" text-anchor="middle">median $2.2m</text>
+      <text x="128" y="60" font-size="10" fill="#bbb" text-anchor="middle">$2m</text>
+      <text x="216" y="60" font-size="10" fill="#bbb" text-anchor="middle">$3m</text>
+      <text x="304" y="60" font-size="10" fill="#bbb" text-anchor="middle">$4m</text>
+      <text x="392" y="60" font-size="10" fill="#bbb" text-anchor="middle">$5m</text>
+      <text x="480" y="60" font-size="10" fill="#bbb" text-anchor="middle">$6m</text>
+      <text x="348" y="12" font-size="9" fill="#999" text-anchor="middle">median $4.5m</text>
     </svg>
 
-    <div class="row-label">2 funds stacked (typical) — min $3m · median $4.5m · max $6m</div>
-    <!-- scale 2.5m–6.5m → x 40–480; 440/4000k = 0.11px per $k -->
-    <svg class="bw-chart" viewBox="0 0 500 72" xmlns="http://www.w3.org/2000/svg">
-      <line x1="40" y1="44" x2="480" y2="44" stroke="#ddd" stroke-width="1"/>
-      <!-- whisker left: 3m→x=95 to Q1 3.5m→x=150 -->
-      <line x1="95" y1="32" x2="150" y2="32" stroke="#888" stroke-width="1.5"/>
-      <line x1="95" y1="25" x2="95" y2="39" stroke="#888" stroke-width="1.5"/>
-      <!-- box: Q1 3.5m→x=150 to Q3 5.2m→x=337 -->
-      <rect x="150" y="19" width="187" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <!-- median: 4.5m→x=260 -->
-      <line x1="260" y1="19" x2="260" y2="45" stroke="#000" stroke-width="2.5"/>
-      <!-- whisker right: Q3 5.2m→x=337 to max 6m→x=425 -->
-      <line x1="337" y1="32" x2="425" y2="32" stroke="#888" stroke-width="1.5"/>
-      <line x1="425" y1="25" x2="425" y2="39" stroke="#888" stroke-width="1.5"/>
-      <!-- axis labels -->
-      <text x="40" y="60" font-size="10" fill="#bbb" text-anchor="middle">$2.5m</text>
-      <text x="150" y="60" font-size="10" fill="#bbb" text-anchor="middle">$3.5m</text>
-      <text x="260" y="60" font-size="10" fill="#bbb" text-anchor="middle">$4.5m</text>
-      <text x="370" y="60" font-size="10" fill="#bbb" text-anchor="middle">$5.5m</text>
-      <text x="480" y="60" font-size="10" fill="#bbb" text-anchor="middle">$6.5m</text>
-      <text x="260" y="12" font-size="9" fill="#999" text-anchor="middle">median $4.5m</text>
-    </svg>
-
-    <div class="chart-note">Expected value at time of grant; realised over 5–10 years. Distribution timing depends on waterfall structure — deal-by-deal (American) waterfalls often pay pre-harvest; whole-fund (European) waterfalls pay at the end. Whiskers show min/max. Box spans Q1–Q3. Line = median.</div>
+    <div class="chart-note">Expected value at time of grant; realised over 5–10 years. Distribution timing depends on waterfall structure — deal-by-deal (American) waterfalls often pay pre-harvest; whole-fund (European) waterfalls pay at the end. Whiskers show P10–P90. Box spans Q1–Q3. Line = median.</div>
   </div>
-  <p style="font-size:13px;color:#888;font-style:italic;margin-top:12px;line-height:1.7"><strong style="font-style:normal;color:#555">Note:</strong> Valuing carry is inherently difficult and highly subjective — the figures above reflect expected value at time of grant, not guaranteed outcomes. Actual realisation depends on fund performance, vintage timing, hurdle rates, and LP cashflow profiles. Treat these numbers as directional, not contractual.</p>
-  <p style="font-size:12px;color:#bbb;font-style:italic;margin-top:8px">Figures amended with ±1–8% at random to ensure full anonymity.</p>
+  <p style="font-size:13px;color:#888;font-style:italic;margin-top:12px;line-height:1.7"><strong style="font-style:normal;color:#555">Note:</strong> Valuing carry is inherently difficult and highly subjective — the figures above reflect expected value at time of grant, not guaranteed outcomes. Actual realisation depends on fund performance, vintage timing, hurdle rates, and LP cashflow profiles. Values assume one point equals 1% of the carry pool, lifetime fund profits of roughly 40% of commitments and a 15% carry rate (pool ≈ 6% of fund size), undiscounted. Treat these numbers as directional, not contractual.</p>
+  <p style="font-size:12px;color:#bbb;font-style:italic;margin-top:8px">Figures presented as aggregated statistics to protect anonymity.</p>
 
   <ul style="color:var(--mid);font-size:15.5px;line-height:1.8;padding-left:20px;margin-top:0">
-    <li>Allocation at Senior MD level is 1–1.5 points of the carry pool per fund (individual fund vehicles typically $500m–$3bn at this manager scale)</li>
+    <li>Allocation at Senior MD level is 1–1.5 points of the carry pool per fund (individual fund vehicles typically $1bn–$3bn at this manager scale)</li>
     <li>Distribution timing depends on waterfall structure: deal-by-deal (American) waterfalls often pay carry progressively as income and principal recoveries land; whole-fund (European) waterfalls defer all carry to end-of-fund — common at larger, more institutional credit managers</li>
-    <li>Most Senior MDs sit across 2 fund vintages simultaneously; per-fund expected unvested carry is $1.5–3m, giving a typical stack of $3–6m</li>
+    <li>Most Senior MDs sit across 2 fund vintages simultaneously; per-fund expected unvested carry is $0.6–2.7m, giving a typical stack of $1.2–5.4m</li>
     <li>When comparing offers, the points allocation is only part of the picture — vintage age, deployment progress, hurdle status, and LP base all affect the real expected value
       <ul style="margin-top:6px;padding-left:20px">
         <li><strong>This is the crux that makes or breaks a deal, and something we are happy to discuss in detail.</strong>
@@ -833,7 +836,7 @@ footer a:hover { color: var(--white); }
 
   <ul style="color:var(--mid);font-size:15.5px;line-height:1.8;padding-left:20px;margin-top:0">
     <li>The most underappreciated component — and the one candidates least often negotiate</li>
-    <li>Core mechanic: invest personal capital alongside the fund at the same leverage terms the fund secures from its lenders; for a direct lending fund generating low-to-mid double digit net returns (opportunistic credit higher), with leverage typically priced at 150–250bps over SOFR, the carry-through to personal returns is structurally attractive</li>
+    <li>Core mechanic: GP commitment and co-invest capital goes into the fund itself, which operates with fund-level leverage. The structural advantage is that this capital typically attracts no management fee and no carry — meaning you participate in the same returns as LPs but keep the full upside. Some firms also provide financing against committed capital. For a direct lending fund generating high single to low double digit net returns (opportunistic credit higher), this is a structurally attractive position</li>
     <li>At Senior MD level, co-invest is usually part of the package — either mandatory GP commitment (signals conviction to LPs) or optional deal-by-deal participation</li>
     <li>Larger platforms tend toward mandatory commitment; smaller or newer funds offer more flexibility</li>
     <li>Over a 10-year career with consistent co-invest access and solid fund performance, the compounding effect can be material — and the returns are more predictable in timing than carry, which is subject to waterfall structure and fund lifecycle</li>
