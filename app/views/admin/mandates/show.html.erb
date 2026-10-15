@@ -55,6 +55,48 @@
         </div>
       </div>
     <% end %>
+
+    <div class="detail-section">
+      <h2>Applications <span class="app-count"><%= @applications.count %></span></h2>
+      <% if @applications.any? %>
+        <table class="applications-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>LinkedIn</th>
+              <th>CV</th>
+              <th>Applied</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @applications.each do |app| %>
+              <tr>
+                <td><%= app.name %></td>
+                <td><a href="mailto:<%= app.email %>"><%= app.email %></a></td>
+                <td>
+                  <% if app.linkedin_url.present? %>
+                    <%= link_to "LinkedIn →", app.linkedin_url, target: "_blank", class: "link-external" %>
+                  <% else %>
+                    <span class="empty">—</span>
+                  <% end %>
+                </td>
+                <td>
+                  <% if app.cv.attached? %>
+                    <%= link_to "Download CV", rails_blob_path(app.cv, disposition: "attachment"), class: "link-external" %>
+                  <% else %>
+                    <span class="empty">—</span>
+                  <% end %>
+                </td>
+                <td><%= app.created_at.strftime("%-d %b %Y") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="no-applications">No applications yet.</p>
+      <% end %>
+    </div>
   </div>
 </div>
 
@@ -165,6 +207,72 @@
 
   .extended-description-content p:last-child {
     margin-bottom: 0;
+  }
+
+  .app-count {
+    display: inline-block;
+    background: #f0f0f0;
+    color: #555;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .applications-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .applications-table thead tr {
+    border-bottom: 2px solid #000;
+  }
+
+  .applications-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #666;
+    font-weight: 600;
+  }
+
+  .applications-table td {
+    padding: 12px 12px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    vertical-align: middle;
+  }
+
+  .applications-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .applications-table tbody tr:hover td {
+    background: #fafafa;
+  }
+
+  .applications-table a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .link-external {
+    font-size: 0.875rem;
+  }
+
+  .empty {
+    color: #bbb;
+  }
+
+  .no-applications {
+    color: #999;
+    font-style: italic;
+    font-size: 1rem;
   }
 
   @media (max-width: 768px) {

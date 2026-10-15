@@ -7,6 +7,7 @@ class Admin::MandatesController < ApplicationController
   end
 
   def show
+    @applications = @mandate.job_applications.order(created_at: :desc)
   end
 
   def new
