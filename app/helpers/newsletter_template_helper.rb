@@ -9,6 +9,11 @@ module NewsletterTemplateHelper
       label: "Blog: Senior MD Comp 2026",
       description: "Pre-filled with the Credit MD compensation report",
       default_subject: "What a Senior MD Earns at a Private Credit Fund in London — 2026"
+    },
+    "blog_madrid_analyst_associate_2026" => {
+      label: "Blog: Madrid Analyst & Associate Comp 2026",
+      description: "Analyst 1 & Associate 1 compensation across Madrid financial services",
+      default_subject: "Analyst & Associate Compensation in Madrid — 2026"
     }
   }.freeze
 
@@ -16,6 +21,9 @@ module NewsletterTemplateHelper
     case template_name
     when "blog_credit_md_2026"
       path = Rails.root.join("public", "credit-md-comp-2026-email.html")
+      File.exist?(path) ? File.read(path) : blank_body
+    when "blog_madrid_analyst_associate_2026"
+      path = Rails.root.join("public", "madrid-analyst-associate-comp-2026-email.html")
       File.exist?(path) ? File.read(path) : blank_body
     else
       blank_body

@@ -32,6 +32,13 @@
             <div class="tpl-desc">Pre-filled with the credit MD compensation report</div>
           </div>
         </label>
+        <label class="template-option" id="tpl-blog_madrid_analyst_associate_2026">
+          <input type="radio" name="template_name" value="blog_madrid_analyst_associate_2026" onchange="selectTemplate(this)">
+          <div class="tpl-inner">
+            <div class="tpl-label">Blog: Madrid Analyst &amp; Associate 2026</div>
+            <div class="tpl-desc">Analyst 1 &amp; Associate 1 comp across Madrid financial services</div>
+          </div>
+        </label>
       </div>
     </div>
 
@@ -178,7 +185,7 @@
   /* template grid */
   .template-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     padding: 20px;
   }
@@ -430,7 +437,8 @@
 
   const SUBJECT_DEFAULTS = {
     "blank": "",
-    "blog_credit_md_2026": "What a Senior MD Earns at a Private Credit Fund in London — 2026"
+    "blog_credit_md_2026": "What a Senior MD Earns at a Private Credit Fund in London — 2026",
+    "blog_madrid_analyst_associate_2026": "Analyst & Associate Compensation in Madrid — 2026"
   };
 
   function selectTemplate(radio) {

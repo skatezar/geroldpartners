@@ -51,6 +51,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get  'madrid-analyst-associate-comp-2026', to: 'blogs#madrid_analyst_associate_comp_2026', as: :madrid_analyst_associate_comp_2026
+  post 'madrid-analyst-associate-comp-2026/unlock', to: 'blogs#madrid_unlock', as: :madrid_unlock
+
   post 'compensation_reports/download', to: 'compensation_reports#download'
   get  'compensation_reports/:id', to: 'compensation_reports#show', as: :compensation_report
 

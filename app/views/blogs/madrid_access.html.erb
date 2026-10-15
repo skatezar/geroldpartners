@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Required — Gerold &amp; Partners</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gate {
+    width: 100%;
+    max-width: 420px;
+    padding: 24px;
+    text-align: center;
+  }
+  .gp-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #fff;
+    margin-bottom: 48px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .error-msg {
+    font-size: 13px;
+    color: #e05555;
+    margin-bottom: 14px;
+    min-height: 18px;
+  }
+  .input-row {
+    display: flex;
+    gap: 10px;
+  }
+  input[type="text"] {
+    flex: 1;
+    padding: 13px 16px;
+    background: #111;
+    border: 1px solid #333;
+    color: #fff;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.1em;
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 2px;
+  }
+  input[type="text"]::placeholder { color: #444; letter-spacing: 0; }
+  input[type="text"]:focus { border-color: #666; }
+  button {
+    padding: 13px 22px;
+    background: #fff;
+    color: #000;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  button:hover { background: #e0e0e0; }
+  .footer-note {
+    margin-top: 40px;
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="gate">
+  <div class="gp-logo">GP</div>
+  <h1>Analyst &amp; Associate Compensation<br>Madrid, Spain</h1>
+  <p class="subtitle">This report is restricted. Enter the access code to continue.</p>
+
+  <% if flash[:error].present? %>
+    <div class="error-msg"><%= flash[:error] %></div>
+  <% else %>
+    <div class="error-msg"></div>
+  <% end %>
+
+  <%= form_with url: madrid_unlock_path, method: :post, local: true do |f| %>
+    <div class="input-row">
+      <%= f.text_field :code, placeholder: "Access code", autofocus: true, autocomplete: "off" %>
+      <%= f.submit "Enter →" %>
+    </div>
+  <% end %>
+
+  <p class="footer-note">Gerold &amp; Partners &nbsp;·&nbsp; Confidential</p>
+</div>
+</body>
+</html>
