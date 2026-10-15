@@ -1,4 +1,5 @@
 class NewsletterMailer < ApplicationMailer
+  layout :resolve_layout
   def confirmation_email(subscription)
     @subscription = subscription
     @confirmation_url = confirm_newsletter_subscriptions_url(token: subscription.confirmation_token)
@@ -35,8 +36,12 @@ class NewsletterMailer < ApplicationMailer
       to: recipient_email,
       subject: subject,
       content_type: "text/html"
-    ) do |format|
-      format.html { render plain: @body_html, content_type: "text/html" }
-    end
+    )
+  end
+
+  private
+
+  def resolve_layout
+    action_name == "broadcast" ? false : "mailer"
   end
 end
