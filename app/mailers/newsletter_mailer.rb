@@ -27,4 +27,16 @@ class NewsletterMailer < ApplicationMailer
       subject: 'New Newsletter Subscription'
     )
   end
+
+  def broadcast(recipient_email, subject, body_html)
+    @body_html = body_html
+
+    mail(
+      to: recipient_email,
+      subject: subject,
+      content_type: "text/html"
+    ) do |format|
+      format.html { render plain: @body_html, content_type: "text/html" }
+    end
+  end
 end

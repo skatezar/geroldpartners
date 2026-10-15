@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_08_31_111053) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_15_104032) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -117,6 +117,31 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_31_111053) do
     t.index ["user_id"], name: "index_mandates_on_user_id"
   end
 
+  create_table "newsletter_send_recipients", force: :cascade do |t|
+    t.integer "newsletter_send_id", null: false
+    t.string "email", null: false
+    t.string "status", default: "pending", null: false
+    t.string "error_message"
+    t.datetime "sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["newsletter_send_id"], name: "index_newsletter_send_recipients_on_newsletter_send_id"
+  end
+
+  create_table "newsletter_sends", force: :cascade do |t|
+    t.string "subject"
+    t.text "body"
+    t.string "template_name"
+    t.string "status", default: "draft", null: false
+    t.integer "total_recipients", default: 0, null: false
+    t.integer "sent_count", default: 0, null: false
+    t.integer "failed_count", default: 0, null: false
+    t.datetime "scheduled_at"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "newsletter_subscriptions", force: :cascade do |t|
     t.string "email", null: false
     t.boolean "confirmed", default: false, null: false
@@ -125,6 +150,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_31_111053) do
     t.datetime "confirmed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "added_by_admin", default: false, null: false
     t.index ["confirmation_token"], name: "index_newsletter_subscriptions_on_confirmation_token", unique: true
     t.index ["confirmed"], name: "index_newsletter_subscriptions_on_confirmed"
     t.index ["email"], name: "index_newsletter_subscriptions_on_email", unique: true
@@ -199,6 +225,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_31_111053) do
   add_foreign_key "employers", "clients"
   add_foreign_key "employers", "roles"
   add_foreign_key "mandates", "users"
+  add_foreign_key "newsletter_send_recipients", "newsletter_sends"
   add_foreign_key "recommendations", "clients"
   add_foreign_key "recommendations", "roles"
   add_foreign_key "report_downloads", "compensation_reports"

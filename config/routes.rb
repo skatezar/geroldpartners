@@ -7,7 +7,13 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :compensation_reports
     resources :mandates
-    resources :newsletter_subscriptions, only: [:index]
+    resources :newsletter_subscriptions, only: [:index, :create]
+    resources :newsletter_sends, only: [:index, :create, :show] do
+      member do
+        post :send_emails
+        get  :status
+      end
+    end
     resources :clients do
       resources :roles, only: [:create, :destroy]
       resources :employers, only: [:create, :update, :destroy]

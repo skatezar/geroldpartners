@@ -6,6 +6,8 @@ class NewsletterSubscription < ApplicationRecord
   scope :confirmed, -> { where(confirmed: true) }
   scope :unconfirmed, -> { where(confirmed: false) }
   scope :confirmed_on, ->(date) { where('DATE(confirmed_at) = ?', date) }
+  scope :admin_added, -> { where(added_by_admin: true) }
+  scope :self_subscribed, -> { where(added_by_admin: false) }
 
   def confirm!
     update(confirmed: true, confirmed_at: Time.current)

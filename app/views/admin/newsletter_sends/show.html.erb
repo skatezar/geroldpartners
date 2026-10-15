@@ -1,0 +1,279 @@
+<div class="ns-container">
+
+  <div class="ns-header">
+    <div>
+      <a href="<%= admin_newsletter_sends_path %>" class="back-link">← Send Newsletter</a>
+      <h1><%= @send.subject %></h1>
+    </div>
+    <span class="status-chip status-<%= @send.status %>" id="status-chip"><%= @send.status %></span>
+  </div>
+
+  <% if notice.present? %>
+    <div class="ns-flash success"><%= notice %></div>
+  <% end %>
+  <% if alert.present? %>
+    <div class="ns-flash error"><%= alert %></div>
+  <% end %>
+
+  <!-- ── STATS ── -->
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-label">Total</div>
+      <div class="stat-value" id="stat-total"><%= @send.total_recipients %></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Sent</div>
+      <div class="stat-value green" id="stat-sent"><%= @send.sent_count %></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Failed</div>
+      <div class="stat-value red" id="stat-failed"><%= @send.failed_count %></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Pending</div>
+      <div class="stat-value" id="stat-pending"><%= @send.total_recipients - @send.sent_count - @send.failed_count %></div>
+    </div>
+  </div>
+
+  <!-- ── PROGRESS BAR ── -->
+  <div class="progress-wrap">
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progress-bar" style="width:<%= @send.progress_percent %>%"></div>
+    </div>
+    <div class="progress-label" id="progress-label"><%= @send.progress_percent %>%</div>
+  </div>
+
+  <!-- ── SEND BUTTON (draft only) ── -->
+  <% if @send.draft? %>
+    <div class="send-action">
+      <%= button_to "Send Now", send_emails_admin_newsletter_send_path(@send), method: :post,
+          class: "btn-primary",
+          data: { confirm: "Send to #{@send.total_recipients} recipient#{"s" if @send.total_recipients != 1}? Emails go out in batches of 20 every 30 seconds." } %>
+      <p class="ns-hint">Emails will be sent in batches of 20, 30 seconds apart to avoid spam detection.</p>
+    </div>
+  <% end %>
+
+  <% if @send.sending? %>
+    <div class="sending-notice">
+      <div class="sending-spinner"></div>
+      Sending in progress — page updates automatically.
+    </div>
+  <% end %>
+
+  <!-- ── META ── -->
+  <div class="meta-row">
+    <span>Template: <strong><%= @send.template_name&.gsub("_", " ") %></strong></span>
+    <span>Created: <strong><%= @send.created_at.strftime("%B %d, %Y at %I:%M %p") %></strong></span>
+    <% if @send.completed_at %>
+      <span>Completed: <strong><%= @send.completed_at.strftime("%B %d, %Y at %I:%M %p") %></strong></span>
+    <% end %>
+  </div>
+
+  <!-- ── RECIPIENT TABLE ── -->
+  <div class="ns-card" style="margin-top:24px;">
+    <div class="ns-card-header">Recipients (<%= @send.newsletter_send_recipients.count %>)</div>
+    <table class="ns-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Sent at</th>
+          <th>Error</th>
+        </tr>
+      </thead>
+      <tbody id="recipients-tbody">
+        <% @send.newsletter_send_recipients.order(:id).each do |r| %>
+          <tr id="row-<%= r.id %>">
+            <td><%= r.email %></td>
+            <td><span class="status-chip status-<%= r.status %>"><%= r.status %></span></td>
+            <td><%= r.sent_at ? r.sent_at.strftime("%H:%M:%S") : "—" %></td>
+            <td style="color:#c00;font-size:0.8rem;"><%= r.error_message %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  .ns-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  }
+
+  .back-link { font-size: 0.85rem; color: #666; text-decoration: none; display: block; margin-bottom: 8px; }
+  .back-link:hover { color: #000; }
+
+  .ns-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #000;
+  }
+
+  .ns-header h1 { margin: 0; font-size: 1.8rem; font-weight: 400; }
+
+  .ns-flash { padding: 12px 20px; border-radius: 4px; margin-bottom: 20px; font-size: 0.95rem; }
+  .ns-flash.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  .ns-flash.error   { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+  /* stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .stat-box {
+    border: 1px solid #e0e0e0;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; color: #999; margin-bottom: 6px; }
+  .stat-value { font-size: 2rem; font-weight: 600; color: #000; }
+  .stat-value.green { color: #155724; }
+  .stat-value.red   { color: #721c24; }
+
+  /* progress */
+  .progress-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+
+  .progress-bar-outer {
+    flex: 1;
+    height: 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    background: #000;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+  }
+
+  .progress-label { font-size: 0.85rem; font-weight: 600; width: 36px; text-align: right; color: #333; }
+
+  /* send action */
+  .send-action { margin-bottom: 24px; }
+  .ns-hint { font-size: 0.82rem; color: #888; margin: 8px 0 0; }
+
+  /* sending notice */
+  .sending-notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #cce5ff;
+    color: #004085;
+    padding: 12px 20px;
+    border: 1px solid #b8daff;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .sending-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #004085;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* meta */
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* status chips */
+  .status-chip {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-block;
+    text-transform: capitalize;
+  }
+  .status-draft     { background: #e9ecef; color: #495057; }
+  .status-sending   { background: #cce5ff; color: #004085; }
+  .status-completed { background: #d4edda; color: #155724; }
+  .status-failed    { background: #f8d7da; color: #721c24; }
+  .status-pending   { background: #fff3cd; color: #856404; }
+  .status-sent      { background: #d4edda; color: #155724; }
+
+  /* card / table */
+  .ns-card { border: 1px solid #e0e0e0; overflow: hidden; }
+  .ns-card-header { background: #000; color: #fff; padding: 12px 20px; font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+  .ns-table { width: 100%; border-collapse: collapse; }
+  .ns-table thead { background: #000; color: #fff; }
+  .ns-table th, .ns-table td { padding: 11px 16px; text-align: left; font-size: 0.875rem; }
+  .ns-table th { font-weight: 500; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.8px; }
+  .ns-table tbody tr { border-bottom: 1px solid #eee; }
+  .ns-table tbody tr:hover { background: #fafafa; }
+
+  /* buttons */
+  .btn-primary {
+    padding: 12px 24px;
+    background: #000;
+    color: #fff;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: #333; }
+</style>
+
+<% if @send.sending? %>
+<script>
+  (function() {
+    const statusUrl = "<%= status_admin_newsletter_send_path(@send) %>";
+    let pollInterval;
+
+    function poll() {
+      fetch(statusUrl, { headers: { "Accept": "application/json" } })
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById("stat-sent").textContent   = data.sent_count;
+          document.getElementById("stat-failed").textContent = data.failed_count;
+          document.getElementById("stat-pending").textContent = data.total_recipients - data.sent_count - data.failed_count;
+          document.getElementById("progress-bar").style.width = data.progress_percent + "%";
+          document.getElementById("progress-label").textContent = data.progress_percent + "%";
+          document.getElementById("status-chip").textContent = data.status;
+          document.getElementById("status-chip").className = "status-chip status-" + data.status;
+
+          if (data.status !== "sending") {
+            clearInterval(pollInterval);
+            // Reload to get updated recipient rows
+            setTimeout(() => location.reload(), 800);
+          }
+        })
+        .catch(() => {});
+    }
+
+    pollInterval = setInterval(poll, 4000);
+  })();
+</script>
+<% end %>

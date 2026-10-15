@@ -5,9 +5,29 @@
       <div class="stats">
         <span class="stat-badge confirmed"><%= @confirmed_count %> Confirmed</span>
         <span class="stat-badge pending"><%= @unconfirmed_count %> Pending</span>
+        <span class="stat-badge admin"><%= @admin_added_count %> Admin Added</span>
       </div>
       <button id="copy-emails-btn" onclick="copyAllEmails()" class="btn-copy">Copy All Emails</button>
     </div>
+  </div>
+
+  <% if notice.present? %>
+    <div class="flash-notice"><%= notice %></div>
+  <% end %>
+
+  <!-- Add subscriber form -->
+  <div class="add-subscriber-form">
+    <h2>Add Subscriber</h2>
+    <%= form_with model: @new_subscription, url: admin_newsletter_subscriptions_path, method: :post do |f| %>
+      <% if @new_subscription.errors.any? %>
+        <div class="form-error"><%= @new_subscription.errors.full_messages.first %></div>
+      <% end %>
+      <div class="form-row">
+        <%= f.email_field :email, placeholder: "email@example.com", class: "form-input", required: true %>
+        <%= f.submit "Add to Newsletter", class: "btn-add" %>
+      </div>
+      <p class="form-note">Subscriber will be marked as confirmed and added by admin.</p>
+    <% end %>
   </div>
 
   <% if @subscriptions.any? %>
@@ -17,6 +37,7 @@
           <tr>
             <th>Email</th>
             <th>Status</th>
+            <th>Source</th>
             <th>Subscribed At</th>
             <th>Confirmed At</th>
           </tr>
@@ -29,6 +50,13 @@
                 <span class="status-badge <%= subscription.confirmed? ? 'confirmed' : 'pending' %>">
                   <%= subscription.confirmed? ? 'Confirmed' : 'Pending' %>
                 </span>
+              </td>
+              <td>
+                <% if subscription.added_by_admin? %>
+                  <span class="source-badge admin">Admin Added</span>
+                <% else %>
+                  <span class="source-badge self">Self-subscribed</span>
+                <% end %>
               </td>
               <td><%= subscription.created_at.strftime('%B %d, %Y at %I:%M %p') %></td>
               <td>
@@ -81,7 +109,9 @@
 
   .stats {
     display: flex;
-    gap: 15px;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .btn-copy {
@@ -101,48 +131,111 @@
   .btn-copy.copied { background: #155724; }
 
   .stat-badge {
-    padding: 8px 20px;
+    padding: 8px 16px;
     border-radius: 25px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
     letter-spacing: 0.5px;
   }
 
-  .stat-badge.confirmed {
+  .stat-badge.confirmed { background: #d4edda; color: #155724; }
+  .stat-badge.pending   { background: #fff3cd; color: #856404; }
+  .stat-badge.admin     { background: #e8e0f0; color: #4a235a; }
+
+  .flash-notice {
     background: #d4edda;
     color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 12px 20px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
   }
 
-  .stat-badge.pending {
-    background: #fff3cd;
-    color: #856404;
+  /* ── Add subscriber form ── */
+  .add-subscriber-form {
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    padding: 24px 28px;
+    margin-bottom: 32px;
   }
 
+  .add-subscriber-form h2 {
+    margin: 0 0 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .form-input {
+    flex: 1;
+    max-width: 380px;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus { border-color: #000; }
+
+  .btn-add {
+    padding: 10px 22px;
+    background: #000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-add:hover { background: #333; }
+
+  .form-note {
+    margin: 10px 0 0;
+    font-size: 0.8rem;
+    color: #888;
+  }
+
+  .form-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+  }
+
+  /* ── Table ── */
   .subscriptions-table {
     background: white;
     border: 1px solid #e0e0e0;
     overflow: hidden;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  table { width: 100%; border-collapse: collapse; }
 
-  thead {
-    background: #000;
-    color: white;
-  }
+  thead { background: #000; color: white; }
 
-  th, td {
-    padding: 18px;
-    text-align: left;
-  }
+  th, td { padding: 16px 18px; text-align: left; }
 
   th {
     font-weight: 500;
     text-transform: uppercase;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     letter-spacing: 1px;
   }
 
@@ -151,27 +244,29 @@
     transition: background 0.2s;
   }
 
-  tbody tr:hover {
-    background: #f8f8f8;
-  }
+  tbody tr:hover { background: #f8f8f8; }
 
   .status-badge {
-    padding: 6px 16px;
+    padding: 5px 14px;
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 500;
     display: inline-block;
   }
 
-  .status-badge.confirmed {
-    background: #d4edda;
-    color: #155724;
+  .status-badge.confirmed { background: #d4edda; color: #155724; }
+  .status-badge.pending   { background: #fff3cd; color: #856404; }
+
+  .source-badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    display: inline-block;
   }
 
-  .status-badge.pending {
-    background: #fff3cd;
-    color: #856404;
-  }
+  .source-badge.admin { background: #e8e0f0; color: #4a235a; }
+  .source-badge.self  { background: #f0f0f0; color: #555; }
 
   .no-data {
     text-align: center;
@@ -180,9 +275,7 @@
     font-size: 1.2rem;
   }
 
-  .back-link {
-    margin-top: 30px;
-  }
+  .back-link { margin-top: 30px; }
 
   .btn-secondary {
     display: inline-block;
@@ -196,9 +289,7 @@
     transition: background 0.3s;
   }
 
-  .btn-secondary:hover {
-    background: #5a6268;
-  }
+  .btn-secondary:hover { background: #5a6268; }
 </style>
 
 <script>
