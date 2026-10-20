@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VP / Junior Director Compensation — Bulge Bracket Banks &amp; Alternative Credit Funds, London 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #000;
+  --dark: #111;
+  --mid: #444;
+  --light-mid: #888;
+  --border: #e0e0e0;
+  --bg: #f8f9fa;
+  --white: #fff;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--white);
+  color: var(--dark);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+/* ── SIDE NAV ── */
+.side-nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 200px;
+  background: var(--black);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 0;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  padding: 0 28px 32px;
+  border-bottom: 1px solid #222;
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 24px 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 28px;
+  color: #999;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--white);
+}
+
+.nav-contact {
+  padding: 16px 20px;
+  border-top: 1px solid #222;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  color: #999;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border: 1px solid #333;
+  border-radius: 4px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-contact-btn:hover {
+  color: var(--white);
+  border-color: #555;
+}
+
+.nav-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #444;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.nav-link:hover .nav-dot,
+.nav-link.active .nav-dot {
+  background: var(--white);
+}
+
+/* ── MAIN CONTENT ── */
+.page-wrap {
+  margin-left: 200px;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--black);
+  padding: 80px 64px 72px;
+  position: relative;
+}
+
+.confidential-badge {
+  position: absolute;
+  top: 28px;
+  right: 40px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #888;
+  border: 1px solid #333;
+  padding: 4px 10px;
+}
+
+.gp-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 3.5vw, 52px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.15;
+  max-width: 680px;
+  margin-bottom: 20px;
+}
+
+header h1 em {
+  font-style: italic;
+  color: #bbb;
+}
+
+.header-meta {
+  font-size: 13px;
+  color: #555;
+  letter-spacing: 0.04em;
+}
+
+.header-meta span { margin: 0 8px; }
+
+/* ── CONTENT CONTAINER ── */
+.container {
+  max-width: 820px;
+  padding: 0 64px;
+}
+
+/* ── INTRO ── */
+.intro-section {
+  padding: 64px 64px 0;
+  max-width: 820px;
+}
+
+.lede {
+  font-family: 'Playfair Display', serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--dark);
+  border-left: 3px solid var(--black);
+  padding-left: 24px;
+  margin-bottom: 28px;
+}
+
+.intro-section p {
+  color: var(--mid);
+  margin-bottom: 16px;
+  font-size: 15.5px;
+}
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0 64px;
+}
+
+/* ── COMP SECTION ── */
+.comp-section {
+  padding: 56px 64px 0;
+  max-width: 820px;
+  scroll-margin-top: 24px;
+}
+
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+.comp-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.headline-range {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.headline-range .sub {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--light-mid);
+  margin-left: 6px;
+}
+
+.comp-section p {
+  color: var(--mid);
+  margin-bottom: 16px;
+  font-size: 15.5px;
+}
+
+/* ── CHART ── */
+.chart-wrap {
+  margin: 8px 0 28px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 22px 24px 18px;
+}
+
+.chart-title {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #bbb;
+  margin-bottom: 18px;
+}
+
+.bw-chart { width: 100%; overflow: visible; }
+
+.chart-note {
+  font-size: 10.5px;
+  color: #c0c0c0;
+  font-style: italic;
+  margin-top: 6px;
+}
+
+/* ── CALLOUT ── */
+.callout {
+  background: var(--bg);
+  border-left: 3px solid var(--black);
+  border-radius: 2px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.65;
+}
+
+.callout strong { color: var(--black); }
+
+/* ── MULTI-CHART LABEL ── */
+.row-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+
+.row-label:first-child { margin-top: 0; }
+
+/* ── COMPARISON TABLE ── */
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  color: var(--mid);
+  margin: 20px 0;
+}
+
+.comp-table thead tr {
+  border-bottom: 2px solid var(--black);
+}
+
+.comp-table th {
+  text-align: left;
+  padding: 8px 12px 8px 0;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.comp-table td {
+  padding: 10px 12px 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
+}
+
+.comp-table tr:last-child td { border-bottom: none; }
+
+.comp-table .row-head {
+  font-weight: 600;
+  color: var(--black);
+  font-size: 13px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  border-top: 1px solid #111;
+  padding: 24px 64px;
+  font-size: 12px;
+  color: #444;
+  letter-spacing: 0.06em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer a { color: #666; text-decoration: none; }
+footer a:hover { color: var(--white); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .side-nav { display: none; }
+  .page-wrap { margin-left: 0; }
+  header, .intro-section, .comp-section, .section-divider, footer {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .section-divider { margin: 0 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDE NAV -->
+<nav class="side-nav">
+  <div class="nav-logo">GP</div>
+  <ul class="nav-links">
+    <li><a href="#top" class="nav-link active">
+      <span class="nav-dot"></span>Overview
+    </a></li>
+    <li><a href="#banks" class="nav-link">
+      <span class="nav-dot"></span>Banks
+    </a></li>
+    <li><a href="#alt-credit" class="nav-link">
+      <span class="nav-dot"></span>Alt. Credit Funds
+    </a></li>
+  </ul>
+  <div class="nav-contact">
+    <a href="https://wa.me/447456252602" target="_blank" class="nav-contact-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <a href="https://linkedin.com/in/laurenzgerold" target="_blank" class="nav-contact-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+  </div>
+</nav>
+
+<!-- ═══ PAGE WRAP -->
+<div class="page-wrap">
+
+<!-- ═══ HEADER -->
+<header id="top">
+  <div class="confidential-badge">Confidential</div>
+  <div class="gp-tag">Gerold &amp; Partners — Market Intelligence</div>
+  <h1>VP / Junior Director Compensation<br><em>Bulge Bracket Banks &amp; Alternative Credit Funds</em>, London 2026</h1>
+  <div class="header-meta">
+    London<span>·</span>6–12 yrs experience<span>·</span>VP &amp; Junior Director<span>·</span>2026
+  </div>
+</header>
+
+<!-- ═══ CONTACT STRIP -->
+<div style="background:#111;padding:20px 64px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+  <span style="font-size:13px;color:#fff;flex-shrink:0">Contact Laurenz Gerold for a confidential conversation:</span>
+  <a href="https://wa.me/447456252602" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#fff;border:1px solid #444;font-size:11px;font-weight:600;padding:7px 14px;border-radius:3px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">
+    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp
+  </a>
+  <a href="https://linkedin.com/in/laurenzgerold" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#fff;border:1px solid #444;font-size:11px;font-weight:600;padding:7px 14px;border-radius:3px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">
+    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    LinkedIn
+  </a>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: BANKS -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<hr class="section-divider" style="margin-top:56px">
+<section class="comp-section" id="banks">
+  <div class="section-label">01 — Sell Side · Bulge Bracket</div>
+  <h2>Bulge Bracket Banks</h2>
+
+  <p>Bulge bracket banks remain a common starting point for structured credit careers, and the VP tier spans a meaningful seniority range. We split it into two sub-levels: Junior VP (6–8 years) and Senior VP (9–12 years), which correspond roughly to VP and SVP/ED titles depending on the bank. <strong>Roughly one third of bonus is deferred into restricted stock vesting over 3–5 years.</strong></p>
+
+  <!-- ── JUNIOR VP CHART BOX ── -->
+  <div class="chart-wrap">
+    <div class="chart-title">Junior VP (6–8 yrs) — Base, Bonus &amp; Total (GBP) · 41 prints · Bulge bracket only, middle market banks excluded</div>
+
+    <div class="row-label" style="margin-top:0">Base salary — £150k to £190k</div>
+    <!-- min:150k Q1:160k median:170k Q3:182k max:190k; scale 120k–210k → x 40–480; 440/90k=4.889px/k; base=120k -->
+    <!-- 150k→x=187, Q1 160k→x=236, median 170k→x=285, Q3 182k→x=344, max 190k→x=383 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="187" y1="28" x2="236" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="187" y1="21" x2="187" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="236" y="15" width="108" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="285" y1="15" x2="285" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="344" y1="28" x2="383" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="383" y1="21" x2="383" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£120k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£145k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£165k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£185k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£210k</text>
+      <text x="285" y="10" font-size="9" fill="#999" text-anchor="middle">median £170k</text>
+    </svg>
+
+    <div class="row-label">Total bonus — £150k to £333k</div>
+    <!-- min:150k Q1:185k median:230k Q3:285k max:333k; scale 100k–370k → x 40–480; 440/270k=1.63px/k; base=100k -->
+    <!-- 150k→x=122, Q1 185k→x=179, median 230k→x=252, Q3 285k→x=342, max 333k→x=421 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="122" y1="28" x2="179" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="122" y1="21" x2="122" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="179" y="15" width="163" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="252" y1="15" x2="252" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="342" y1="28" x2="421" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="421" y1="21" x2="421" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£100k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£168k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£235k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£303k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£370k</text>
+      <text x="252" y="10" font-size="9" fill="#999" text-anchor="middle">median £230k</text>
+    </svg>
+
+    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £300k to £525k</div>
+    <!-- min:300k Q1:350k median:415k Q3:468k max:525k; scale 230k–580k → x 40–480; 440/350k=1.257px/k; base=230k -->
+    <!-- 300k→x=128, Q1 350k→x=191, median 415k→x=273, Q3 468k→x=339, max 525k→x=411 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="128" y1="28" x2="191" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="128" y1="21" x2="128" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <rect x="191" y="15" width="148" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="273" y1="15" x2="273" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
+      <line x1="339" y1="28" x2="411" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="411" y1="21" x2="411" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£230k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£318k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£405k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£493k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£580k</text>
+      <text x="273" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £415k</text>
+    </svg>
+
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (cash + deferred restricted stock); ~1/3 deferred into restricted stock vesting over 3–5yr. Blue chart = total comp (base + total bonus).</div>
+  </div>
+
+  <!-- ── SENIOR VP CHART BOX ── -->
+  <div class="chart-wrap" style="margin-top:28px">
+    <div class="chart-title">Senior VP (9–12 yrs) — Base, Bonus &amp; Total (GBP) · 41 prints · Bulge bracket only, middle market banks excluded</div>
+
+    <div class="row-label" style="margin-top:0">Base salary — £190k to £220k</div>
+    <!-- min:190k Q1:198k median:207k Q3:215k max:220k; scale 170k–240k → x 40–480; 440/70k=6.286px/k; base=170k -->
+    <!-- 190k→x=166, Q1 198k→x=216, median 207k→x=273, Q3 215k→x=323, max 220k→x=355 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="166" y1="28" x2="216" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="166" y1="21" x2="166" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="216" y="15" width="107" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="273" y1="15" x2="273" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="323" y1="28" x2="355" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="355" y1="21" x2="355" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£170k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£188k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£205k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£222k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£240k</text>
+      <text x="273" y="10" font-size="9" fill="#999" text-anchor="middle">median £207k</text>
+    </svg>
+
+    <div class="row-label">Total bonus — £285k to £530k</div>
+    <!-- min:285k Q1:340k median:400k Q3:460k max:530k; scale 230k–570k → x 40–480; 440/340k=1.294px/k; base=230k -->
+    <!-- 285k→x=111, Q1 340k→x=182, median 400k→x=260, Q3 460k→x=337, max 530k→x=428 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="111" y1="28" x2="182" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="111" y1="21" x2="111" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="182" y="15" width="155" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="260" y1="15" x2="260" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="337" y1="28" x2="428" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="428" y1="21" x2="428" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£230k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£315k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£400k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£485k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£570k</text>
+      <text x="260" y="10" font-size="9" fill="#999" text-anchor="middle">median £400k</text>
+    </svg>
+
+    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £475k to £750k</div>
+    <!-- min:475k Q1:530k median:610k Q3:685k max:750k; scale 380k–820k → x 40–480; 440/440k=1.0px/k; base=380k -->
+    <!-- 475k→x=135, Q1 530k→x=190, median 610k→x=270, Q3 685k→x=345, max 750k→x=410 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="135" y1="28" x2="190" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="135" y1="21" x2="135" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <rect x="190" y="15" width="155" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="270" y1="15" x2="270" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
+      <line x1="345" y1="28" x2="410" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="410" y1="21" x2="410" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£380k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£490k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£600k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£710k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£820k</text>
+      <text x="270" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £610k</text>
+    </svg>
+
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (cash + deferred restricted stock); ~1/3 deferred into restricted stock vesting over 3–5yr. Blue chart = total comp (base + total bonus).</div>
+  </div>
+
+  <div style="margin-bottom:20px;padding:22px 24px;border:1px solid var(--border);border-radius:4px;background:var(--bg)">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px">Bulge Bracket — Comp Breakdown by Sub-Level (GBP)</div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;color:var(--mid)">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black);width:26%">Level</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Base</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Bonus (total)</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Deferred stock (~1/3)</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Total comp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f0f0f0">
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">Junior VP</td>
+          <td style="padding:8px 0">£150k – £190k</td>
+          <td style="padding:8px 0">£150k – £333k</td>
+          <td style="padding:8px 0">£50k – £111k</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">£300k – £525k</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">Senior VP</td>
+          <td style="padding:8px 0">£190k – £220k</td>
+          <td style="padding:8px 0">£285k – £530k</td>
+          <td style="padding:8px 0">£95k – £177k</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">£475k – £750k</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:#888;margin-top:12px">Senior VP upper band (£530k bonus / £750k TC) reflects top-of-pool outcomes in strong years at the largest banks — not a median result. Most Senior VPs sit in the £475k–£650k TC range.</p>
+  </div>
+
+  <ul style="color:var(--mid);font-size:15.5px;line-height:1.8;padding-left:20px;margin-top:0">
+    <li>Base is higher than most buy-side equivalents at the same seniority — banks use it as a fixed-cost retention lever in a way that credit funds typically don't</li>
+    <li>Roughly one third of bonus is paid as restricted stock vesting over 3–5 years; this deferred component is often the single biggest friction point for candidates considering a buy-side move, as unvested stock is forfeited on departure</li>
+    <li>Bonus is discretionary and pool-allocated</li>
+
+    <li>On a pure cash basis Junior VP at a bulge bracket (£300k–£525k) is competitive with VP at an alt credit fund; Senior VP (£475k–£750k) is ahead of most buy-side equivalents on cash alone — but the deferred stock and absence of carry change the long-term picture materially</li>
+  </ul>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: ALT CREDIT FUND -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<hr class="section-divider" style="margin-top:56px">
+<section class="comp-section" id="alt-credit">
+  <div class="section-label">02 — Alternative Credit Fund ($5–25bn)</div>
+  <h2>VP &amp; Director at Alt. Credit Funds <span style="font-size:0.55em;font-weight:400;color:#888;font-family:'Inter',sans-serif;vertical-align:middle">Director figures exclude Managing Directors</span></h2>
+
+  <p>Data covers $10–50bn alternative credit platforms — not megafunds, where comp at this level is meaningfully higher. Compensation at this level has <span style="text-decoration:underline">three components</span>:</p>
+  <ul style="color:var(--mid);font-size:15.5px;line-height:1.8;padding-left:20px;margin:12px 0 20px">
+    <li><strong>Base salary</strong> — modest relative to total compensation; provides income stability but is not the primary retention lever</li>
+    <li><strong>Bonus (cash &amp; deferred)</strong> — the dominant component, typically 100–150% of base at VP level and more at Director; a portion is deferred into fund shares vesting over 3–5 years</li>
+    <li><strong>Carry</strong> — begins to appear at VP level, becomes a meaningful part of the package at Director; the size and quality of carry allocation is often the central negotiating point at this tier</li>
+  </ul>
+
+  <!-- ── VP CHART BOX ── -->
+  <div class="chart-wrap">
+    <div class="chart-title">VP (6–8 yrs) — Base, Bonus &amp; Total (GBP) · 27 prints</div>
+
+    <div class="row-label" style="margin-top:0">Base salary — £120k to £150k</div>
+    <!-- min:120k Q1:128k median:135k Q3:143k max:150k; scale 90k–180k → 440/90k=4.889px/k; base=90k -->
+    <!-- 120k→x=187, Q1 128k→x=226, median 135k→x=260, Q3 143k→x=299, max 150k→x=333 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="187" y1="28" x2="226" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="187" y1="21" x2="187" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="226" y="15" width="73" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="260" y1="15" x2="260" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="299" y1="28" x2="333" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="333" y1="21" x2="333" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£90k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£113k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£135k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£158k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£180k</text>
+      <text x="260" y="10" font-size="9" fill="#999" text-anchor="middle">median £135k</text>
+    </svg>
+
+    <div class="row-label">Total bonus — £120k to £225k</div>
+    <!-- min:120k Q1:148k median:170k Q3:198k max:225k; scale 80k–260k → 440/180k=2.444px/k; base=80k -->
+    <!-- 120k→x=138, Q1 148k→x=206, median 170k→x=260, Q3 198k→x=329, max 225k→x=394 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="138" y1="28" x2="206" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="138" y1="21" x2="138" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="206" y="15" width="123" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="260" y1="15" x2="260" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="329" y1="28" x2="394" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="394" y1="21" x2="394" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£80k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£125k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£170k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£215k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£260k</text>
+      <text x="260" y="10" font-size="9" fill="#999" text-anchor="middle">median £170k</text>
+    </svg>
+
+    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £240k to £375k</div>
+    <!-- min:240k Q1:270k median:305k Q3:345k max:375k; scale 150k–420k → 440/270k=1.630px/k; base=150k -->
+    <!-- 240k→x=205, Q1 270k→x=254, median 305k→x=303, Q3 345k→x=368, max 375k→x=417 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="205" y1="28" x2="254" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="205" y1="21" x2="205" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <rect x="254" y="15" width="114" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="303" y1="15" x2="303" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
+      <line x1="368" y1="28" x2="417" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="417" y1="21" x2="417" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£150k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£220k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£285k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£355k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£420k</text>
+      <text x="303" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £305k</text>
+    </svg>
+
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (subject to deferral schedule below). Blue chart = total comp (base + total bonus).</div>
+  </div>
+
+  <!-- ── DIRECTOR CHART BOX ── -->
+  <div class="chart-wrap" style="margin-top:28px">
+    <div class="chart-title">Director (8–12 yrs, excl. Managing Directors) — Base, Bonus &amp; Total (GBP) · 27 prints</div>
+
+    <div class="row-label" style="margin-top:0">Base salary — £150k to £180k</div>
+    <!-- min:150k Q1:158k median:165k Q3:173k max:180k; scale 120k–210k → 440/90k=4.889px/k; base=120k -->
+    <!-- 150k→x=187, Q1 158k→x=226, median 165k→x=260, Q3 173k→x=299, max 180k→x=333 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="187" y1="28" x2="226" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="187" y1="21" x2="187" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="226" y="15" width="73" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="260" y1="15" x2="260" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="299" y1="28" x2="333" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="333" y1="21" x2="333" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£120k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£143k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£165k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£188k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£210k</text>
+      <text x="260" y="10" font-size="9" fill="#999" text-anchor="middle">median £165k</text>
+    </svg>
+
+    <div class="row-label">Total bonus — £175k to £620k</div>
+    <!-- min:175k Q1:215k median:265k Q3:380k max:620k; scale 100k–680k → 440/580k=0.759px/k; base=100k -->
+    <!-- 175k→x=97, Q1 215k→x=127, median 265k→x=165, Q3 380k→x=253, max 620k→x=435 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="97" y1="28" x2="127" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="97" y1="21" x2="97" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="127" y="15" width="126" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="165" y1="15" x2="165" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="253" y1="28" x2="435" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="435" y1="21" x2="435" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£100k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£245k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£390k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£535k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£680k</text>
+      <text x="165" y="10" font-size="9" fill="#999" text-anchor="middle">median £265k</text>
+    </svg>
+
+    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £325k to £800k</div>
+    <!-- min:325k Q1:380k median:435k Q3:570k max:800k; scale 250k–870k → 440/620k=0.710px/k; base=250k -->
+    <!-- 325k→x=93, Q1 380k→x=92+55=132, median 435k→x=171, Q3 570k→x=227, max 800k→x=391 -->
+    <!-- 325k→40+(75×0.710)=93, Q1 380k→40+(130×0.710)=132, median 435k→40+(185×0.710)=171, Q3 570k→40+(320×0.710)=267, max 800k→40+(550×0.710)=431 -->
+    <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="93" y1="28" x2="132" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="93" y1="21" x2="93" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <rect x="132" y="15" width="135" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="171" y1="15" x2="171" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
+      <line x1="267" y1="28" x2="431" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="431" y1="21" x2="431" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£250k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£425k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£600k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£775k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£870k</text>
+      <text x="171" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £435k</text>
+    </svg>
+
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (subject to deferral schedule below). Blue chart = total comp (base + total bonus). <strong>Carry is not included — see the deferred fund shares &amp; carry table below for estimated annual carry values.</strong></div>
+  </div>
+
+  <div style="margin-bottom:20px;padding:22px 24px;border:1px solid var(--border);border-radius:4px;background:var(--bg)">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px">Bonus Vesting Schedule — Firmwide</div>
+    <table style="width:100%;border-collapse:collapse;font-size:14.5px;color:var(--mid)">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black);width:38%">Total Bonus</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Cash (immediate)</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Fund shares (deferred, 3–5yr) — employee-managed fund</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f0f0f0">
+          <td style="padding:8px 0">£0 – £350k</td>
+          <td style="padding:8px 0">100%</td>
+          <td style="padding:8px 0">—</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0f0f0">
+          <td style="padding:8px 0">£350k – £700k</td>
+          <td style="padding:8px 0">70–80%</td>
+          <td style="padding:8px 0">20–30%</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0">£700k+</td>
+          <td style="padding:8px 0">60–70%</td>
+          <td style="padding:8px 0">30–40%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="color:var(--mid);font-size:15px;margin-bottom:16px">For example, on a £600k total bonus:</p>
+
+  <div style="margin-bottom:28px;padding:18px 24px;border:1px solid var(--border);border-radius:4px;background:#fff5e6">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:10px">Walkthrough — £600k total bonus illustration</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px;color:var(--mid)">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:left;padding:5px 0;font-weight:600;color:var(--black);width:28%">Slice</th>
+          <th style="text-align:left;padding:5px 0;font-weight:600;color:var(--black);width:18%">Amount</th>
+          <th style="text-align:left;padding:5px 0;font-weight:600;color:var(--black)">Cash</th>
+          <th style="text-align:left;padding:5px 0;font-weight:600;color:var(--black)">Fund shares</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f0f0f0">
+          <td style="padding:7px 0">£0 – £350k</td>
+          <td style="padding:7px 0">£350k</td>
+          <td style="padding:7px 0">£350k (100%)</td>
+          <td style="padding:7px 0">—</td>
+        </tr>
+        <tr style="border-bottom:1px solid #f0f0f0">
+          <td style="padding:7px 0">£350k – £600k</td>
+          <td style="padding:7px 0">£250k</td>
+          <td style="padding:7px 0">~£188k (75%)</td>
+          <td style="padding:7px 0">~£63k (25%)</td>
+        </tr>
+        <tr style="font-weight:600;color:var(--black);border-top:1px solid #ccc">
+          <td style="padding:8px 0">Total</td>
+          <td style="padding:8px 0">£600k</td>
+          <td style="padding:8px 0">~£538k</td>
+          <td style="padding:8px 0">~£63k</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-bottom:20px;padding:22px 24px;border:1px solid var(--border);border-radius:4px;background:var(--bg)">
+    <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px">Alt. Credit Fund — Comp Table (GBP, cash only)</div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;color:var(--mid)">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black);width:16%">Level</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Yrs Exp</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Base</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Bonus</th>
+          <th style="text-align:left;padding:6px 0;font-weight:600;color:var(--black)">Total Cash</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #f0f0f0">
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">VP</td>
+          <td style="padding:8px 0">6–8 yrs</td>
+          <td style="padding:8px 0">£120k – £150k</td>
+          <td style="padding:8px 0">£120k – £225k</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">£240k – £375k</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">Director <span style="font-weight:400;font-size:12px;color:#999">(excl. MDs)</span></td>
+          <td style="padding:8px 0">8–12 yrs</td>
+          <td style="padding:8px 0">£150k – £180k</td>
+          <td style="padding:8px 0">£175k – £620k</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">£325k – £800k</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:#888;margin-top:12px">Director upper band reflects top-of-range outcomes at well-performing funds — not a typical result. The majority of Directors sit in the £325k–£500k range. The £800k ceiling is attainable but uncommon and generally requires strong fund performance, a long tenure, and meaningful deal involvement.</p>
+  </div>
+
+
+  <ul style="color:var(--mid);font-size:15.5px;line-height:1.8;padding-left:20px;margin-top:0">
+    <li>Carry at Junior VP level is typically very low — allocations exist but are small, so the comp table is close to total compensation for this cohort</li>
+    <li>The deferred fund shares component only triggers above the £350k bonus threshold — a Director on a £450k bonus will typically receive around £25k–£50k in fund shares (20–30% of the slice above £350k); these vest over 3–5 years and are forfeited on departure, making them a meaningful retention tool alongside carry</li>
+    <li>Fund shares vest into an employee co-investment vehicle — distinct from the main fund but investing alongside it. In strong vintages the value at vest exceeds grant value; in weaker ones it does not</li>
+    <li>At Director level carry typically begins, though allocations vary significantly by fund size and vintage; this is the critical variable to interrogate in any offer</li>
+    <li>Bad leaver clauses become a constraint from Director upwards — unvested and in some cases vested carry can be subject to haircuts on departure, making lateral moves more costly than they appear on paper</li>
+    <li>Co-investment rights typically open at Director level alongside carry — meaningful additional upside, but requires tying up personal capital (though at fund leverage terms, which is structurally favourable)</li>
+  </ul>
+</section>
+
+
+
+
+<!-- ═══ CONTACT -->
+<hr class="section-divider" style="margin-top:56px">
+<section class="comp-section" style="padding-bottom:80px">
+  <div class="section-label">— Gerold &amp; Partners</div>
+  <h2>Up for a confidential chat?</h2>
+  <p style="color:var(--mid);font-size:15.5px;line-height:1.8;margin-bottom:32px">These numbers raise questions that are specific to your situation — which employer type is the right fit, how to read a carry package, how to navigate a move from the sell side. Please feel free to reach out.</p>
+  <p style="color:var(--mid);font-size:15px;line-height:1.8;margin-bottom:32px">
+    <strong style="color:var(--black)">Laurenz Gerold</strong><br>
+    Gerold &amp; Partners — Executive Search &amp; Advisory<br>
+    <a href="mailto:recruitment@geroldpartners.com" style="color:#555;text-decoration:none;">recruitment@geroldpartners.com</a>
+  </p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap">
+    <a href="https://wa.me/447456252602" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#000;color:#fff;border:1px solid #222;font-size:13px;font-weight:600;padding:12px 20px;border-radius:3px;text-decoration:none;letter-spacing:0.04em">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <a href="https://linkedin.com/in/laurenzgerold" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#000;color:#fff;border:1px solid #222;font-size:13px;font-weight:600;padding:12px 20px;border-radius:3px;text-decoration:none;letter-spacing:0.04em">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER -->
+<footer>
+  <span>Gerold &amp; Partners &nbsp;·&nbsp; Executive Search &amp; Advisory</span>
+  <span>Confidential &nbsp;·&nbsp; London 2026</span>
+</footer>
+
+</div><!-- /page-wrap -->
+
+<script>
+const sections = document.querySelectorAll('header[id], section[id], div[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const id = entry.target.id;
+      const active = document.querySelector(`.nav-link[href="#${id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
