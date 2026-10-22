@@ -40,6 +40,7 @@
             <th>Source</th>
             <th>Subscribed At</th>
             <th>Confirmed At</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -61,6 +62,9 @@
               <td><%= subscription.created_at.strftime('%B %d, %Y at %I:%M %p') %></td>
               <td>
                 <%= subscription.confirmed_at ? subscription.confirmed_at.strftime('%B %d, %Y at %I:%M %p') : '-' %>
+              </td>
+              <td>
+                <%= button_to "Delete", admin_newsletter_subscription_path(subscription), method: :delete, data: { turbo_confirm: "Remove #{subscription.email} from the newsletter?" }, class: "btn-delete" %>
               </td>
             </tr>
           <% end %>
@@ -267,6 +271,21 @@
 
   .source-badge.admin { background: #e8e0f0; color: #4a235a; }
   .source-badge.self  { background: #f0f0f0; color: #555; }
+
+  .btn-delete {
+    padding: 5px 14px;
+    background: #fff;
+    color: #c0392b;
+    border: 1px solid #c0392b;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-delete:hover { background: #c0392b; color: #fff; }
 
   .no-data {
     text-align: center;

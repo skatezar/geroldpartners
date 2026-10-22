@@ -25,4 +25,11 @@ class Admin::NewsletterSubscriptionsController < ApplicationController
       render :index, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    subscription = NewsletterSubscription.find(params[:id])
+    email = subscription.email
+    subscription.destroy
+    redirect_to admin_newsletter_subscriptions_path, notice: "#{email} removed from newsletter."
+  end
 end
