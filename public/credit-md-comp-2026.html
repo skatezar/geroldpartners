@@ -402,17 +402,110 @@ footer a:hover { color: var(--white); }
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .side-nav { display: none; }
-  .page-wrap { margin-left: 0; }
-  header, .intro-section, .comp-section, .section-divider, .total-section, footer {
-    padding-left: 24px;
-    padding-right: 24px;
+  .page-wrap { margin-left: 0; padding-top: 52px; }
+
+  header {
+    padding: 48px 20px 40px;
   }
-  .section-divider { margin: 0 24px; }
-  .total-grid { grid-template-columns: 1fr 1fr; }
+
+  header h1 {
+    font-size: clamp(22px, 6vw, 34px);
+    max-width: 100%;
+  }
+
+  .confidential-badge {
+    position: static;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .intro-section, .comp-section, .total-section {
+    padding: 36px 20px 0;
+  }
+
+  .section-divider {
+    margin: 0 20px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .total-grid { grid-template-columns: 1fr; }
+
+  .chart-wrap {
+    padding: 16px 12px 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .bw-chart {
+    min-width: 460px;
+  }
+
+  .comp-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  footer {
+    padding: 20px 20px;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+/* Mobile nav bar for blog */
+.blog-mobile-nav {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.97);
+  height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+.blog-mobile-nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.blog-mobile-back {
+  font-size: 12px;
+  font-weight: 500;
+  color: #999;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.blog-mobile-back:hover { color: white; }
+
+@media (max-width: 900px) {
+  .blog-mobile-nav { display: flex; }
 }
 </style>
 </head>
 <body>
+
+<!-- ═══ MOBILE TOP NAV (blog) -->
+<nav class="blog-mobile-nav">
+  <a href="/" class="blog-mobile-nav-logo">GP</a>
+  <a href="/" class="blog-mobile-back">← Back to site</a>
+</nav>
 
 <!-- ═══ SIDE NAV -->
 <nav class="side-nav">

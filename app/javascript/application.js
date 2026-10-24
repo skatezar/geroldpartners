@@ -6,8 +6,8 @@ import "controllers"
 document.addEventListener('turbo:load', function() {
   // Intersection Observer for section animations
   const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -100px 0px'
+    threshold: 0.05,
+    rootMargin: '0px 0px -50px 0px'
   };
 
   const sectionObserver = new IntersectionObserver((entries) => {
@@ -389,6 +389,30 @@ document.addEventListener('turbo:load', function() {
       downloadForm.reset();
     }
   });
+
+  // Mobile nav toggle
+  const mobileNavToggle = document.getElementById('mobileNavToggle');
+  const mobileNavMenu = document.getElementById('mobileNavMenu');
+  if (mobileNavToggle && mobileNavMenu) {
+    mobileNavToggle.addEventListener('click', () => {
+      const isOpen = mobileNavMenu.classList.toggle('open');
+      mobileNavToggle.classList.toggle('open', isOpen);
+    });
+
+    // Close menu when a link is clicked
+    mobileNavMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        mobileNavMenu.classList.remove('open');
+        mobileNavToggle.classList.remove('open');
+        const targetId = link.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
 
   // Standard Terms Modal functionality
   const termsModal = document.getElementById('termsModal');

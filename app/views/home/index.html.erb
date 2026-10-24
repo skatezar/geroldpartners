@@ -9,6 +9,23 @@
   </div>
 <% end %>
 
+<!-- Mobile Top Navigation -->
+<nav class="mobile-nav">
+  <a href="#hero" class="mobile-nav-logo">GP</a>
+  <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-nav-menu" id="mobileNavMenu">
+  <a href="#hero">Home</a>
+  <a href="#services">Services</a>
+  <a href="#success">Success Stories</a>
+  <a href="#opportunities">Mandates</a>
+  <a href="#blog">Compensation Data</a>
+  <a href="#cv-upload">Talent Bank</a>
+  <a href="#contact">Contact</a>
+</div>
+
 <!-- Fixed Left Navigation -->
 <nav class="side-nav">
   <div class="nav-logo">GP</div>
@@ -363,6 +380,10 @@
     padding: 100px 0;
   }
 
+  .blog-section > .container {
+    width: 100%;
+  }
+
   .blog-section h2 {
     font-size: 3rem;
     margin-bottom: 15px;
@@ -378,7 +399,7 @@
 
   .blog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
     gap: 30px;
     max-width: 900px;
     margin: 0 auto;
@@ -393,6 +414,7 @@
     text-decoration: none;
     color: inherit;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 0;
   }
 
   .blog-card:hover {
@@ -429,6 +451,43 @@
     font-weight: 600;
     color: #111;
     letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 768px) {
+    .blog-section {
+      padding: 60px 0;
+    }
+
+    .blog-section > .container {
+      padding: 0 16px;
+      box-sizing: border-box;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .blog-section h2 {
+      font-size: 1.8rem;
+      word-break: break-word;
+    }
+
+    .blog-section .subtitle {
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+      padding: 0 4px;
+    }
+
+    .blog-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .blog-card {
+      padding: 22px 18px;
+    }
+
+    .blog-card h4 {
+      font-size: 1.1rem;
+    }
   }
 </style>
 
