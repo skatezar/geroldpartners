@@ -366,6 +366,17 @@ footer {
 footer a { color: #666; text-decoration: none; }
 footer a:hover { color: var(--white); }
 
+/* ── SCROLL HINT (shown only on mobile) ── */
+.chart-scroll-hint {
+  display: none;
+}
+
+/* ── TABLE SCROLL WRAPPER ── */
+.table-scroll-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .side-nav { display: none; }
@@ -406,9 +417,17 @@ footer a:hover { color: var(--white); }
     font-size: 18px;
   }
 
-  /* Make SVG charts horizontally scrollable on narrow screens */
+  /* Contact strip */
+  .contact-strip {
+    padding: 16px 20px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  /* SVG charts scroll horizontally */
   .chart-wrap {
-    padding: 16px 12px 12px;
+    padding: 16px 12px 8px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -417,16 +436,30 @@ footer a:hover { color: var(--white); }
     min-width: 460px;
   }
 
-  /* Tables scroll horizontally */
-  .comp-table {
+  /* Scroll hint shown on mobile */
+  .chart-scroll-hint {
     display: block;
+    font-size: 10px;
+    color: #bbb;
+    letter-spacing: 0.06em;
+    text-align: right;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  /* Inline table wrappers scroll horizontally */
+  .table-scroll-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
+  }
+
+  .table-scroll-wrap table {
+    min-width: 480px;
   }
 
   footer {
-    padding: 20px 20px;
+    padding: 20px;
     flex-direction: column;
     gap: 8px;
     text-align: center;
@@ -522,7 +555,7 @@ footer a:hover { color: var(--white); }
 </header>
 
 <!-- ═══ CONTACT STRIP -->
-<div style="background:#111;padding:20px 64px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+<div class="contact-strip" style="background:#111;padding:20px 64px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
   <span style="font-size:13px;color:#fff;flex-shrink:0">Contact Laurenz Gerold for a confidential conversation:</span>
   <a href="https://wa.me/447456252602" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#fff;border:1px solid #444;font-size:11px;font-weight:600;padding:7px 14px;border-radius:3px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">
     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -547,135 +580,153 @@ footer a:hover { color: var(--white); }
 
   <!-- ── JUNIOR VP CHART BOX ── -->
   <div class="chart-wrap">
-    <div class="chart-title">Junior VP (6–8 yrs) — Base, Bonus &amp; Total (GBP) · 41 prints · Bulge bracket only, middle market banks excluded</div>
+    <div class="chart-title">Junior VP (6–8 yrs) — Base, Bonus &amp; Total Comp (GBP) · 41 prints · Front office · Bulge bracket only, middle market banks excluded · FY2025</div>
+    <span class="chart-scroll-hint">← scroll to see full chart →</span>
 
     <div class="row-label" style="margin-top:0">Base salary — £150k to £190k</div>
-    <!-- min:150k Q1:160k median:170k Q3:182k max:190k; scale 120k–210k → x 40–480; 440/90k=4.889px/k; base=120k -->
-    <!-- 150k→x=187, Q1 160k→x=236, median 170k→x=285, Q3 182k→x=344, max 190k→x=383 -->
+    <!-- P10:150k Q1:158k median:168k Q3:179k P90:190k -->
+    <!-- scale £140k–£200k → 440/60k=7.333px/k; base=140k -->
+    <!-- 150→40+(10×7.333)=113, 158→40+(18×7.333)=172, 168→40+(28×7.333)=245, 179→40+(39×7.333)=326, 190→40+(50×7.333)=407 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="187" y1="28" x2="236" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="187" y1="21" x2="187" y2="35" stroke="#888" stroke-width="1.5"/>
-      <rect x="236" y="15" width="108" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <line x1="285" y1="15" x2="285" y2="41" stroke="#000" stroke-width="2.5"/>
-      <line x1="344" y1="28" x2="383" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="383" y1="21" x2="383" y2="35" stroke="#888" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£120k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£145k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£165k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£185k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£210k</text>
-      <text x="285" y="10" font-size="9" fill="#999" text-anchor="middle">median £170k</text>
+      <line x1="113" y1="28" x2="172" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="113" y1="21" x2="113" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="172" y="15" width="154" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="245" y1="15" x2="245" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="326" y1="28" x2="407" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="407" y1="21" x2="407" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£140k</text>
+      <text x="113" y="56" font-size="10" fill="#bbb" text-anchor="middle">£150k</text>
+      <text x="187" y="56" font-size="10" fill="#bbb" text-anchor="middle">£160k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£170k</text>
+      <text x="333" y="56" font-size="10" fill="#bbb" text-anchor="middle">£180k</text>
+      <text x="407" y="56" font-size="10" fill="#bbb" text-anchor="middle">£190k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£200k</text>
+      <text x="245" y="10" font-size="9" fill="#999" text-anchor="middle">median £168k</text>
     </svg>
 
     <div class="row-label">Total bonus — £150k to £333k</div>
-    <!-- min:150k Q1:155k median:180k Q3:225k max:333k; scale 100k–370k → x 40–480; 440/270k=1.630px/k; base=100k -->
-    <!-- 150k→x=122, Q1 155k→x=130, median 180k→x=170, Q3 225k→x=245, max 333k→x=421 -->
+    <!-- P10:152k Q1:183k median:213k Q3:255k P90:320k -->
+    <!-- scale £100k–£350k → 440/250k=1.76px/k; base=100k -->
+    <!-- 152→40+(52×1.76)=132, 183→40+(83×1.76)=186, 213→40+(113×1.76)=239, 255→40+(155×1.76)=313, 320→40+(220×1.76)=427 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="122" y1="28" x2="130" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="122" y1="21" x2="122" y2="35" stroke="#888" stroke-width="1.5"/>
-      <rect x="130" y="15" width="115" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <line x1="170" y1="15" x2="170" y2="41" stroke="#000" stroke-width="2.5"/>
-      <line x1="245" y1="28" x2="421" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="421" y1="21" x2="421" y2="35" stroke="#888" stroke-width="1.5"/>
+      <line x1="132" y1="28" x2="186" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="132" y1="21" x2="132" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="186" y="15" width="127" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="239" y1="15" x2="239" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="313" y1="28" x2="427" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="427" y1="21" x2="427" y2="35" stroke="#888" stroke-width="1.5"/>
       <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£100k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£168k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£235k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£303k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£370k</text>
-      <text x="170" y="10" font-size="9" fill="#999" text-anchor="middle">median £180k</text>
+      <text x="128" y="56" font-size="10" fill="#bbb" text-anchor="middle">£150k</text>
+      <text x="216" y="56" font-size="10" fill="#bbb" text-anchor="middle">£200k</text>
+      <text x="304" y="56" font-size="10" fill="#bbb" text-anchor="middle">£250k</text>
+      <text x="392" y="56" font-size="10" fill="#bbb" text-anchor="middle">£300k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£350k</text>
+      <text x="239" y="10" font-size="9" fill="#999" text-anchor="middle">median £213k</text>
     </svg>
 
-    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £300k to £525k</div>
-    <!-- min:300k Q1:305k median:350k Q3:400k max:525k; scale 230k–580k → x 40–480; 440/350k=1.257px/k; base=230k -->
-    <!-- 300k→x=128, Q1 305k→x=134, median 350k→x=151+40=191... -->
-    <!-- 300k→40+(70×1.257)=128, Q1 305k→40+(75×1.257)=134, median 350k→40+(120×1.257)=191, Q3 400k→40+(170×1.257)=254, max 525k→40+(295×1.257)=411 -->
+    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £315k to £495k</div>
+    <!-- Recomputed from 41 individual prints (base + bonus per person): -->
+    <!-- P10:315k Q1:339k median:377k Q3:435k P90:495k -->
+    <!-- scale £250k–£550k → 440/300k=1.467px/k; base=250k -->
+    <!-- 315→40+(65×1.467)=135, 339→40+(89×1.467)=171, 377→40+(127×1.467)=226, 435→40+(185×1.467)=311, 495→40+(245×1.467)=399 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="128" y1="28" x2="134" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="128" y1="21" x2="128" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
-      <rect x="134" y="15" width="120" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="191" y1="15" x2="191" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
-      <line x1="254" y1="28" x2="411" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="411" y1="21" x2="411" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£230k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£318k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£405k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£493k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£580k</text>
-      <text x="191" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £350k</text>
+      <line x1="135" y1="28" x2="171" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="135" y1="21" x2="135" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <rect x="171" y="15" width="140" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="226" y1="15" x2="226" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
+      <line x1="311" y1="28" x2="399" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="399" y1="21" x2="399" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£250k</text>
+      <text x="113" y="56" font-size="10" fill="#bbb" text-anchor="middle">£300k</text>
+      <text x="187" y="56" font-size="10" fill="#bbb" text-anchor="middle">£350k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£400k</text>
+      <text x="333" y="56" font-size="10" fill="#bbb" text-anchor="middle">£450k</text>
+      <text x="407" y="56" font-size="10" fill="#bbb" text-anchor="middle">£500k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£550k</text>
+      <text x="226" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £377k</text>
     </svg>
 
-    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (cash + deferred restricted stock); ~1/3 deferred into restricted stock vesting over 3–5yr. Blue chart = total comp (base + total bonus).</div>
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (cash + deferred stock). Deferral varies by bank and seniority, typically 25–40%+ deferred over 3–5 years; higher for PRA Material Risk Takers. Blue chart = total comp (base + total bonus), computed per-print — not a sum of per-component percentiles. Axes are scaled independently per row; box widths are not comparable across rows.</div>
   </div>
 
   <!-- ── SENIOR VP CHART BOX ── -->
   <div class="chart-wrap" style="margin-top:28px">
-    <div class="chart-title">Senior VP (9–12 yrs) — Base, Bonus &amp; Total (GBP) · 41 prints · Bulge bracket only, middle market banks excluded</div>
+    <div class="chart-title">Senior VP / ED (9–12 yrs) — Base, Bonus &amp; Total Comp (GBP) · 41 prints · Front office · Bulge bracket only, middle market banks excluded · FY2025</div>
+    <span class="chart-scroll-hint">← scroll to see full chart →</span>
 
     <div class="row-label" style="margin-top:0">Base salary — £190k to £220k</div>
-    <!-- min:190k Q1:198k median:207k Q3:215k max:220k; scale 170k–240k → x 40–480; 440/70k=6.286px/k; base=170k -->
-    <!-- 190k→x=166, Q1 198k→x=216, median 207k→x=273, Q3 215k→x=323, max 220k→x=355 -->
+    <!-- P10:190k Q1:198k median:207k Q3:215k P90:220k -->
+    <!-- scale £180k–£230k → 440/50k=8.8px/k; base=180k -->
+    <!-- 190→40+(10×8.8)=128, 198→40+(18×8.8)=198, 207→40+(27×8.8)=278, 215→40+(35×8.8)=348, 220→40+(40×8.8)=392 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="166" y1="28" x2="216" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="166" y1="21" x2="166" y2="35" stroke="#888" stroke-width="1.5"/>
-      <rect x="216" y="15" width="107" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <line x1="273" y1="15" x2="273" y2="41" stroke="#000" stroke-width="2.5"/>
-      <line x1="323" y1="28" x2="355" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="355" y1="21" x2="355" y2="35" stroke="#888" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£170k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£188k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£205k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£222k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£240k</text>
-      <text x="273" y="10" font-size="9" fill="#999" text-anchor="middle">median £207k</text>
+      <line x1="128" y1="28" x2="198" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="128" y1="21" x2="128" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="198" y="15" width="150" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="278" y1="15" x2="278" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="348" y1="28" x2="392" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="392" y1="21" x2="392" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£180k</text>
+      <text x="128" y="56" font-size="10" fill="#bbb" text-anchor="middle">£190k</text>
+      <text x="216" y="56" font-size="10" fill="#bbb" text-anchor="middle">£200k</text>
+      <text x="304" y="56" font-size="10" fill="#bbb" text-anchor="middle">£210k</text>
+      <text x="392" y="56" font-size="10" fill="#bbb" text-anchor="middle">£220k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£230k</text>
+      <text x="278" y="10" font-size="9" fill="#999" text-anchor="middle">median £207k</text>
     </svg>
 
     <div class="row-label">Total bonus — £285k to £530k</div>
-    <!-- min:285k Q1:310k median:343k Q3:420k max:530k; scale 230k–570k → x 40–480; 440/340k=1.294px/k; base=230k -->
-    <!-- 285k→x=111, Q1 310k→x=144, median 343k→x=186, Q3 420k→x=286, max 530k→x=428 -->
+    <!-- P10:285k Q1:310k median:343k Q3:420k P90:530k -->
+    <!-- scale £250k–£550k → 440/300k=1.467px/k; base=250k -->
+    <!-- 285→40+(35×1.467)=91, 310→40+(60×1.467)=128, 343→40+(93×1.467)=176, 420→40+(170×1.467)=289, 530→40+(280×1.467)=451 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="111" y1="28" x2="144" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="111" y1="21" x2="111" y2="35" stroke="#888" stroke-width="1.5"/>
-      <rect x="144" y="15" width="142" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <line x1="186" y1="15" x2="186" y2="41" stroke="#000" stroke-width="2.5"/>
-      <line x1="286" y1="28" x2="428" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="428" y1="21" x2="428" y2="35" stroke="#888" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£230k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£315k</text>
+      <line x1="91" y1="28" x2="128" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="91" y1="21" x2="91" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="128" y="15" width="161" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="176" y1="15" x2="176" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="289" y1="28" x2="451" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="451" y1="21" x2="451" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£250k</text>
+      <text x="113" y="56" font-size="10" fill="#bbb" text-anchor="middle">£300k</text>
+      <text x="187" y="56" font-size="10" fill="#bbb" text-anchor="middle">£350k</text>
       <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£400k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£485k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£570k</text>
-      <text x="186" y="10" font-size="9" fill="#999" text-anchor="middle">median £343k</text>
+      <text x="333" y="56" font-size="10" fill="#bbb" text-anchor="middle">£450k</text>
+      <text x="407" y="56" font-size="10" fill="#bbb" text-anchor="middle">£500k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£550k</text>
+      <text x="176" y="10" font-size="9" fill="#999" text-anchor="middle">median £343k</text>
     </svg>
 
-    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £475k to £750k</div>
-    <!-- min:475k Q1:490k median:550k Q3:640k max:750k; scale 380k–820k → x 40–480; 440/440k=1.0px/k; base=380k -->
-    <!-- 475k→x=135, Q1 490k→x=150, median 550k→x=210, Q3 640k→x=300, max 750k→x=410 -->
+    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £500k to £675k</div>
+    <!-- Recomputed from 41 individual prints (base + bonus per person): -->
+    <!-- P10:500k Q1:522k median:560k Q3:606k P90:675k -->
+    <!-- scale £400k–£800k → 440/400k=1.1px/k; base=400k -->
+    <!-- 500→40+(100×1.1)=150, 522→40+(122×1.1)=174, 560→40+(160×1.1)=216, 606→40+(206×1.1)=267, 675→40+(275×1.1)=343 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="135" y1="28" x2="150" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="135" y1="21" x2="135" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
-      <rect x="150" y="15" width="150" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="210" y1="15" x2="210" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
-      <line x1="300" y1="28" x2="410" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="410" y1="21" x2="410" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£380k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£490k</text>
+      <line x1="150" y1="28" x2="174" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="150" y1="21" x2="150" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <rect x="174" y="15" width="93" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="216" y1="15" x2="216" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
+      <line x1="267" y1="28" x2="343" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="343" y1="21" x2="343" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£400k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£500k</text>
       <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£600k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£710k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£820k</text>
-      <text x="210" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £550k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£700k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£800k</text>
+      <text x="216" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £560k</text>
     </svg>
 
-    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (cash + deferred restricted stock); ~1/3 deferred into restricted stock vesting over 3–5yr. Blue chart = total comp (base + total bonus).</div>
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (cash + deferred stock). Deferral varies by bank and seniority, typically 25–40%+ deferred over 3–5 years; higher for PRA Material Risk Takers. Blue chart = total comp (base + total bonus), computed per-print — not a sum of per-component percentiles. Axes are scaled independently per row; box widths are not comparable across rows. Title equivalent: ED / Director at JPM, MS, Citi, BofA, Barclays; VP at Goldman Sachs.</div>
   </div>
 
   <div style="margin-bottom:20px;padding:22px 24px;border:1px solid var(--border);border-radius:4px;background:var(--bg)">
     <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px">Bulge Bracket — Comp Breakdown by Sub-Level (GBP)</div>
+    <div class="table-scroll-wrap">
     <table style="width:100%;border-collapse:collapse;font-size:14px;color:var(--mid)">
       <thead>
         <tr style="border-bottom:1px solid var(--border)">
@@ -691,19 +742,20 @@ footer a:hover { color: var(--white); }
           <td style="padding:8px 0;font-weight:600;color:var(--black)">Junior VP</td>
           <td style="padding:8px 0">£150k – £190k</td>
           <td style="padding:8px 0">£150k – £333k</td>
-          <td style="padding:8px 0">£50k – £111k</td>
-          <td style="padding:8px 0;font-weight:600;color:var(--black)">£300k – £525k</td>
+          <td style="padding:8px 0">£38k – £133k</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">£315k – £495k</td>
         </tr>
         <tr>
-          <td style="padding:8px 0;font-weight:600;color:var(--black)">Senior VP</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">Senior VP / ED</td>
           <td style="padding:8px 0">£190k – £220k</td>
           <td style="padding:8px 0">£285k – £530k</td>
-          <td style="padding:8px 0">£95k – £177k</td>
-          <td style="padding:8px 0;font-weight:600;color:var(--black)">£475k – £750k</td>
+          <td style="padding:8px 0">£71k – £212k</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">£500k – £675k</td>
         </tr>
       </tbody>
     </table>
-    <p style="font-size:13px;color:#888;margin-top:12px">Senior VP upper band (£530k bonus / £750k TC) reflects top-of-pool outcomes in strong years at the largest banks — not a median result. Most Senior VPs sit in the £475k–£650k TC range.</p>
+    </div>
+    <p style="font-size:13px;color:#888;margin-top:12px">Senior VP / ED upper band (£530k bonus) reflects top-of-pool outcomes in strong years at the largest banks — not a median result. Total comp P10–P90 range is £500k–£675k; most Senior VPs sit in the £520k–£610k interquartile range. Title equivalent: ED / Director at JPM, MS, Citi, BofA, Barclays; VP at Goldman Sachs.</p>
   </div>
 
   <ul style="color:var(--mid);font-size:15.5px;line-height:1.8;padding-left:20px;margin-top:0">
@@ -732,134 +784,150 @@ footer a:hover { color: var(--white); }
 
   <!-- ── VP CHART BOX ── -->
   <div class="chart-wrap">
-    <div class="chart-title">VP (6–8 yrs) — Base, Bonus &amp; Total (GBP) · 27 prints</div>
+    <div class="chart-title">VP (6–8 yrs) — Base, Bonus &amp; Total Comp (GBP) · 27 prints · Front office · Alt. credit funds $10–50bn AUM · FY2025</div>
+    <span class="chart-scroll-hint">← scroll to see full chart →</span>
 
     <div class="row-label" style="margin-top:0">Base salary — £120k to £150k</div>
-    <!-- min:120k Q1:128k median:135k Q3:143k max:150k; scale 90k–180k → 440/90k=4.889px/k; base=90k -->
-    <!-- 120k→x=187, Q1 128k→x=226, median 135k→x=260, Q3 143k→x=299, max 150k→x=333 -->
+    <!-- P10:120k Q1:126k median:134k Q3:143k P90:150k -->
+    <!-- scale £100k–£170k → 440/70k=6.286px/k; base=100k -->
+    <!-- 120→40+(20×6.286)=166, 126→40+(26×6.286)=203, 134→40+(34×6.286)=254, 143→40+(43×6.286)=310, 150→40+(50×6.286)=354 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="187" y1="28" x2="226" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="187" y1="21" x2="187" y2="35" stroke="#888" stroke-width="1.5"/>
-      <rect x="226" y="15" width="73" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <line x1="260" y1="15" x2="260" y2="41" stroke="#000" stroke-width="2.5"/>
-      <line x1="299" y1="28" x2="333" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="333" y1="21" x2="333" y2="35" stroke="#888" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£90k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£113k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£135k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£158k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£180k</text>
-      <text x="260" y="10" font-size="9" fill="#999" text-anchor="middle">median £135k</text>
+      <line x1="166" y1="28" x2="203" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="166" y1="21" x2="166" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="203" y="15" width="107" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="254" y1="15" x2="254" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="310" y1="28" x2="354" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="354" y1="21" x2="354" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£100k</text>
+      <text x="103" y="56" font-size="10" fill="#bbb" text-anchor="middle">£110k</text>
+      <text x="166" y="56" font-size="10" fill="#bbb" text-anchor="middle">£120k</text>
+      <text x="229" y="56" font-size="10" fill="#bbb" text-anchor="middle">£130k</text>
+      <text x="292" y="56" font-size="10" fill="#bbb" text-anchor="middle">£140k</text>
+      <text x="354" y="56" font-size="10" fill="#bbb" text-anchor="middle">£150k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£170k</text>
+      <text x="254" y="10" font-size="9" fill="#999" text-anchor="middle">median £134k</text>
     </svg>
 
-    <div class="row-label">Total bonus — £120k to £225k</div>
-    <!-- min:120k Q1:148k median:170k Q3:198k max:225k; scale 80k–260k → 440/180k=2.444px/k; base=80k -->
-    <!-- 120k→x=138, Q1 148k→x=206, median 170k→x=260, Q3 198k→x=329, max 225k→x=394 -->
+    <div class="row-label">Total bonus — £122k to £225k</div>
+    <!-- P10:122k Q1:150k median:182k Q3:206k P90:225k -->
+    <!-- scale £80k–£240k → 440/160k=2.75px/k; base=80k -->
+    <!-- 122→40+(42×2.75)=156, 150→40+(70×2.75)=233, 182→40+(102×2.75)=321, 206→40+(126×2.75)=387, 225→40+(145×2.75)=439 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="138" y1="28" x2="206" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="138" y1="21" x2="138" y2="35" stroke="#888" stroke-width="1.5"/>
-      <rect x="206" y="15" width="123" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <line x1="260" y1="15" x2="260" y2="41" stroke="#000" stroke-width="2.5"/>
-      <line x1="329" y1="28" x2="394" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="394" y1="21" x2="394" y2="35" stroke="#888" stroke-width="1.5"/>
+      <line x1="156" y1="28" x2="233" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="156" y1="21" x2="156" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="233" y="15" width="154" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="321" y1="15" x2="321" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="387" y1="28" x2="439" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="439" y1="21" x2="439" y2="35" stroke="#888" stroke-width="1.5"/>
       <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£80k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£125k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£170k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£215k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£260k</text>
-      <text x="260" y="10" font-size="9" fill="#999" text-anchor="middle">median £170k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£120k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£160k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£200k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£240k</text>
+      <text x="321" y="10" font-size="9" fill="#999" text-anchor="middle">median £182k</text>
     </svg>
 
-    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £240k to £375k</div>
-    <!-- min:240k Q1:270k median:320k Q3:345k max:375k; scale 150k–420k → 440/270k=1.630px/k; base=150k -->
-    <!-- 240k→x=205, Q1 270k→x=254, median 320k→x=317, Q3 345k→x=368, max 375k→x=417 -->
+    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £250k to £355k</div>
+    <!-- Recomputed from 27 individual prints (base + bonus per person): -->
+    <!-- P10:250k Q1:276k median:311k Q3:343k P90:355k -->
+    <!-- scale £200k–£400k → 440/200k=2.2px/k; base=200k -->
+    <!-- 250→40+(50×2.2)=150, 276→40+(76×2.2)=207, 311→40+(111×2.2)=284, 343→40+(143×2.2)=355, 355→40+(155×2.2)=381 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="205" y1="28" x2="254" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="205" y1="21" x2="205" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
-      <rect x="254" y="15" width="114" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="317" y1="15" x2="317" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
-      <line x1="368" y1="28" x2="417" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="417" y1="21" x2="417" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£150k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£220k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£285k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£355k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£420k</text>
-      <text x="317" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £320k</text>
+      <line x1="150" y1="28" x2="207" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="150" y1="21" x2="150" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <rect x="207" y="15" width="148" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="284" y1="15" x2="284" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
+      <line x1="355" y1="28" x2="381" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="381" y1="21" x2="381" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£200k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£250k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£300k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£350k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£400k</text>
+      <text x="284" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £311k</text>
     </svg>
 
-    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (subject to deferral schedule below). Blue chart = total comp (base + total bonus). <strong>Carry not included.</strong></div>
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (subject to deferral schedule below). Blue chart = total comp (base + total bonus), computed per-print — not a sum of per-component percentiles. Axes are scaled independently per row; box widths are not comparable across rows. <strong>Carry not included.</strong></div>
   </div>
 
   <!-- ── DIRECTOR CHART BOX ── -->
   <div class="chart-wrap" style="margin-top:28px">
-    <div class="chart-title">Director (8–12 yrs, excl. Managing Directors) — Base, Bonus &amp; Total (GBP) · 27 prints</div>
+    <div class="chart-title">Director (8–12 yrs, excl. Managing Directors) — Base, Bonus &amp; Total Comp (GBP) · 27 prints · Front office · Alt. credit funds $10–50bn AUM · FY2025</div>
+    <span class="chart-scroll-hint">← scroll to see full chart →</span>
 
     <div class="row-label" style="margin-top:0">Base salary — £150k to £180k</div>
-    <!-- min:150k Q1:158k median:165k Q3:173k max:180k; scale 120k–210k → 440/90k=4.889px/k; base=120k -->
-    <!-- 150k→x=187, Q1 158k→x=226, median 165k→x=260, Q3 173k→x=299, max 180k→x=333 -->
+    <!-- P10:150k Q1:156k median:163k Q3:170k P90:180k -->
+    <!-- scale £140k–£190k → 440/50k=8.8px/k; base=140k -->
+    <!-- 150→40+(10×8.8)=128, 156→40+(16×8.8)=181, 163→40+(23×8.8)=242, 170→40+(30×8.8)=304, 180→40+(40×8.8)=392 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="187" y1="28" x2="226" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="187" y1="21" x2="187" y2="35" stroke="#888" stroke-width="1.5"/>
-      <rect x="226" y="15" width="73" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <line x1="260" y1="15" x2="260" y2="41" stroke="#000" stroke-width="2.5"/>
-      <line x1="299" y1="28" x2="333" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="333" y1="21" x2="333" y2="35" stroke="#888" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£120k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£143k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£165k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£188k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£210k</text>
-      <text x="260" y="10" font-size="9" fill="#999" text-anchor="middle">median £165k</text>
+      <line x1="128" y1="28" x2="181" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="128" y1="21" x2="128" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="181" y="15" width="123" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="242" y1="15" x2="242" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="304" y1="28" x2="392" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="392" y1="21" x2="392" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£140k</text>
+      <text x="128" y="56" font-size="10" fill="#bbb" text-anchor="middle">£150k</text>
+      <text x="216" y="56" font-size="10" fill="#bbb" text-anchor="middle">£160k</text>
+      <text x="304" y="56" font-size="10" fill="#bbb" text-anchor="middle">£170k</text>
+      <text x="392" y="56" font-size="10" fill="#bbb" text-anchor="middle">£180k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£190k</text>
+      <text x="242" y="10" font-size="9" fill="#999" text-anchor="middle">median £163k</text>
     </svg>
 
-    <div class="row-label">Total bonus — £175k to £620k</div>
-    <!-- min:175k Q1:215k median:265k Q3:380k max:620k; scale 100k–680k → 440/580k=0.759px/k; base=100k -->
-    <!-- 175k→x=97, Q1 215k→x=127, median 265k→x=165, Q3 380k→x=253, max 620k→x=435 -->
+    <div class="row-label">Total bonus — £178k to £620k</div>
+    <!-- P10:178k Q1:230k median:330k Q3:470k P90:620k -->
+    <!-- scale £150k–£650k → 440/500k=0.88px/k; base=150k -->
+    <!-- 178→40+(28×0.88)=65, 230→40+(80×0.88)=110, 330→40+(180×0.88)=198, 470→40+(320×0.88)=322, 620→40+(470×0.88)=454 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="97" y1="28" x2="127" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="97" y1="21" x2="97" y2="35" stroke="#888" stroke-width="1.5"/>
-      <rect x="127" y="15" width="126" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <line x1="226" y1="15" x2="226" y2="41" stroke="#000" stroke-width="2.5"/>
-      <line x1="253" y1="28" x2="435" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="435" y1="21" x2="435" y2="35" stroke="#888" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£100k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£245k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£390k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£535k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£680k</text>
-      <text x="226" y="10" font-size="9" fill="#999" text-anchor="middle">median £345k</text>
+      <line x1="65" y1="28" x2="110" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="65" y1="21" x2="65" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="110" y="15" width="212" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="198" y1="15" x2="198" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="322" y1="28" x2="454" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="454" y1="21" x2="454" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£150k</text>
+      <text x="128" y="56" font-size="10" fill="#bbb" text-anchor="middle">£250k</text>
+      <text x="216" y="56" font-size="10" fill="#bbb" text-anchor="middle">£350k</text>
+      <text x="304" y="56" font-size="10" fill="#bbb" text-anchor="middle">£450k</text>
+      <text x="392" y="56" font-size="10" fill="#bbb" text-anchor="middle">£550k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£650k</text>
+      <text x="198" y="10" font-size="9" fill="#999" text-anchor="middle">median £330k</text>
     </svg>
 
-    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £325k to £800k</div>
-    <!-- min:325k Q1:380k median:510k Q3:570k max:800k; scale 250k–870k → 440/620k=0.710px/k; base=250k -->
-    <!-- 325k→40+(75×0.710)=93, Q1 380k→40+(130×0.710)=132, median 510k→40+(260×0.710)=225, Q3 570k→40+(320×0.710)=267, max 800k→40+(550×0.710)=431 -->
+    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £340k to £735k</div>
+    <!-- Recomputed from 27 individual prints (base + bonus per person): -->
+    <!-- P10:340k Q1:386k median:493k Q3:640k P90:735k -->
+    <!-- scale £300k–£800k → 440/500k=0.88px/k; base=300k -->
+    <!-- 340→40+(40×0.88)=75, 386→40+(86×0.88)=116, 493→40+(193×0.88)=210, 640→40+(340×0.88)=339, 735→40+(435×0.88)=423 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="93" y1="28" x2="132" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="93" y1="21" x2="93" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
-      <rect x="132" y="15" width="135" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="225" y1="15" x2="225" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
-      <line x1="267" y1="28" x2="431" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="431" y1="21" x2="431" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£250k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£425k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£600k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£775k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£870k</text>
-      <text x="225" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £510k</text>
+      <line x1="75" y1="28" x2="116" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="75" y1="21" x2="75" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <rect x="116" y="15" width="223" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="210" y1="15" x2="210" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
+      <line x1="339" y1="28" x2="423" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="423" y1="21" x2="423" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£300k</text>
+      <text x="128" y="56" font-size="10" fill="#bbb" text-anchor="middle">£400k</text>
+      <text x="216" y="56" font-size="10" fill="#bbb" text-anchor="middle">£500k</text>
+      <text x="304" y="56" font-size="10" fill="#bbb" text-anchor="middle">£600k</text>
+      <text x="392" y="56" font-size="10" fill="#bbb" text-anchor="middle">£700k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£800k</text>
+      <text x="210" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £493k</text>
     </svg>
 
-    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (subject to deferral schedule below). Blue chart = total comp (base + total bonus). <strong>Carry is not included — see the deferred fund shares &amp; carry table below for estimated annual carry values.</strong></div>
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (subject to deferral schedule below). Blue chart = total comp (base + total bonus), computed per-print — not a sum of per-component percentiles. Axes are scaled independently per row; box widths are not comparable across rows. <strong>Carry is not included — see the deferred fund shares &amp; carry table below for estimated annual carry values.</strong></div>
   </div>
 
   <div style="margin-bottom:20px;padding:22px 24px;border:1px solid var(--border);border-radius:4px;background:var(--bg)">
     <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px">Bonus Vesting Schedule — Firmwide</div>
+    <div class="table-scroll-wrap">
     <table style="width:100%;border-collapse:collapse;font-size:14.5px;color:var(--mid)">
       <thead>
         <tr style="border-bottom:1px solid var(--border)">
@@ -886,12 +954,14 @@ footer a:hover { color: var(--white); }
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 
   <p style="color:var(--mid);font-size:15px;margin-bottom:16px">For example, on a £600k total bonus:</p>
 
   <div style="margin-bottom:28px;padding:18px 24px;border:1px solid var(--border);border-radius:4px;background:#fff5e6">
     <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:10px">Walkthrough — £600k total bonus illustration</div>
+    <div class="table-scroll-wrap">
     <table style="width:100%;border-collapse:collapse;font-size:13.5px;color:var(--mid)">
       <thead>
         <tr style="border-bottom:1px solid var(--border)">
@@ -922,10 +992,12 @@ footer a:hover { color: var(--white); }
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 
   <div style="margin-bottom:20px;padding:22px 24px;border:1px solid var(--border);border-radius:4px;background:var(--bg)">
     <div style="font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:14px">Alt. Credit Fund — Comp Table (GBP, cash only)</div>
+    <div class="table-scroll-wrap">
     <table style="width:100%;border-collapse:collapse;font-size:14px;color:var(--mid)">
       <thead>
         <tr style="border-bottom:1px solid var(--border)">
@@ -941,19 +1013,20 @@ footer a:hover { color: var(--white); }
           <td style="padding:8px 0;font-weight:600;color:var(--black)">VP</td>
           <td style="padding:8px 0">6–8 yrs</td>
           <td style="padding:8px 0">£120k – £150k</td>
-          <td style="padding:8px 0">£120k – £225k</td>
-          <td style="padding:8px 0;font-weight:600;color:var(--black)">£240k – £375k</td>
+          <td style="padding:8px 0">£122k – £225k</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">£250k – £355k</td>
         </tr>
         <tr>
           <td style="padding:8px 0;font-weight:600;color:var(--black)">Director <span style="font-weight:400;font-size:12px;color:#999">(excl. MDs)</span></td>
           <td style="padding:8px 0">8–12 yrs</td>
           <td style="padding:8px 0">£150k – £180k</td>
-          <td style="padding:8px 0">£175k – £620k</td>
-          <td style="padding:8px 0;font-weight:600;color:var(--black)">£325k – £800k</td>
+          <td style="padding:8px 0">£178k – £620k</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">£340k – £735k</td>
         </tr>
       </tbody>
     </table>
-    <p style="font-size:13px;color:#888;margin-top:12px">Director upper band reflects top-of-range outcomes at well-performing funds — not a typical result. The majority of Directors sit in the £325k–£500k range. The £800k ceiling is attainable but uncommon and generally requires strong fund performance, a long tenure, and meaningful deal involvement.</p>
+    </div>
+    <p style="font-size:13px;color:#888;margin-top:12px">Director upper band reflects top-of-range outcomes at well-performing funds — not a typical result. The majority of Directors sit in the £340k–£500k range (P10–Q3). The P90 of £735k is attainable but uncommon and generally requires strong fund performance, long tenure, and meaningful deal involvement. Total comp ranges are computed per-print; carry not included.</p>
   </div>
 
 
