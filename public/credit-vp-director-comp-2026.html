@@ -809,45 +809,48 @@ footer a:hover { color: var(--white); }
       <text x="254" y="10" font-size="9" fill="#999" text-anchor="middle">median £134k</text>
     </svg>
 
-    <div class="row-label">Total bonus — £122k to £225k</div>
-    <!-- P10:122k Q1:150k median:182k Q3:206k P90:225k -->
-    <!-- scale £80k–£240k → 440/160k=2.75px/k; base=80k -->
-    <!-- 122→40+(42×2.75)=156, 150→40+(70×2.75)=233, 182→40+(102×2.75)=321, 206→40+(126×2.75)=387, 225→40+(145×2.75)=439 -->
+    <div class="row-label">Total bonus — £130k to £425k</div>
+    <!-- P10:130k Q1:170k median:225k Q3:310k P90:425k -->
+    <!-- scale £100k–£450k → 440/350k=1.257px/k; base=100k -->
+    <!-- 130→40+(30×1.257)=78, 170→40+(70×1.257)=128, 225→40+(125×1.257)=197, 310→40+(210×1.257)=304, 425→40+(325×1.257)=449 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="156" y1="28" x2="233" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="156" y1="21" x2="156" y2="35" stroke="#888" stroke-width="1.5"/>
-      <rect x="233" y="15" width="154" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
-      <line x1="321" y1="15" x2="321" y2="41" stroke="#000" stroke-width="2.5"/>
-      <line x1="387" y1="28" x2="439" y2="28" stroke="#888" stroke-width="1.5"/>
-      <line x1="439" y1="21" x2="439" y2="35" stroke="#888" stroke-width="1.5"/>
-      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£80k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£120k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£160k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£200k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£240k</text>
-      <text x="321" y="10" font-size="9" fill="#999" text-anchor="middle">median £182k</text>
+      <line x1="78" y1="28" x2="128" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="78" y1="21" x2="78" y2="35" stroke="#888" stroke-width="1.5"/>
+      <rect x="128" y="15" width="176" height="26" fill="#e8e8e8" stroke="#999" stroke-width="1.5"/>
+      <line x1="197" y1="15" x2="197" y2="41" stroke="#000" stroke-width="2.5"/>
+      <line x1="304" y1="28" x2="449" y2="28" stroke="#888" stroke-width="1.5"/>
+      <line x1="449" y1="21" x2="449" y2="35" stroke="#888" stroke-width="1.5"/>
+      <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£100k</text>
+      <text x="103" y="56" font-size="10" fill="#bbb" text-anchor="middle">£150k</text>
+      <text x="166" y="56" font-size="10" fill="#bbb" text-anchor="middle">£200k</text>
+      <text x="229" y="56" font-size="10" fill="#bbb" text-anchor="middle">£250k</text>
+      <text x="292" y="56" font-size="10" fill="#bbb" text-anchor="middle">£300k</text>
+      <text x="355" y="56" font-size="10" fill="#bbb" text-anchor="middle">£350k</text>
+      <text x="418" y="56" font-size="10" fill="#bbb" text-anchor="middle">£400k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£450k</text>
+      <text x="197" y="10" font-size="9" fill="#999" text-anchor="middle">median £225k</text>
     </svg>
 
-    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £250k to £355k</div>
+    <div class="row-label" style="color:#1a3a5c">Total comp (base + total bonus) — £255k to £565k</div>
     <!-- Recomputed from 27 individual prints (base + bonus per person): -->
-    <!-- P10:250k Q1:276k median:311k Q3:343k P90:355k -->
-    <!-- scale £200k–£400k → 440/200k=2.2px/k; base=200k -->
-    <!-- 250→40+(50×2.2)=150, 276→40+(76×2.2)=207, 311→40+(111×2.2)=284, 343→40+(143×2.2)=355, 355→40+(155×2.2)=381 -->
+    <!-- P10:255k Q1:300k median:360k Q3:450k P90:565k -->
+    <!-- scale £200k–£600k → 440/400k=1.1px/k; base=200k -->
+    <!-- 255→40+(55×1.1)=101, 300→40+(100×1.1)=150, 360→40+(160×1.1)=216, 450→40+(250×1.1)=315, 565→40+(365×1.1)=442 -->
     <svg class="bw-chart" viewBox="0 0 500 66" xmlns="http://www.w3.org/2000/svg">
       <line x1="40" y1="40" x2="480" y2="40" stroke="#ddd" stroke-width="1"/>
-      <line x1="150" y1="28" x2="207" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="150" y1="21" x2="150" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
-      <rect x="207" y="15" width="148" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="284" y1="15" x2="284" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
-      <line x1="355" y1="28" x2="381" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
-      <line x1="381" y1="21" x2="381" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="101" y1="28" x2="150" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="101" y1="21" x2="101" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
+      <rect x="150" y="15" width="166" height="26" fill="#d6e4f0" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="216" y1="15" x2="216" y2="41" stroke="#1a3a5c" stroke-width="2.5"/>
+      <line x1="315" y1="28" x2="442" y2="28" stroke="#1a3a5c" stroke-width="1.5"/>
+      <line x1="442" y1="21" x2="442" y2="35" stroke="#1a3a5c" stroke-width="1.5"/>
       <text x="40" y="56" font-size="10" fill="#bbb" text-anchor="middle">£200k</text>
-      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£250k</text>
-      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£300k</text>
-      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£350k</text>
-      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£400k</text>
-      <text x="284" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £311k</text>
+      <text x="150" y="56" font-size="10" fill="#bbb" text-anchor="middle">£300k</text>
+      <text x="260" y="56" font-size="10" fill="#bbb" text-anchor="middle">£400k</text>
+      <text x="370" y="56" font-size="10" fill="#bbb" text-anchor="middle">£500k</text>
+      <text x="480" y="56" font-size="10" fill="#bbb" text-anchor="middle">£600k</text>
+      <text x="216" y="10" font-size="9" fill="#1a3a5c" text-anchor="middle">median £360k</text>
     </svg>
 
     <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Bonus = total bonus (subject to deferral schedule below). Blue chart = total comp (base + total bonus), computed per-print — not a sum of per-component percentiles. Axes are scaled independently per row; box widths are not comparable across rows. <strong>Carry not included.</strong></div>
@@ -1013,8 +1016,8 @@ footer a:hover { color: var(--white); }
           <td style="padding:8px 0;font-weight:600;color:var(--black)">VP</td>
           <td style="padding:8px 0">6–8 yrs</td>
           <td style="padding:8px 0">£120k – £150k</td>
-          <td style="padding:8px 0">£122k – £225k</td>
-          <td style="padding:8px 0;font-weight:600;color:var(--black)">£250k – £355k</td>
+          <td style="padding:8px 0">£130k – £425k</td>
+          <td style="padding:8px 0;font-weight:600;color:var(--black)">£255k – £565k</td>
         </tr>
         <tr>
           <td style="padding:8px 0;font-weight:600;color:var(--black)">Director <span style="font-weight:400;font-size:12px;color:#999">(excl. MDs)</span></td>
@@ -1026,7 +1029,7 @@ footer a:hover { color: var(--white); }
       </tbody>
     </table>
     </div>
-    <p style="font-size:13px;color:#888;margin-top:12px">Director upper band reflects top-of-range outcomes at well-performing funds — not a typical result. The majority of Directors sit in the £340k–£500k range (P10–Q3). The P90 of £735k is attainable but uncommon and generally requires strong fund performance, long tenure, and meaningful deal involvement. Total comp ranges are computed per-print; carry not included.</p>
+    <p style="font-size:13px;color:#888;margin-top:12px">Director upper band reflects top-of-range outcomes at well-performing funds — not a typical result. The majority of Directors sit in the £340k–£500k range (P10–Q3). The P90 of £735k is attainable but uncommon and generally requires strong fund performance, long tenure, and meaningful deal involvement. VP upper band (£425k bonus) reflects strong performers at larger platforms in a good year. Total comp ranges are computed per-print; carry not included.</p>
   </div>
 
 
