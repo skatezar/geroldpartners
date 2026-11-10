@@ -1,6 +1,3 @@
-require 'net/http'
-require 'json'
-
 class ContactsController < ApplicationController
   def create
     @contact = Contact.new(contact_params)
@@ -63,26 +60,4 @@ class ContactsController < ApplicationController
     true
   end
 
-  def verify_turnstile?
-    return true if Rails.env.development? && request.host == 'localhost'
-
-    token = params['cf-turnstile-response']
-    return false if token.blank?
-
-    secret_key = ENV['CLOUDFLARE_TURNSTILE_SECRET_KEY']
-    return true if secret_key.blank?
-
-    uri = URI('https://challenges.cloudflare.com/turnstile/v0/siteverify')
-    response = Net::HTTP.post_form(uri, {
-      'secret' => secret_key,
-      'response' => token,
-      'remoteip' => request.remote_ip
-    })
-
-    result = JSON.parse(response.body)
-    result['success']
-  rescue => e
-    Rails.logger.error "Turnstile verification error: #{e.message}"
-    false
-  end
 end

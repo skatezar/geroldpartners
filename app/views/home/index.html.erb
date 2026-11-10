@@ -78,6 +78,13 @@
           <%= f.email_field :email, placeholder: "Enter your email", required: true, class: "newsletter-input" %>
           <%= f.submit "Subscribe", class: "newsletter-btn" %>
         </div>
+        <div id="newsletterTurnstile"
+             class="cf-turnstile"
+             data-sitekey="<%= ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'] %>"
+             data-size="invisible"
+             data-callback="onNewsletterTurnstileSuccess"
+             data-error-callback="onNewsletterTurnstileError"
+             style="display:none;"></div>
         <div id="newsletterMessage" class="newsletter-message"></div>
       <% end %>
     </div>
@@ -524,7 +531,13 @@
             <%= f.file_field :cv, accept: ".pdf", required: true, id: "cvFileInput", style: "display: none;" %>
           </div>
         </div>
-        <%= f.submit "Submit CV", class: "btn-primary", id: "cvSubmitBtn" %>
+        <div class="form-group" style="margin-top: 15px;">
+          <div class="cf-turnstile"
+               data-sitekey="<%= ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'] %>"
+               data-callback="onCvTurnstileSuccess"
+               data-error-callback="onCvTurnstileError"></div>
+        </div>
+        <%= f.submit "Submit CV", class: "btn-primary", id: "cvSubmitBtn", disabled: true %>
       <% end %>
     </div>
 
@@ -591,6 +604,7 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
+  // Contact form Turnstile
   function onContactTurnstileSuccess(token) {
     const submitBtn = document.getElementById('contactSubmitBtn');
     if (submitBtn) {
@@ -604,50 +618,142 @@
     document.getElementById('contactForm').appendChild(tokenInput);
   }
 
+  // CV form Turnstile
+  function onCvTurnstileSuccess(token) {
+    const submitBtn = document.getElementById('cvSubmitBtn');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+    }
+    const existing = document.querySelector('#cvForm input[name="cf-turnstile-response"]');
+    if (existing) existing.remove();
+    const tokenInput = document.createElement('input');
+    tokenInput.type = 'hidden';
+    tokenInput.name = 'cf-turnstile-response';
+    tokenInput.value = token;
+    document.getElementById('cvForm').appendChild(tokenInput);
+  }
+
+  function onCvTurnstileError() {
+    const submitBtn = document.getElementById('cvSubmitBtn');
+    if (submitBtn) submitBtn.disabled = true;
+  }
+
+  // Newsletter Turnstile (invisible — triggered programmatically on submit)
+  let newsletterTurnstileWidgetId = null;
+  let newsletterPendingSubmit = false;
+
+  function onNewsletterTurnstileSuccess(token) {
+    const existing = document.querySelector('#newsletterForm input[name="cf-turnstile-response"]');
+    if (existing) existing.remove();
+    const tokenInput = document.createElement('input');
+    tokenInput.type = 'hidden';
+    tokenInput.name = 'cf-turnstile-response';
+    tokenInput.value = token;
+    document.getElementById('newsletterForm').appendChild(tokenInput);
+
+    if (newsletterPendingSubmit) {
+      newsletterPendingSubmit = false;
+      submitNewsletterForm();
+    }
+  }
+
+  function onNewsletterTurnstileError() {
+    newsletterPendingSubmit = false;
+    const submitBtn = document.querySelector('#newsletterForm .newsletter-btn');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.value = submitBtn.dataset.originalText || 'Subscribe';
+    }
+    const messageDiv = document.getElementById('newsletterMessage');
+    if (messageDiv) {
+      messageDiv.className = 'newsletter-message error';
+      messageDiv.textContent = 'Security check failed. Please try again.';
+    }
+  }
+
+  async function submitNewsletterForm() {
+    const newsletterForm = document.getElementById('newsletterForm');
+    const submitBtn = newsletterForm.querySelector('.newsletter-btn');
+    const messageDiv = document.getElementById('newsletterMessage');
+
+    const formData = new FormData(newsletterForm);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    try {
+      const response = await fetch(newsletterForm.action, {
+        method: 'POST',
+        headers: { 'X-CSRF-Token': csrfToken },
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        messageDiv.className = 'newsletter-message success';
+        messageDiv.textContent = result.message || 'Please check your email to confirm your subscription.';
+        newsletterForm.reset();
+      } else {
+        messageDiv.className = 'newsletter-message error';
+        messageDiv.textContent = result.error || 'Something went wrong. Please try again.';
+      }
+    } catch (error) {
+      messageDiv.className = 'newsletter-message error';
+      messageDiv.textContent = 'Error submitting form. Please try again.';
+    } finally {
+      submitBtn.value = submitBtn.dataset.originalText || 'Subscribe';
+      submitBtn.disabled = false;
+      // Reset turnstile so it can be used again
+      if (newsletterTurnstileWidgetId !== null && typeof turnstile !== 'undefined') {
+        turnstile.reset(newsletterTurnstileWidgetId);
+      }
+    }
+  }
+
   document.addEventListener('turbo:load', function() {
+    // Render invisible Turnstile widget for newsletter after Turnstile script loads
+    function initNewsletterTurnstile() {
+      const container = document.getElementById('newsletterTurnstile');
+      if (!container || typeof turnstile === 'undefined') return;
+      if (newsletterTurnstileWidgetId !== null) return;
+      newsletterTurnstileWidgetId = turnstile.render('#newsletterTurnstile', {
+        sitekey: container.dataset.sitekey,
+        size: 'invisible',
+        callback: onNewsletterTurnstileSuccess,
+        'error-callback': onNewsletterTurnstileError
+      });
+    }
+
+    if (typeof turnstile !== 'undefined') {
+      initNewsletterTurnstile();
+    } else {
+      document.querySelector('script[src*="turnstile"]')?.addEventListener('load', initNewsletterTurnstile);
+    }
+
     // Newsletter form handler
     const newsletterForm = document.getElementById('newsletterForm');
     if (newsletterForm) {
       newsletterForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        const formData = new FormData(newsletterForm);
         const submitBtn = newsletterForm.querySelector('.newsletter-btn');
         const messageDiv = document.getElementById('newsletterMessage');
-        const originalText = submitBtn.value;
 
+        submitBtn.dataset.originalText = submitBtn.value;
         submitBtn.disabled = true;
         submitBtn.value = 'Subscribing...';
         messageDiv.className = 'newsletter-message';
         messageDiv.textContent = '';
 
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-        try {
-          const response = await fetch(newsletterForm.action, {
-            method: 'POST',
-            headers: {
-              'X-CSRF-Token': csrfToken
-            },
-            body: formData
-          });
-
-          const result = await response.json();
-
-          if (result.success) {
-            messageDiv.className = 'newsletter-message success';
-            messageDiv.textContent = result.message || 'Please check your email to confirm your subscription.';
-            newsletterForm.reset();
-          } else {
-            messageDiv.className = 'newsletter-message error';
-            messageDiv.textContent = result.error || 'Something went wrong. Please try again.';
-          }
-        } catch (error) {
-          messageDiv.className = 'newsletter-message error';
-          messageDiv.textContent = 'Error submitting form. Please try again.';
-        } finally {
-          submitBtn.value = originalText;
-          submitBtn.disabled = false;
+        // Check if we already have a valid token
+        const existingToken = newsletterForm.querySelector('input[name="cf-turnstile-response"]');
+        if (existingToken && existingToken.value) {
+          await submitNewsletterForm();
+        } else if (typeof turnstile !== 'undefined' && newsletterTurnstileWidgetId !== null) {
+          newsletterPendingSubmit = true;
+          turnstile.execute(newsletterTurnstileWidgetId);
+        } else {
+          // Turnstile not loaded — submit anyway (server-side will pass if key not configured)
+          await submitNewsletterForm();
         }
       });
     }

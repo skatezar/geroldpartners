@@ -5,6 +5,11 @@ class NewsletterSubscriptionsController < ApplicationController
       return
     end
 
+    unless verify_turnstile?
+      render json: { success: false, error: 'Security check failed. Please try again.' }, status: :unprocessable_entity
+      return
+    end
+
     @subscription = NewsletterSubscription.new(subscription_params)
 
     if @subscription.save

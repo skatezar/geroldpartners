@@ -7,6 +7,11 @@ class TalentPoolApplicationsController < ApplicationController
       return
     end
 
+    unless verify_turnstile?
+      render json: { success: false, errors: ['Security check failed. Please try again.'] }, status: :unprocessable_entity
+      return
+    end
+
     @application = TalentPoolApplication.new(talent_pool_params)
 
     # Attach CV if present
