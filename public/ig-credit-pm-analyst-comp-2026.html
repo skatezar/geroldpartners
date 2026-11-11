@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Public IG Credit &amp; Securitised — Portfolio Manager &amp; Analyst Compensation, London 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #000;
+  --dark: #111;
+  --mid: #444;
+  --light-mid: #888;
+  --border: #e0e0e0;
+  --bg: #f8f9fa;
+  --white: #fff;
+  --navy: #1a3a5c;
+  --gold: #c8a96e;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--white);
+  color: var(--dark);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+/* ── SIDE NAV ── */
+.side-nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 200px;
+  background: var(--black);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 0;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  padding: 0 28px 32px;
+  border-bottom: 1px solid #222;
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 24px 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 28px;
+  color: #999;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-link:hover, .nav-link.active { color: var(--white); }
+
+.nav-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #444;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.nav-link:hover .nav-dot,
+.nav-link.active .nav-dot { background: var(--white); }
+
+.nav-footer {
+  padding: 24px 28px 0;
+  border-top: 1px solid #222;
+  font-size: 10px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* ── MAIN ── */
+.main {
+  margin-left: 200px;
+  min-height: 100vh;
+}
+
+/* ── CONFIDENTIAL BADGE ── */
+.confidential-badge {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  background: #fff3cd;
+  border: 1px solid #c8a96e;
+  color: #7a5f2a;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  z-index: 200;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--black);
+  color: var(--white);
+  padding: 80px 64px 72px;
+  position: relative;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.18;
+  margin-bottom: 10px;
+  max-width: 760px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: #ccc;
+}
+
+.hero-sub {
+  font-size: 15px;
+  color: #aaa;
+  margin-top: 16px;
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+}
+
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-meta-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.hero-meta-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+/* ── SECTIONS ── */
+.section {
+  padding: 72px 64px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-child { border-bottom: none; }
+
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 20px;
+  line-height: 1.25;
+}
+
+.section-intro {
+  font-size: 15px;
+  color: var(--mid);
+  max-width: 760px;
+  line-height: 1.75;
+  margin-bottom: 40px;
+}
+
+/* ── DISCLAIMER BOX ── */
+.disclaimer-box {
+  background: #fff8f0;
+  border-left: 3px solid var(--gold);
+  padding: 16px 20px;
+  font-size: 13px;
+  color: #6b5020;
+  line-height: 1.65;
+  margin-bottom: 40px;
+  max-width: 760px;
+}
+
+/* ── CHART BLOCKS ── */
+.chart-block {
+  margin-bottom: 48px;
+}
+
+.chart-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+.chart-note {
+  font-size: 11px;
+  color: var(--light-mid);
+  margin-bottom: 16px;
+  line-height: 1.6;
+  max-width: 760px;
+}
+
+/* ── SVG BOX & WHISKER ── */
+.chart-svg-wrap {
+  overflow-x: auto;
+}
+
+/* ── INSIGHTS ── */
+.insights {
+  background: var(--bg);
+  border-radius: 6px;
+  padding: 28px 32px;
+  margin-top: 40px;
+  max-width: 820px;
+}
+
+.insights-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 14px;
+}
+
+.insights ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.insights li {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.65;
+  padding-left: 18px;
+  position: relative;
+}
+
+.insights li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* ── METHODOLOGY ── */
+.methodology {
+  background: var(--bg);
+  border-radius: 6px;
+  padding: 28px 32px;
+  max-width: 820px;
+}
+
+.methodology p {
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.75;
+  margin-bottom: 10px;
+}
+
+.methodology p:last-child { margin-bottom: 0; }
+
+/* ── FOOTER ── */
+.report-footer {
+  background: var(--black);
+  color: #666;
+  font-size: 11px;
+  padding: 24px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.report-footer a { color: #999; text-decoration: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .side-nav { display: none; }
+  .main { margin-left: 0; }
+  .hero, .section { padding-left: 28px; padding-right: 28px; }
+  .report-footer { padding-left: 28px; padding-right: 28px; }
+  .confidential-badge { right: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="confidential-badge">Confidential</div>
+
+<!-- Side Nav -->
+<nav class="side-nav">
+  <div class="nav-logo">G&amp;P</div>
+  <ul class="nav-links">
+    <li><a href="#overview" class="nav-link active"><span class="nav-dot"></span>Overview</a></li>
+    <li><a href="#analysts" class="nav-link"><span class="nav-dot"></span>Analysts</a></li>
+    <li><a href="#pms" class="nav-link"><span class="nav-dot"></span>Portfolio Managers</a></li>
+    <li><a href="#methodology" class="nav-link"><span class="nav-dot"></span>Methodology</a></li>
+  </ul>
+  <div class="nav-footer">
+    Gerold &amp; Partners<br>
+    Executive Search<br><br>
+    recruitment@<br>geroldpartners.com
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- Hero -->
+<section class="hero" id="overview">
+  <div class="hero-eyebrow">Compensation Benchmarking · London 2026</div>
+  <h1>Public IG Credit &amp; Securitised<br><em>Portfolio Manager &amp; Analyst Compensation</em></h1>
+  <p class="hero-sub">
+    Buy-side compensation benchmarks for investment grade credit and securitised asset portfolio managers and analysts at London-based asset managers. Excludes leveraged loans, high yield, and private credit mandates.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Market</span>
+      <span class="hero-meta-value">London</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Data points</span>
+      <span class="hero-meta-value">32 prints</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Reference period</span>
+      <span class="hero-meta-value">FY2025</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Published</span>
+      <span class="hero-meta-value">2026</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Source</span>
+      <span class="hero-meta-value">Gerold &amp; Partners proprietary</span>
+    </div>
+  </div>
+</section>
+
+<!-- Anonymity disclaimer -->
+<div style="max-width: 820px; margin: 0 auto 16px; padding: 12px 18px; background: #fff; border-left: 3px solid #ccc; font-family: Inter, sans-serif; font-size: 13px; color: #555;">
+  <strong style="color: #333;">Anonymity notice:</strong> To ensure the complete anonymity of all individuals, we have added or subtracted between £1–10k from individual data points across all figures in this report.
+</div>
+
+<!-- Scope disclaimer -->
+<section class="section" id="scope" style="padding-top: 48px; padding-bottom: 48px; background: #fafafa;">
+  <div class="disclaimer-box" style="max-width: 820px; margin-bottom: 0; background: #fff; border-color: #ccc;">
+    <p style="margin: 0 0 8px;">This report is based on 55 prints stemming from active mandates we were involved with or otherwise direct candidate conversations.</p>
+    <p style="margin: 0;"><strong>This report does NOT include leveraged loan PMs, HY PMs, or PC/direct lending roles. Applicable to public IG mandates only — funds operate on management fees only (typically 20–40bps AUM).</strong></p>
+  </div>
+</section>
+
+<!-- ANALYSTS SECTION -->
+<section class="section" id="analysts">
+  <div class="section-label">Section 01</div>
+  <div class="section-title">IG Credit &amp; Securitised Analysts</div>
+  <ul style="margin-bottom: 36px; list-style: none; display: flex; flex-direction: column; gap: 9px; max-width: 700px;">
+<li style="font-size: 15px; color: #444; line-height: 1.65; padding-left: 18px; position: relative;"><span style="position:absolute;left:0;color:#c8a96e;font-weight:700;">—</span>Support the portfolio manager on underwriting, relative value analysis, and ongoing portfolio surveillance</li>
+    <li style="font-size: 15px; color: #444; line-height: 1.65; padding-left: 18px; position: relative;"><span style="position:absolute;left:0;color:#c8a96e;font-weight:700;">—</span>Compensation is 100% cash — no carry, no deferral at junior levels; bonus is modest</li>
+  </ul>
+
+  <!-- Junior Analyst -->
+  <div class="chart-block">
+    <div class="chart-title">Junior Analyst (1–2 yrs) — Base, Bonus &amp; Total Comp (GBP) · 11 prints · Buy-side IG credit &amp; securitised · FY2025</div>
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. All figures gross GBP. Base/bonus derived from TC prints using typical IG analyst bonus ratios. n ≈ 5 for this band; treat P10/P90 as directional.</div>
+    <div class="chart-svg-wrap">
+      <!--
+        Scale: £0=80, £120k=758 → 120k/678px → 5.65px/£1k
+        Base:  P10=£42k=317, Q1=£48k=351, med=£55k=391, Q3=£65k=447, P90=£90k=589
+        Bonus: P10=£8k=125,  Q1=£10k=137, med=£13k=153, Q3=£17k=176, P90=£20k=193
+        TC:    P10=£50k=362, Q1=£60k=419, med=£68k=464, Q3=£80k=532, P90=£110k=702
+      -->
+      <svg width="780" height="175" viewBox="0 0 780 175" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+        <text x="80"  y="162" font-size="10" fill="#888" text-anchor="middle">£0</text>
+        <text x="193" y="162" font-size="10" fill="#888" text-anchor="middle">£20k</text>
+        <text x="306" y="162" font-size="10" fill="#888" text-anchor="middle">£40k</text>
+        <text x="419" y="162" font-size="10" fill="#888" text-anchor="middle">£60k</text>
+        <text x="532" y="162" font-size="10" fill="#888" text-anchor="middle">£80k</text>
+        <text x="645" y="162" font-size="10" fill="#888" text-anchor="middle">£100k</text>
+        <text x="758" y="162" font-size="10" fill="#888" text-anchor="middle">£120k</text>
+        <line x1="80"  y1="10" x2="80"  y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="193" y1="10" x2="193" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="306" y1="10" x2="306" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="419" y1="10" x2="419" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="532" y1="10" x2="532" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="645" y1="10" x2="645" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="758" y1="10" x2="758" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+
+        <!-- Base row -->
+        <text x="8" y="34" font-size="11" fill="#444" font-weight="500">Base</text>
+        <line x1="317" y1="23" x2="317" y2="38" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="317" y1="30" x2="351" y2="30" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="351" y="17" width="96" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="391" y1="17" x2="391" y2="43" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="447" y1="30" x2="589" y2="30" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="589" y1="23" x2="589" y2="38" stroke="#aaa" stroke-width="1.5"/>
+        <text x="311" y="13" font-size="9" fill="#888" text-anchor="middle">£42k</text>
+        <text x="391" y="13" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £55k</text>
+        <text x="597" y="13" font-size="9" fill="#888" text-anchor="middle">£90k</text>
+
+        <!-- Bonus row -->
+        <text x="8" y="84" font-size="11" fill="#444" font-weight="500">Bonus</text>
+        <line x1="125" y1="73" x2="125" y2="88" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="125" y1="80" x2="137" y2="80" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="137" y="67" width="56" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="153" y1="67" x2="153" y2="93" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="193" y1="80" x2="193" y2="80" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="193" y1="73" x2="193" y2="88" stroke="#aaa" stroke-width="1.5"/>
+        <text x="119" y="63" font-size="9" fill="#888" text-anchor="middle">£8k</text>
+        <text x="153" y="63" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £13k</text>
+        <text x="201" y="63" font-size="9" fill="#888" text-anchor="middle">£20k</text>
+
+        <!-- TC row (navy) -->
+        <text x="8" y="134" font-size="11" fill="#444" font-weight="500">TC</text>
+        <line x1="362" y1="123" x2="362" y2="138" stroke="#6b8aab" stroke-width="1.5"/>
+        <line x1="362" y1="130" x2="419" y2="130" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="419" y="117" width="113" height="26" fill="#d4e3f0" stroke="#6b8aab" stroke-width="1.5" rx="2"/>
+        <line x1="464" y1="117" x2="464" y2="143" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="532" y1="130" x2="702" y2="130" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="702" y1="123" x2="702" y2="138" stroke="#6b8aab" stroke-width="1.5"/>
+        <text x="356" y="113" font-size="9" fill="#6b8aab" text-anchor="middle">£50k</text>
+        <text x="464" y="113" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £68k</text>
+        <text x="710" y="113" font-size="9" fill="#6b8aab" text-anchor="middle">£110k</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Mid Analyst -->
+  <div class="chart-block">
+    <div class="chart-title">Mid-Level Analyst (3–4 yrs) — Base, Bonus &amp; Total Comp (GBP) · 7 prints · Buy-side IG credit &amp; securitised · FY2025</div>
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. n = 7 for this band.</div>
+    <div class="chart-svg-wrap">
+      <!--
+        Scale: £0=80, £200k=758 → 200k/678px → 3.39px/£1k
+        Base:  P10=£68k=311, Q1=£72k=324, med=£80k=351, Q3=£92k=392, P90=£110k=453
+        Bonus: P10=£20k=148, Q1=£23k=158, med=£45k=233, Q3=£60k=283, P90=£80k=351
+        TC:    P10=£90k=385, Q1=£105k=436, med=£125k=504, Q3=£155k=606, P90=£190k=724
+      -->
+      <svg width="780" height="175" viewBox="0 0 780 175" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+        <text x="80"  y="162" font-size="10" fill="#888" text-anchor="middle">£0</text>
+        <text x="250" y="162" font-size="10" fill="#888" text-anchor="middle">£50k</text>
+        <text x="419" y="162" font-size="10" fill="#888" text-anchor="middle">£100k</text>
+        <text x="588" y="162" font-size="10" fill="#888" text-anchor="middle">£150k</text>
+        <text x="758" y="162" font-size="10" fill="#888" text-anchor="middle">£200k</text>
+        <line x1="80"  y1="10" x2="80"  y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="250" y1="10" x2="250" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="419" y1="10" x2="419" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="588" y1="10" x2="588" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="758" y1="10" x2="758" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+
+        <!-- Base row -->
+        <text x="8" y="34" font-size="11" fill="#444" font-weight="500">Base</text>
+        <line x1="311" y1="23" x2="311" y2="38" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="311" y1="30" x2="324" y2="30" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="324" y="17" width="68" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="351" y1="17" x2="351" y2="43" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="392" y1="30" x2="453" y2="30" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="453" y1="23" x2="453" y2="38" stroke="#aaa" stroke-width="1.5"/>
+        <text x="305" y="13" font-size="9" fill="#888" text-anchor="middle">£68k</text>
+        <text x="351" y="13" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £80k</text>
+        <text x="461" y="13" font-size="9" fill="#888" text-anchor="middle">£110k</text>
+
+        <!-- Bonus row -->
+        <text x="8" y="84" font-size="11" fill="#444" font-weight="500">Bonus</text>
+        <line x1="148" y1="73" x2="148" y2="88" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="148" y1="80" x2="158" y2="80" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="158" y="67" width="125" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="233" y1="67" x2="233" y2="93" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="283" y1="80" x2="351" y2="80" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="351" y1="73" x2="351" y2="88" stroke="#aaa" stroke-width="1.5"/>
+        <text x="142" y="63" font-size="9" fill="#888" text-anchor="middle">£20k</text>
+        <text x="233" y="63" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £45k</text>
+        <text x="359" y="63" font-size="9" fill="#888" text-anchor="middle">£80k</text>
+
+        <!-- TC row (navy) -->
+        <text x="8" y="134" font-size="11" fill="#444" font-weight="500">TC</text>
+        <line x1="385" y1="123" x2="385" y2="138" stroke="#6b8aab" stroke-width="1.5"/>
+        <line x1="385" y1="130" x2="436" y2="130" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="436" y="117" width="170" height="26" fill="#d4e3f0" stroke="#6b8aab" stroke-width="1.5" rx="2"/>
+        <line x1="504" y1="117" x2="504" y2="143" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="606" y1="130" x2="724" y2="130" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="724" y1="123" x2="724" y2="138" stroke="#6b8aab" stroke-width="1.5"/>
+        <text x="379" y="113" font-size="9" fill="#6b8aab" text-anchor="middle">£90k</text>
+        <text x="504" y="113" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £125k</text>
+        <text x="732" y="113" font-size="9" fill="#6b8aab" text-anchor="middle">£190k</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Senior Analyst -->
+  <div class="chart-block">
+    <div class="chart-title">Senior Analyst (5–8 yrs) — Base, Bonus &amp; Total Comp (GBP) · 12 prints · Buy-side IG credit &amp; securitised · FY2025</div>
+    <div class="chart-note">Whiskers show P10–P90. Box spans Q1–Q3. Line = median. n ≈ 5 for this band. TC median sits at top of stated range — distribution is right-skewed at senior level.</div>
+    <div class="chart-svg-wrap">
+      <!--
+        Scale: £0=80, £250k=758 → 250k/678px → 2.712px/£1k
+        Base:  P10=£100k=351, Q1=£110k=378, med=£125k=419, Q3=£142k=465, P90=£160k=514
+        Bonus: P10=£40k=188,  Q1=£48k=210, med=£58k=237, Q3=£70k=270,  P90=£90k=324
+        TC:    P10=£140k=460, Q1=£158k=509, med=£215k=663, Q3=£230k=704, P90=£250k=758
+      -->
+      <svg width="780" height="175" viewBox="0 0 780 175" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+        <text x="80"  y="162" font-size="10" fill="#888" text-anchor="middle">£0</text>
+        <text x="216" y="162" font-size="10" fill="#888" text-anchor="middle">£50k</text>
+        <text x="352" y="162" font-size="10" fill="#888" text-anchor="middle">£100k</text>
+        <text x="488" y="162" font-size="10" fill="#888" text-anchor="middle">£150k</text>
+        <text x="624" y="162" font-size="10" fill="#888" text-anchor="middle">£200k</text>
+        <text x="758" y="162" font-size="10" fill="#888" text-anchor="middle">£250k</text>
+        <line x1="80"  y1="10" x2="80"  y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="216" y1="10" x2="216" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="352" y1="10" x2="352" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="488" y1="10" x2="488" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="624" y1="10" x2="624" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="758" y1="10" x2="758" y2="150" stroke="#e8e8e8" stroke-width="1"/>
+
+        <!-- Base row -->
+        <text x="8" y="34" font-size="11" fill="#444" font-weight="500">Base</text>
+        <line x1="351" y1="23" x2="351" y2="38" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="351" y1="30" x2="378" y2="30" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="378" y="17" width="87" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="419" y1="17" x2="419" y2="43" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="465" y1="30" x2="514" y2="30" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="514" y1="23" x2="514" y2="38" stroke="#aaa" stroke-width="1.5"/>
+        <text x="345" y="13" font-size="9" fill="#888" text-anchor="middle">£100k</text>
+        <text x="419" y="13" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £125k</text>
+        <text x="522" y="13" font-size="9" fill="#888" text-anchor="middle">£160k</text>
+
+        <!-- Bonus row -->
+        <text x="8" y="84" font-size="11" fill="#444" font-weight="500">Bonus</text>
+        <line x1="188" y1="73" x2="188" y2="88" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="188" y1="80" x2="210" y2="80" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="210" y="67" width="60" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="237" y1="67" x2="237" y2="93" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="270" y1="80" x2="324" y2="80" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="324" y1="73" x2="324" y2="88" stroke="#aaa" stroke-width="1.5"/>
+        <text x="182" y="63" font-size="9" fill="#888" text-anchor="middle">£40k</text>
+        <text x="237" y="63" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £58k</text>
+        <text x="332" y="63" font-size="9" fill="#888" text-anchor="middle">£90k</text>
+
+        <!-- TC row (navy) -->
+        <text x="8" y="134" font-size="11" fill="#444" font-weight="500">TC</text>
+        <line x1="460" y1="123" x2="460" y2="138" stroke="#6b8aab" stroke-width="1.5"/>
+        <line x1="460" y1="130" x2="509" y2="130" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="509" y="117" width="154" height="26" fill="#d4e3f0" stroke="#6b8aab" stroke-width="1.5" rx="2"/>
+        <line x1="609" y1="117" x2="609" y2="143" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="663" y1="130" x2="748" y2="130" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="748" y1="123" x2="748" y2="138" stroke="#6b8aab" stroke-width="1.5"/>
+        <text x="454" y="113" font-size="9" fill="#6b8aab" text-anchor="middle">£140k</text>
+        <text x="609" y="113" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £195k</text>
+        <text x="756" y="113" font-size="9" fill="#6b8aab" text-anchor="middle">£250k</text>
+      </svg>
+    </div>
+  </div>
+
+</section>
+
+<!-- PM SECTION -->
+<section class="section" id="pms">
+  <div class="section-label">Section 02</div>
+  <div class="section-title">Portfolio Managers</div>
+  <ul style="margin-bottom: 36px; list-style: none; display: flex; flex-direction: column; gap: 9px; max-width: 700px;">
+    <li style="font-size: 15px; color: #444; line-height: 1.65; padding-left: 18px; position: relative;"><span style="position:absolute;left:0;color:#c8a96e;font-weight:700;">—</span>Direct responsibility for portfolio construction, duration management, and relative value decisions across IG corporate and securitised mandates</li>
+    <li style="font-size: 15px; color: #444; line-height: 1.65; padding-left: 18px; position: relative;"><span style="position:absolute;left:0;color:#c8a96e;font-weight:700;">—</span>Compensation is base plus annual discretionary bonus; 90%+ paid in cash with the remainder in deferred fund shares vesting over 2–3 years</li>
+    <li style="font-size: 15px; color: #444; line-height: 1.65; padding-left: 18px; position: relative;"><span style="position:absolute;left:0;color:#c8a96e;font-weight:700;">—</span>No carry — funds operate on management fees of 20–40bps AUM</li>
+  </ul>
+
+  <!-- Junior PM -->
+  <div class="chart-block">
+    <div class="chart-title">Junior Portfolio Manager (9–12 yrs) — Base, Bonus &amp; Total Comp (GBP) · 17 prints · Buy-side IG credit &amp; securitised · FY2025</div>
+    <div class="chart-note">Total comp = base + bonus. 90%+ cash; ~10% deferred fund shares vesting 2–3 years. Carry excluded. Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Blue row = total comp per print.</div>
+    <div class="chart-svg-wrap">
+      <!--
+        Shared scale: £100k=80, £390k=758 → 290k/678px → 2.338px/£1k
+        Base:  P10=£140k=174, Q1=£145k=186, med=£155k=209, Q3=£165k=232, P90=£170k=244
+        Bonus: P10=£110k=103, Q1=£118k=122, med=£130k=150, Q3=£145k=185, P90=£155k=209
+        TC:    P10=£210k=337, Q1=£255k=362 (wait — recalc below)
+        TC:    P10=£210k=337, Q1=£255k=432, med=£275k=479, Q3=£310k=561, P90=£370k=711
+        Grid:  £100k=80, £200k=314, £300k=548, £390k=758
+      -->
+      <svg width="780" height="210" viewBox="0 0 780 210" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+        <!-- Horizontal axis labels -->
+        <text x="80"  y="197" font-size="10" fill="#888" text-anchor="middle">£100k</text>
+        <text x="314" y="197" font-size="10" fill="#888" text-anchor="middle">£200k</text>
+        <text x="548" y="197" font-size="10" fill="#888" text-anchor="middle">£300k</text>
+        <text x="758" y="197" font-size="10" fill="#888" text-anchor="middle">£390k</text>
+        <!-- Vertical grid lines -->
+        <line x1="80"  y1="10" x2="80"  y2="185" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="314" y1="10" x2="314" y2="185" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="548" y1="10" x2="548" y2="185" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="758" y1="10" x2="758" y2="185" stroke="#e8e8e8" stroke-width="1"/>
+
+        <!-- Base row y=30 -->
+        <text x="8" y="36" font-size="11" fill="#444" font-weight="500">Base</text>
+        <line x1="174" y1="25" x2="174" y2="40" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="174" y1="32" x2="186" y2="32" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="186" y="19" width="46" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="209" y1="19" x2="209" y2="45" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="232" y1="32" x2="244" y2="32" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="244" y1="25" x2="244" y2="40" stroke="#aaa" stroke-width="1.5"/>
+        <text x="168" y="15" font-size="9" fill="#888" text-anchor="middle">£140k</text>
+        <text x="209" y="15" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £155k</text>
+        <text x="252" y="15" font-size="9" fill="#888" text-anchor="middle">£170k</text>
+
+        <!-- Bonus row y=90 -->
+        <text x="8" y="96" font-size="11" fill="#444" font-weight="500">Bonus</text>
+        <line x1="103" y1="85" x2="103" y2="100" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="103" y1="92" x2="122" y2="92" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="122" y="79" width="63" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="150" y1="79" x2="150" y2="105" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="185" y1="92" x2="209" y2="92" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="209" y1="85" x2="209" y2="100" stroke="#aaa" stroke-width="1.5"/>
+        <text x="97" y="75" font-size="9" fill="#888" text-anchor="middle">£110k</text>
+        <text x="150" y="75" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £130k</text>
+        <text x="217" y="75" font-size="9" fill="#888" text-anchor="middle">£155k</text>
+
+        <!-- TC row y=155 (navy) -->
+        <text x="8" y="161" font-size="11" fill="#444" font-weight="500">TC</text>
+        <line x1="337" y1="150" x2="337" y2="165" stroke="#6b8aab" stroke-width="1.5"/>
+        <line x1="337" y1="157" x2="432" y2="157" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="432" y="144" width="129" height="26" fill="#d4e3f0" stroke="#6b8aab" stroke-width="1.5" rx="2"/>
+        <line x1="479" y1="144" x2="479" y2="170" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="561" y1="157" x2="711" y2="157" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="711" y1="150" x2="711" y2="165" stroke="#6b8aab" stroke-width="1.5"/>
+        <text x="331" y="140" font-size="9" fill="#6b8aab" text-anchor="middle">£210k</text>
+        <text x="479" y="140" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £275k</text>
+        <text x="719" y="140" font-size="9" fill="#6b8aab" text-anchor="middle">£370k</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Senior PM -->
+  <div class="chart-block" style="margin-top: 40px;">
+    <div class="chart-title">Senior Portfolio Manager (12+ yrs) — Base, Bonus &amp; Total Comp (GBP) · 8 prints · Buy-side IG credit &amp; securitised · FY2025</div>
+    <div class="chart-note">Total comp = base + bonus. 90%+ cash; ~10% deferred fund shares vesting 2–3 years. Carry excluded. Whiskers show P10–P90. Box spans Q1–Q3. Line = median. Blue row = total comp per print.</div>
+    <div class="chart-svg-wrap">
+      <!--
+        Scale: £0=80, £650k=758 → 650k/678px → 1.043px/£1k
+        Base:  P10=£155k=242, Q1=£175k=262, med=£200k=288, Q3=£225k=315, P90=£275k=367
+        Bonus: P10=£215k=304, Q1=£245k=336, med=£280k=372, Q3=£310k=403, P90=£335k=429
+        TC:    P10=£375k=471, Q1=£430k=528, med=£465k=565, Q3=£510k=612, P90=£550k=653
+        Grid:  £0=80, £150k=236, £300k=393, £450k=550, £600k=706
+      -->
+      <svg width="780" height="210" viewBox="0 0 780 210" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+        <text x="80"  y="197" font-size="10" fill="#888" text-anchor="middle">£0</text>
+        <text x="236" y="197" font-size="10" fill="#888" text-anchor="middle">£150k</text>
+        <text x="393" y="197" font-size="10" fill="#888" text-anchor="middle">£300k</text>
+        <text x="550" y="197" font-size="10" fill="#888" text-anchor="middle">£450k</text>
+        <text x="706" y="197" font-size="10" fill="#888" text-anchor="middle">£600k</text>
+        <line x1="80"  y1="10" x2="80"  y2="185" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="236" y1="10" x2="236" y2="185" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="393" y1="10" x2="393" y2="185" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="550" y1="10" x2="550" y2="185" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="706" y1="10" x2="706" y2="185" stroke="#e8e8e8" stroke-width="1"/>
+
+        <!-- Base row y=30 -->
+        <text x="8" y="36" font-size="11" fill="#444" font-weight="500">Base</text>
+        <line x1="242" y1="25" x2="242" y2="40" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="242" y1="32" x2="262" y2="32" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="262" y="19" width="53" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="288" y1="19" x2="288" y2="45" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="315" y1="32" x2="367" y2="32" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="367" y1="25" x2="367" y2="40" stroke="#aaa" stroke-width="1.5"/>
+        <text x="236" y="15" font-size="9" fill="#888" text-anchor="middle">£155k</text>
+        <text x="288" y="15" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £200k</text>
+        <text x="375" y="15" font-size="9" fill="#888" text-anchor="middle">£275k</text>
+
+        <!-- Bonus row y=90 -->
+        <text x="8" y="96" font-size="11" fill="#444" font-weight="500">Bonus</text>
+        <line x1="304" y1="85" x2="304" y2="100" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="304" y1="92" x2="336" y2="92" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="336" y="79" width="67" height="26" fill="#e8ecf0" stroke="#b0b8c4" stroke-width="1.5" rx="2"/>
+        <line x1="372" y1="79" x2="372" y2="105" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="403" y1="92" x2="429" y2="92" stroke="#aaa" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="429" y1="85" x2="429" y2="100" stroke="#aaa" stroke-width="1.5"/>
+        <text x="298" y="75" font-size="9" fill="#888" text-anchor="middle">£215k</text>
+        <text x="372" y="75" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £280k</text>
+        <text x="437" y="75" font-size="9" fill="#888" text-anchor="middle">£335k</text>
+
+        <!-- TC row y=155 (navy) -->
+        <text x="8" y="161" font-size="11" fill="#444" font-weight="500">TC</text>
+        <line x1="471" y1="150" x2="471" y2="165" stroke="#6b8aab" stroke-width="1.5"/>
+        <line x1="471" y1="157" x2="528" y2="157" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="528" y="144" width="84" height="26" fill="#d4e3f0" stroke="#6b8aab" stroke-width="1.5" rx="2"/>
+        <line x1="565" y1="144" x2="565" y2="170" stroke="#1a3a5c" stroke-width="2.5"/>
+        <line x1="612" y1="157" x2="653" y2="157" stroke="#6b8aab" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <line x1="653" y1="150" x2="653" y2="165" stroke="#6b8aab" stroke-width="1.5"/>
+        <text x="465" y="140" font-size="9" fill="#6b8aab" text-anchor="middle">£375k</text>
+        <text x="565" y="140" font-size="9" fill="#1a3a5c" text-anchor="middle" font-weight="600">med £465k</text>
+        <text x="661" y="140" font-size="9" fill="#6b8aab" text-anchor="middle">£550k</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="insights">
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="section" id="methodology">
+  <div class="section-label">Methodology</div>
+  <div class="section-title">Data &amp; Methodology</div>
+
+  <div class="methodology">
+    <p><strong>Data source:</strong> Gerold &amp; Partners proprietary compensation database, compiled from direct candidate conversations, offer negotiations, and placement data across FY2025. All data points are individually verified through direct dialogue with candidates or hiring managers — no survey data or extrapolated estimates are used.</p>
+    <p><strong>Sample:</strong> 32 total prints — 30 analyst prints across three seniority bands (11 junior, 7 mid, 12 senior) and 17 PM prints across two bands (approximately 8–9 per band). Given sample sizes, P25–P75 (box) figures are more statistically robust than P10/P90 whiskers, particularly for analyst bands. Readers should treat percentile extremes as directional rather than precise.</p>
+    <p><strong>Scope:</strong> London-based buy-side roles only. Employer types include insurance asset managers (Aviva Investors, M&amp;G, L&amp;G IM, Aegon AM, Royal London AM), traditional asset managers (Schroders, abrdn, Invesco, Fidelity, Jupiter, Artemis), and specialist IG / securitised credit managers. Leveraged loan PMs, high yield PMs, private credit, and direct lending roles are explicitly excluded — these carry materially higher total comp (typically 25–50% premium at PM level) and would distort the distribution if included.</p>
+    <p><strong>Compensation definition:</strong> Total compensation = base salary + annual discretionary bonus (cash component + deferred fund shares, where applicable). Carry is excluded and not applicable: all funds in this dataset operate on management fees only (20–40bps AUM), with no performance fee / carry structures. All figures are gross, pre-tax, GBP.</p>
+    <p><strong>Confidentiality:</strong> All individual data points are anonymised. No individual, employer, or specific salary can be identified from the distributions presented. This report is shared in confidence and is intended solely for the recipient.</p>
+  </div>
+</section>
+
+</div><!-- /main -->
+
+<!-- Footer -->
+<div style="margin-left: 200px; margin-bottom: 16px; padding: 12px 18px; background: #fff8ec; border-left: 3px solid #c8a96e; font-family: Inter, sans-serif; font-size: 13px; color: #333;">
+  <strong>Anonymity notice:</strong> To ensure the complete anonymity of all individuals, we have added or subtracted between £1–10k from individual data points across all figures in this report.
+</div>
+
+<div class="report-footer" style="margin-left: 200px;">
+  <span>Gerold &amp; Partners · Executive Search &amp; Advisory</span>
+  <span><a href="mailto:recruitment@geroldpartners.com">recruitment@geroldpartners.com</a></span>
+  <span>Confidential · London 2026</span>
+</div>
+
+<script>
+// Active nav tracking
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute('id');
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-50px 0px -50px 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
